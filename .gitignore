@@ -1,0 +1,6 @@
+*.swp
+*.un~
+autoload/
+session/
+plugged/
+tags
