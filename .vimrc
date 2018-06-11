@@ -1,7 +1,100 @@
 ﻿" vim: fdm=marker foldenable sw=4 ts=4 sts=4
 " "zo" to open folds, "zc" to close, "zn" to disable.
 " Run vim +PlugInstall +qall to install
-set nocompatible               " Be iMproved
+
+" Required {{{
+    " Be iMproved
+    set nocompatible
+    filetype off
+    let mapleader=','
+
+    if has('nvim')
+        let vimhome=expand('~/.config/nvim')
+    else
+        let vimhome=expand('~/.vim')
+    endif
+" }}}
+
+" Vim Plug Setup {{{
+    let vimplug_exists=expand(vimhome . '/autoload/plug.vim')
+
+    if !filereadable(vimplug_exists)
+        if !executable("curl")
+            echoerr "You have to install curl or first install vim-plug yourself!"
+            execute "q!"
+        endif
+        echo "Installing Vim-Plug to ".vimplug_exists."..."
+        echo ""
+
+        execute "!\curl -fLo " . vimplug_exists . " --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+        let g:not_finish_vimplug = "yes"
+
+        autocmd VimEnter * PlugInstall
+    endif
+
+    if isdirectory(vimhome . '/plugged') == 0
+        execute "silent !mkdir -p \"" .  vimhome . "/plugged\" > /dev/null 2>&1"
+    endif
+
+    call plug#begin(expand(vimhome . '/plugged'))
+" }}}
+
+" Packages {{{
+    " Autocomplete {{{
+        " Snippet Collections {{{
+            Plug 'honza/vim-snippets'
+        " }}}
+
+        " Ultisnps {{{
+            if v:version >= 704
+                Plug 'SirVer/ultisnips'
+            endif
+        " }}}
+    " }}}
+
+    " File Managers/Finders {{{
+        " FZF {{{
+            if isdirectory('/usr/local/opt/fzf')
+                Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+            else
+                Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+                Plug 'junegunn/fzf.vim'
+            endif
+        " }}}
+
+        " NERDTree {{{
+            Plug 'scrooloose/nerdtree'
+            Plug 'jistr/vim-nerdtree-tabs'
+            Plug 'Xuyuanp/nerdtree-git-plugin'
+        " }}}
+    " }}}
+
+    " Version Control {{{
+        " Git {{{
+            Plug 'tpope/vim-fugitive' " Git helpers
+            Plug 'airblade/vim-gitgutter' " Shows git diff in the gutter
+        " }}}
+    " }}}
+
+    " UI {{{
+        " Colours {{{
+            Plug 'vim-scripts/CSApprox' " Enabled gui colourschemes to run in terminal
+            Plug 'flazz/vim-colorschemes' " Huge collection of colour schemes
+        " }}}
+
+        " Status Bar {{{
+            " Airline {{{
+                Plug 'vim-airline/vim-airline'
+                Plug 'vim-airline/vim-airline-themes'
+            " }}}
+        " }}}
+    " }}}
+" }}}
+
+" Vim Plug Setup Complete {{{
+    call plug#end()
+    filetype plugin indent on
+" }}}
 
 " Basic Config {{{
     " Abbreviations {{{
@@ -22,10 +115,12 @@ set nocompatible               " Be iMproved
         set wildmode=longest,list,full
         set wildmenu
         set completeopt=menu,menuone,preview
+        set completeopt+=noselect
+        set completeopt+=noinsert
         " set complete-=i
 
         " Setup the ignore list
-        set wildignore+=*.swp,tags                      " Ignore commong VIM files
+        set wildignore+=*.swp,tags                      " Ignore common VIM files
         set wildignore+=*/tmp/*                         " Ignore temporary directories
         set wildignore+=*.png,*.jpg,*.jpeg,*.gif        " Ignore images
         set wildignore+=*.avi,*.mp4,*.mkv,*.mov         " Ignore videos
@@ -35,14 +130,25 @@ set nocompatible               " Be iMproved
         set wildignore+=.git,.hg,.svn                   " Ignore version control directories
         set wildignore+=*.o,*.so                        " Ignore compiled objects (eg for C)
         set wildignore+=*.pyc,__pycache__               " Ignore common python objects
+
+
+        " better key bindings for UltiSnipsExpandTrigger
+        let g:UltiSnipsExpandTrigger = "<tab>"
+        let g:UltiSnipsJumpForwardTrigger = "<tab>"
+        let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
     " }}}
 
     " Backup {{{
-        set backup
+        if isdirectory(vimhome . '/backup') == 0
+            execute "silent !mkdir -p \"" .  vimhome . "/backup\" > /dev/null 2>&1"
+        endif
+
         set backupdir-=.
-        set backupdir=.backup//,~/.backup//,/tmp//
-        set backupskip=/tmp/*,/private/tmp/*
-        set writebackup
+        set backupdir+=.
+        set backupdir-=~/
+        set backupdir^=~/.vim/backup/
+        set backupdir^=./.vim-backup/
+        set backup
     " }}}
 
     " Buffers {{{
@@ -60,23 +166,6 @@ set nocompatible               " Be iMproved
         " Split
         noremap <Leader>h :<C-u>split<CR>
         noremap <Leader>v :<C-u>vsplit<CR>
-    " }}}
-
-    " Colours {{{
-        syntax on
-        set t_Co=256
-        let g:solarized_termcolors=256
-
-        if !exists('g:not_finish_vimplug')
-            set background=dark
-            " colorscheme molokai
-        endif
-
-        augroup vimrc-sync-fromstart
-            autocmd!
-            " The PC is fast enough, do syntax highlight syncing from start unless 200 lines
-            autocmd BufEnter * :syntax sync maxlines=200
-        augroup END
     " }}}
 
     " Copy/Paste/Cut {{{
@@ -114,7 +203,7 @@ set nocompatible               " Be iMproved
         "set binary
     " }}}
 
-    " File Managers {{{
+    " File Managers/Finders {{{
         " NETRW {{{
             let g:netrw_banner = 1
             let g:netrw_liststyle = 3
@@ -127,20 +216,70 @@ set nocompatible               " Be iMproved
                 " autocmd VimEnter * :Vexplore
             " augroup END
         " }}}
-    " }}}
 
-    " Indentation {{{
-        set autoindent
-        set smartindent
-        set smarttab
-        set tabstop=4
-        set softtabstop=0
-        set shiftwidth=4
-        set expandtab
-    " }}}
+        " FZF {{{
+            let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
 
-    " Leader {{{
-        let mapleader=','
+            " The Silver Searcher
+            if executable('ag')
+                let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
+            endif
+
+            " ripgrep
+            if executable('rg')
+                let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
+                command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+            endif
+
+            "cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
+            nnoremap <silent> <leader>f :FZF -m<CR>
+            noremap <silent> <leader>b :Buffers<CR>"
+        " }}}
+
+        " NERDTree {{{
+            let g:NERDTreeChDirMode=2
+            let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
+            let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
+            let g:NERDTreeShowBookmarks=1
+            let g:nerdtree_tabs_focus_on_files=1
+            let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
+            let g:NERDTreeWinSize = 40
+            let g:NERDTreeShowHidden=1
+            " Show ignored icon next to ignored files. This can be intensive with a lot of files
+            let g:NERDTreeShowIgnoredStatus = 1
+            " List of icons for file statuses
+            let g:NERDTreeIndicatorMapCustom = {
+                        \ "Modified"  : "✹",
+                        \ "Staged"    : "✚",
+                        \ "Untracked" : "✭",
+                        \ "Renamed"   : "➜",
+                        \ "Unmerged"  : "═",
+                        \ "Deleted"   : "✖",
+                        \ "Dirty"     : "✗",
+                        \ "Clean"     : "✔︎",
+                        \ 'Ignored'   : '☒',
+                        \ "Unknown"   : "?"
+                        \ }
+
+            " NERDTree - Quit vim when all other windows have been closed.
+            au BufEnter *
+              \ if (winnr("$") == 1 && exists("b:NERDTreeType") &&
+              \ b:NERDTreeType == "primary") |
+              \   q |
+              \ endif
+
+            " Toggle NERDTREE
+            nnoremap <leader>t :NERDTreeToggle<CR>
+
+            "" Show hidden files
+            "autocmd StdinReadPre * let s:std_in=1
+            "" When given a directory, open nerdtree and empty buffer. Focus on empty buffer
+            "autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+            "" When given a file, open nerdtree and focus on file buffer
+            "autocmd VimEnter * if argc() == 1 && !isdirectory(argv()[0]) && !exists("s:std_in") | NERDTree | wincmd p | endif
+            "" When args are empty, open nerdtree and empty buffer. Focus on Nerdtree
+            "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+        " }}}
     " }}}
 
     " Misc {{{
@@ -191,49 +330,15 @@ set nocompatible               " Be iMproved
         endif
     " }}}
 
-    " Status Bar {{{
-        set laststatus=2
-        " set statusline=[%n]\ %<%.99f\ %h%w%m%r%{CallFunction('CapsLockStatusline')}%y%{SL('fugitive#statusline')}%#ErrorMsg#%{SL('SyntasticStatuslineFlag')}%*%=%-14.(%l,%c%V%)\ %P
-        " set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
-        " set statusline=%!MyStatusLine()
-        function! MyStatusLine()
-            let statusline = ""
-            " Filename (F -> full, f -> relative)
-            let statusline .= "%F %y"
-            " Buffer flags
-            let statusline .= "%( %h%1*%m%*%r%w%) "
-            " File format and type
-            let statusline .= "(%{&ff}%(\/%Y%))"
-            " Left/right separator
-            let statusline .= "%="
-            " Line & column
-            let statusline .= "(%l/%L, %c%V, %P) "
-            " Character under cursor (decimal)
-            " let statusline .= "dec:%03.3b "
-            " Character under cursor (hexadecimal)
-            " let statusline .= "hex:0x%02.2B "
-
-            " Caps lock status display
-            if exists('*CapsLockStatusline')
-                let statusline .= call('CapsLockStatusline', [])
-            endif
-
-            " Git status
-            if exists('*fugitive#statusline')
-                let statusline .= call('fugitive#statusline', [])
-            endif
-
-            " Syntax check status
-            if exists('*SyntasticStatuslineFlag')
-                let statusline .= call('SyntasticStatuslineFlag', [])
-            endif
-
-            return statusline
-        endfunction
-    " }}}
-
     " Swap {{{
-        set directory=.swp//,~/.swp//,/tmp//
+        if isdirectory(vimhome . '/swap') == 0
+            execute "silent !mkdir -p \"" .  vimhome . "/swap\" > /dev/null 2>&1"
+        endif
+
+        set directory=./.vim-swap//
+        set directory+=~/.vim/swap//
+        set directory+=~/tmp//
+        set directory+=.
         " set noswapfile
     " }}}
 
@@ -262,7 +367,7 @@ set nocompatible               " Be iMproved
             set listchars=tab:>\ ,trail:-,extends:>,precedes:<
         endif
 
-        set guifont=Monospace\ 10
+        set guifont=Monospace\ 9
         if has("gui_running")
             if has("gui_mac") || has("gui_macvim")
                 set guifont=Menlo:h12
@@ -275,14 +380,98 @@ set nocompatible               " Be iMproved
         if has('autocmd')
              autocmd GUIEnter * set visualbell t_vb=
         endif
+
+
+        " Colours {{{
+            syntax on
+            set t_Co=256
+            let g:solarized_termcolors=256
+
+            if !exists('g:not_finish_vimplug')
+                set background=dark
+                colorscheme Tomorrow-Night
+            endif
+
+            augroup vimrc-sync-fromstart
+                autocmd!
+                " The PC is fast enough, do syntax highlight syncing from start unless 200 lines
+                autocmd BufEnter * :syntax sync maxlines=200
+            augroup END
+        " }}}
+
+        " Status Bar {{{
+            let g:airline_theme = 'tomorrow'
+            let g:airline#extensions#syntastic#enabled = 1
+            let g:airline#extensions#branch#enabled = 1
+            let g:airline#extensions#tabline#enabled = 1
+            let g:airline#extensions#tagbar#enabled = 1
+            let g:airline#extensions#virtualenv#enabled = 1
+            let g:airline_skip_empty_sections = 1
+            " let g:airline_powerline_fonts = 1
+            let g:hybrid_custom_term_colors = 1
+
+
+            if !exists('g:airline_symbols')
+                let g:airline_symbols = {}
+            endif
+
+            if !exists('g:airline_powerline_fonts')
+                let g:airline#extensions#tabline#left_sep = ' '
+                let g:airline#extensions#tabline#left_alt_sep = '|'
+                let g:airline_left_sep          = '▶'
+                let g:airline_left_alt_sep      = '»'
+                let g:airline_right_sep         = '◀'
+                let g:airline_right_alt_sep     = '«'
+                let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
+                let g:airline#extensions#readonly#symbol   = '⊘'
+                let g:airline#extensions#linecolumn#prefix = '¶'
+                let g:airline#extensions#paste#symbol      = 'ρ'
+                let g:airline_symbols.linenr    = '␊'
+                let g:airline_symbols.branch    = '⎇'
+                let g:airline_symbols.paste     = 'ρ'
+                let g:airline_symbols.paste     = 'Þ'
+                let g:airline_symbols.paste     = '∥'
+                let g:airline_symbols.whitespace = 'Ξ'
+            else
+                let g:airline#extensions#tabline#left_sep = ''
+                let g:airline#extensions#tabline#left_alt_sep = ''
+
+                " powerline symbols
+                let g:airline_left_sep = ''
+                let g:airline_left_alt_sep = ''
+                let g:airline_right_sep = ''
+                let g:airline_right_alt_sep = ''
+                let g:airline_symbols.branch = ''
+                let g:airline_symbols.readonly = ''
+                let g:airline_symbols.linenr = ''
+            endif
+        " }}}
     " }}}
 
     " Undo {{{
-        set undodir=.undo//,~/.undo//,/tmp//
         set history=500
         set undolevels=1000
-        if exists("&undofile")
+        " This is only present in 7.3+
+        if exists('+undofile')
+            if isdirectory(vimhome . '/undo') == 0
+                execute "silent !mkdir -p \"" .  vimhome . "/undo\" > /dev/null 2>&1"
+            endif
+
+            set undodir=./.vim-undo//
+            set undodir+=~/.vim/undo//
             set undofile
         endif
+    " }}}
+
+    " Whitespace & Formatting {{{
+        " Indentation {{{
+            set autoindent
+            set smartindent
+            set smarttab
+            set tabstop=4
+            set softtabstop=0
+            set shiftwidth=4
+            set expandtab
+        " }}}
     " }}}
 " }}}
