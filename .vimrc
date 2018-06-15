@@ -117,6 +117,13 @@
                 Plug 'vim-airline/vim-airline-themes'
             " }}}
         " }}}
+
+    " }}}
+
+
+    " Whitespace & Formatting {{{
+        Plug 'nathanaelkane/vim-indent-guides'
+        Plug 'ntpeters/vim-better-whitespace'
     " }}}
 " }}}
 
@@ -436,13 +443,8 @@
         set number
         set norelativenumber
 
+        set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,nbsp:·
         set list
-        if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8') && version >= 700
-            let &listchars = "tab:\u21e5\u00b7,trail:\u2423,extends:\u21c9,precedes:\u21c7,nbsp:\u26ad"
-            let &fillchars = "vert:\u259a,fold:\u00b7"
-        else
-            set listchars=tab:>\ ,trail:-,extends:>,precedes:<
-        endif
 
         set guifont=Monospace\ 9
         if has("gui_running")
@@ -549,6 +551,18 @@
             set softtabstop=0
             set shiftwidth=4
             set expandtab
+
+            let g:indent_guides_enable_on_vim_startup = 1
+            let g:indent_guides_guide_size = 1
+            let g:indent_guides_start_level = 2
+            " let g:indent_guides_auto_colors = 0
+            " autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg='5b8597' ctermbg='5b8597'
+            " autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg='5b8597' ctermbg='5b8597'
+        " }}}
+
+        " Vim-Better-Whitespace {{{
+            let g:better_whitespace_enabled=1
+            let g:strip_whitespace_on_save=1
         " }}}
     " }}}
 " }}}
