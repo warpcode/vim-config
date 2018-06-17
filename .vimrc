@@ -83,6 +83,13 @@
                 Plug 'sheerun/vim-polyglot'
             " }}}
         " }}}
+
+        " HTML {{{
+            Plug 'gorodinskiy/vim-coloresque'
+            Plug 'hail2u/vim-css3-syntax'
+            Plug 'mattn/emmet-vim'
+            Plug 'tpope/vim-haml'
+        " }}}
     " }}}
 
     " Version Control {{{
@@ -315,6 +322,19 @@
 
         " Go {{{
             let g:syntastic_go_checkers = ['golint', 'govet']
+        " }}}
+
+        " HTML/CSS {{{
+            let g:user_emmet_install_global = 0
+            augroup vimrc-emmet
+                autocmd!
+                autocmd FileType php,html,css EmmetInstall
+            augroup END
+
+            augroup VimCSS3Syntax
+                autocmd!
+                autocmd FileType css setlocal iskeyword+=-
+            augroup END
         " }}}
 
         " Ocaml {{{
