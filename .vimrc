@@ -69,6 +69,22 @@
         " }}}
     " }}}
 
+    " File Types {{{
+        " All {{{
+            " Comments {{{
+                Plug 'tpope/vim-commentary'               " Auto comment out code
+            " }}}
+
+            " Syntax Checking {{{
+                Plug 'scrooloose/syntastic'
+            " }}}
+
+            " Syntax Highlighting {{{
+                Plug 'sheerun/vim-polyglot'
+            " }}}
+        " }}}
+    " }}}
+
     " Version Control {{{
         " Git {{{
             Plug 'tpope/vim-fugitive' " Git helpers
@@ -279,6 +295,41 @@
             "autocmd VimEnter * if argc() == 1 && !isdirectory(argv()[0]) && !exists("s:std_in") | NERDTree | wincmd p | endif
             "" When args are empty, open nerdtree and empty buffer. Focus on Nerdtree
             "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+        " }}}
+    " }}}
+
+    " File Types {{{
+        " All {{{
+            let g:polyglot_disabled = ['elm', 'python']
+
+            let g:syntastic_always_populate_loc_list=1
+            let g:syntastic_error_symbol='✗'
+            let g:syntastic_warning_symbol='⚠'
+            let g:syntastic_style_error_symbol = '✗'
+            let g:syntastic_style_warning_symbol = '⚠'
+            let g:syntastic_auto_loc_list=1
+            let g:syntastic_aggregate_errors = 1
+            let g:syntastic_check_on_open = 1
+            let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+        " }}}
+
+        " Go {{{
+            let g:syntastic_go_checkers = ['golint', 'govet']
+        " }}}
+
+        " Ocaml {{{
+            " let g:syntastic_ocaml_checkers = ['merlin']
+        " }}}
+
+        " PHP {{{
+            " let g:syntastic_phpcs_disable = 1
+            " let g:syntastic_phpmd_disable = 1
+            " let g:syntastic_php_checkers = ['php', 'phpcs']
+            let g:syntastic_php_phpcs_args = '--standard=PSR2 -n'
+        " }}}
+
+        " Python {{{
+            let g:syntastic_python_checkers=['python', 'flake8']
         " }}}
     " }}}
 
