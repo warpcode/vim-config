@@ -120,7 +120,6 @@
 
     " }}}
 
-
     " Whitespace & Formatting {{{
         Plug 'nathanaelkane/vim-indent-guides'
         Plug 'ntpeters/vim-better-whitespace'
