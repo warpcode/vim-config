@@ -268,7 +268,7 @@
 
             "cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
             nnoremap <silent> <leader>f :FZF -m<CR>
-            noremap <silent> <leader>b :Buffers<CR>"
+            noremap <silent> <leader>b :Buffers<CR>
         " }}}
 
         " NERDTree {{{
