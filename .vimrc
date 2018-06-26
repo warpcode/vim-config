@@ -464,7 +464,7 @@
         set number
         set norelativenumber
 
-        set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,nbsp:·
+        set listchars=eol:¬,tab:\|\ ,trail:~,extends:>,precedes:<,nbsp:·
         set list
 
         set guifont=Monospace\ 9
