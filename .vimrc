@@ -221,7 +221,7 @@
     " }}}
 
     " Cursor {{{
-        set cursorline              " Highlight the line the cursor is on
+        set nocursorline              " disable the cursor line
 
         augroup vimrc-remember-cursor-position
             autocmd!
