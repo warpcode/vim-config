@@ -401,6 +401,28 @@
         set sidescroll=1
     " }}}
 
+    " Search {{{
+        set path+=**  " Helps using the find command for project searching
+        set hlsearch
+        set incsearch
+        set ignorecase
+        set smartcase
+        set grepprg=grep\ -IrsnH
+
+       " The Silver Searcher
+        if executable('ag')
+            set grepprg=ag\ --nogroup\ --nocolor
+        endif
+        " ripgrep
+        if executable('rg')
+            set grepprg=rg\ --vimgrep
+        endif
+
+        " Whilst in command mode, after doing a search, an extra Carriage return turns
+        " off highlighting
+        nnoremap <CR> :noh<CR><CR>
+    " }}}
+
     " Shell {{{
         if exists('$SHELL')
             set shell=$SHELL
