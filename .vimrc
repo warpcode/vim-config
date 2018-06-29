@@ -121,8 +121,7 @@
     " }}}
 
     " Whitespace & Formatting {{{
-        Plug 'nathanaelkane/vim-indent-guides'
-        Plug 'ntpeters/vim-better-whitespace'
+        Plug 'Yggdroot/indentLine'
     " }}}
 " }}}
 
@@ -573,17 +572,8 @@
             set shiftwidth=4
             set expandtab
 
-            let g:indent_guides_enable_on_vim_startup = 1
-            let g:indent_guides_guide_size = 1
-            let g:indent_guides_start_level = 2
-            " let g:indent_guides_auto_colors = 0
-            " autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg='5b8597' ctermbg='5b8597'
-            " autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg='5b8597' ctermbg='5b8597'
-        " }}}
-
-        " Vim-Better-Whitespace {{{
-            let g:better_whitespace_enabled=1
-            let g:strip_whitespace_on_save=1
+            let g:indentLine_concealcursor = 'inc'
+            let g:indentLine_conceallevel = 2
         " }}}
     " }}}
 " }}}
