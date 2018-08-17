@@ -8,6 +8,7 @@ let no_buffers_menu=1
 noremap <leader>bp :bp<CR>
 noremap <leader>bn :bn<CR>
 noremap <leader>bc :bd<CR>
+noremap <leader>bq :bp <BAR> bd #<cr>
 
 " Split
 noremap <Leader>h :<C-u>split<CR>
