@@ -1,6 +1,6 @@
 ﻿set nocompatible
 filetype off
-let mapleader=','
+let mapleader='\'
 
 if has('nvim')
     let vimhome=expand('~/.config/nvim')
