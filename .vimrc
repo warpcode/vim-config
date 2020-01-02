@@ -11,6 +11,9 @@ endif
 let vimSrc=fnamemodify(resolve(expand('~/.vimrc')), ':h')
 let vimIncludes=vimSrc."/vimrc"
 
+" Add the repository to the runtime path
+let &runtimepath=escape(vimSrc, '\,').','.&runtimepath
+
 exec "source ".vimIncludes."/vimPlug.vimrc"
 
 filetype plugin indent on
