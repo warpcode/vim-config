@@ -1,4 +1,4 @@
-function s:setEsLint()
+function! s:setEsLint()
     let g:eslint_config_name = '.eslintrc.json'
 
     " We need to search for the first instance of the file working up the tree from our file
