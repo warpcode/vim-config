@@ -10,5 +10,3 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Allow YCM to search tags for completion
 let g:ycm_collect_identifiers_from_tags_files = 1
-
-" Ctags
