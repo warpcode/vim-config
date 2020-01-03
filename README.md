@@ -19,4 +19,13 @@ or
 `vim +PlugInstall +qall`
 
 ## Dependencies
-Coming soon
+These dependencies are for ubuntu based systems as this is what i primarily use
+
+```
+build-essential
+cmake
+python3-dev
+exuberant-ctags
+silversearcher-ag
+php-codesniffer
+```
