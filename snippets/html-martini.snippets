@@ -1,0 +1,24 @@
+snippet m_escape "Martini Template %escape()"
+	%escape(${1})
+snippet m_if "Martini Template %if()"
+	%if(${1})
+	${0:${VISUAL}}
+	%endif()
+snippet m_ifi "Martini Template inline %if()"
+	%if(${1})${0:${VISUAL}}%endif()
+snippet m_ife "Martini Template %if()else()"
+	%if(${1})
+	${2}
+	%else()
+	${0:${VISUAL}}
+	%endif()
+snippet m_ifei "Martini Template inline %if()else()"
+	%if(${1})${2}%else()${0:${VISUAL}}%endif()
+snippet m_include "Martini Template %include()"
+	%include(${1})
+snippet m_raw "Martini Template %raw()"
+	%raw(${1})
+snippet m_section "Martini Template %section()"
+	%section(${1})
+	${0:${VISUAL}}
+	%endsection(${2:$1})
