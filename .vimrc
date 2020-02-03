@@ -22,7 +22,3 @@ filetype plugin indent on
 for f in split(glob(vimIncludes.'/config/*.vimrc'), '\n')
     exe 'source' f
 endfor
-
-for f in split(glob(vimIncludes.'/packagesConfig/*.vimrc'), '\n')
-    exe 'source' f
-endfor
