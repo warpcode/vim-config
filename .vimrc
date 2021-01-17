@@ -4,11 +4,12 @@ let mapleader='\'
 
 if has('nvim')
     let vimhome=expand('~/.config/nvim')
+    let vimSrc=fnamemodify(resolve(expand('~/.config/nvim/init.vim')), ':h')
 else
     let vimhome=expand('~/.vim')
+    let vimSrc=fnamemodify(resolve(expand('~/.vimrc')), ':h')
 endif
 
-let vimSrc=fnamemodify(resolve(expand('~/.vimrc')), ':h')
 let vimIncludes=vimSrc."/vimrc"
 
 " Add the repository to the runtime path
