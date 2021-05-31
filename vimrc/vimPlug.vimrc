@@ -4,7 +4,7 @@ let vimplug_exists=expand(vimhome . '/autoload/plug.vim')
 if !filereadable(vimplug_exists)
     if !executable("curl")
         echoerr "You have to install curl or first install vim-plug yourself!"
-        execute "q!"
+        execute "cq!"
     endif
     echo "Installing Vim-Plug to ".vimplug_exists."..."
     echo ""
