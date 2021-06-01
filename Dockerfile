@@ -35,6 +35,8 @@ RUN echo "Building neovim from branch ${NVIM_BRANCH}"\
         && make install\
         && rm -r /usr/src/neovim
 
+RUN run-app -e -- python3 -m pip install --user --upgrade pynvim
+
 COPY . /home/app/src/warpcode/vim-config/
 RUN cd /home/app/src/warpcode/vim-config/ && run-app -e -- make install-nvim
 
