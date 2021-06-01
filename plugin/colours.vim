@@ -25,8 +25,10 @@ endif
 " highlight qfFileName guifg=#aed75f
 " hi TelescopeBorder guifg=#5eacd
 
-augroup WARPCODE_COLOURS
-    autocmd!
-    " The PC is fast enough, do syntax highlight syncing from start unless 200 lines
-    autocmd BufEnter * :syntax sync maxlines=200
-augroup END
+if !has('nvim')
+    augroup WARPCODE_COLOURS
+        autocmd!
+        " The PC is fast enough, do syntax highlight syncing from start unless 200 lines
+        autocmd BufEnter * :syntax sync maxlines=200
+    augroup END
+endif
