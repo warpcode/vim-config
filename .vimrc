@@ -46,10 +46,4 @@ endfor
 
 call plug#end()
 
-if !has('nvim')
-    for f in split(glob(vim_includes.'/config/*.vimrc'), '\n')
-        exe 'source' f
-    endfor
-endif
-
 filetype plugin indent on
