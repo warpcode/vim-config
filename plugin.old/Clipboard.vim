@@ -1,8 +1,4 @@
 if !has('nvim')
-    if has('unnamedplus')
-        set clipboard=unnamed,unnamedplus
-    endif
-
     " Copy/paste/cut to system clipboard
     noremap YY "+y<CR>
     noremap <leader>p "+gP<CR>
