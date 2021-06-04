@@ -1,6 +1,6 @@
-﻿set nocompatible
+set nocompatible
 filetype off
-let mapleader='\'
+let mapleader=' ' " Spave character
 
 if has('nvim')
     let vim_home=expand('~/.config/nvim')
