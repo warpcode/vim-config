@@ -6,7 +6,4 @@ if !has('nvim')
         Plug 'junegunn/fzf.vim'
     endif
 
-    Plug 'scrooloose/nerdtree'
-    Plug 'jistr/vim-nerdtree-tabs'
-    Plug 'Xuyuanp/nerdtree-git-plugin'
 endif
