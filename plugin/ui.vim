@@ -10,6 +10,8 @@ set ruler
 set showcmd
 set showmatch
 set showmode
+set signcolumn=yes
+set colorcolumn=80,120
 
 " Enable absolute numbers on the selected line but relative on other lines
 set number
