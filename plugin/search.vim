@@ -18,6 +18,11 @@ set wildignore+=.DS_Store                       " Ignore MacOS DS_Store files
 set wildignore+=.git,.hg,.svn                   " Ignore version control directories
 set wildignore+=*.o,*.so                        " Ignore compiled objects (eg for C)
 set wildignore+=*.pyc,__pycache__               " Ignore common python objects
+set wildignore+=*_build/*
+set wildignore+=**/coverage/*
+set wildignore+=**/node_modules/*
+set wildignore+=**/android/*
+set wildignore+=**/ios/*
 
 " Whilst in command mode, after doing a search, an extra Carriage return turns
 " off highlighting
