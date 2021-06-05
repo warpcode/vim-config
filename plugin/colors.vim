@@ -1,17 +1,21 @@
 syntax on
 set t_Co=256
+set background=dark
 
-let g:gruvbox_contrast_dark = 'hard'
-let g:gruvbox_invert_selection = '0'
+if warpcode#has#colorscheme('gruvbox')
+    " If gruvbox is installed, use that
+    let g:gruvbox_contrast_dark = 'hard'
+    let g:gruvbox_invert_selection = '0'
 
-if !exists('g:not_finish_vimplug')
     if exists('+termguicolors')
         let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
         let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     endif
 
-    set background=dark
     colorscheme gruvbox
+else
+    " Default to whatever theme is in our default file
+    colorscheme warpcode-default
 endif
 
 " highlight ColorColumn ctermbg=0 guibg=grey
