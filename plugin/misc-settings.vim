@@ -4,6 +4,9 @@ set noerrorbells
 " Set behaviour of backpace
 set backspace=indent,eol,start
 
+" Set default encoding
+set encoding=utf-8
+
 
 " Backup
 " if isdirectory(vim_home . '/backup') == 0
