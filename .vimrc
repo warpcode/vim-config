@@ -35,8 +35,6 @@ if isdirectory(vim_home . '/plugged') == 0
     execute "silent !mkdir -p \"" .  vim_home . "/plugged\" > /dev/null 2>&1"
 endif
 
-" exec "source ".vim_includes."/functions.vimrc"
-
 " Setup plugins
 call plug#begin(expand(vim_home . '/plugged'))
 
