@@ -22,3 +22,7 @@ augroup WARPCODE_BUFFER_FOCUS_NUMBER_TOGGLE
   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
+
+" Whitespace
+set listchars=eol:¬,tab:\|\ ,trail:~,extends:>,precedes:<,nbsp:·
+set list
