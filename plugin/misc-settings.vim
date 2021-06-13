@@ -39,12 +39,14 @@ set undolevels=1000
 
 " This is only present in 7.3+
 if exists('+undofile')
-    " if isdirectory(vim_home . '/undo') == 0
-    "     execute "silent !mkdir -p \"" .  vim_home . "/undo\" > /dev/null 2>&1"
-    " endif
+    let target_path = expand(vim_home . '/undo')
 
-    " set undodir=./.vim-undo//
-    " set undodir+=~/.vim/undo//
-    " set undofile
-    set noundofile
+    " create the directory and any parent directories
+    " if the location does not exist.
+    if !isdirectory(target_path)
+        call mkdir(target_path, "p", 0700)
+    endif
+
+    let &undodir=target_path
+    set undofile
 endif
