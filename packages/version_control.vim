@@ -4,4 +4,7 @@ if executable('git')
 
     " Shows git diff in the gutter
     Plug 'airblade/vim-gitgutter' 
+
+    " Git commit browser
+    Plug 'junegunn/gv.vim'
 endif
