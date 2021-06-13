@@ -7,6 +7,10 @@ function! s:require(condition, message)
 endfunction
 
 function! health#warpcode#check() abort
-  call health#report_start('Warpcode')
+  call health#report_start('warpcode')
   call s:require(executable("curl"), 'Has curl installed')
+
+  call health#report_start('warpcode#filteypes#php')
+  call s:require(executable("php"), 'Has php installed')
+  call s:require(executable("php"), 'Has PHP code sniffer (phpcs) installed')
 endfunction
