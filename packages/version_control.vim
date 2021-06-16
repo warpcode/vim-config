@@ -7,4 +7,7 @@ if executable('git')
 
     " Git commit browser
     Plug 'junegunn/gv.vim'
+
+    " View git blame inline
+    Plug 'tveskag/nvim-blame-line'
 endif
