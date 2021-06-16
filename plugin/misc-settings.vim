@@ -39,7 +39,7 @@ set undolevels=1000
 
 " This is only present in 7.3+
 if exists('+undofile')
-    let target_path = expand(vim_home . '/undo')
+    let target_path = expand(g:vim_home . '/undo')
 
     " create the directory and any parent directories
     " if the location does not exist.
