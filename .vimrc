@@ -3,20 +3,17 @@ filetype off
 let mapleader=' ' " Spave character
 
 if has('nvim')
-    let vim_home=expand('~/.config/nvim')
-    let vim_source=fnamemodify(resolve(expand('~/.config/nvim/init.vim')), ':h')
+    let g:vim_home=expand('~/.config/nvim')
+    let g:vim_source=fnamemodify(resolve(expand('~/.config/nvim/init.vim')), ':h')
 else
-    let vim_home=expand('~/.vim')
-    let vim_source=fnamemodify(resolve(expand('~/.vimrc')), ':h')
+    let g:vim_home=expand('~/.vim')
+    let g:vim_source=fnamemodify(resolve(expand('~/.vimrc')), ':h')
 endif
 
-let vim_includes=vim_source."/vimrc"
-
-" Add the repository to the runtime path
-let &runtimepath=escape(vim_source, '\,').','.&runtimepath
+echo g:vim_home
 
 " Setup Plug
-let vimplug_exists=expand(vim_home . '/autoload/plug.vim')
+let vimplug_exists=expand(g:vim_home . '/autoload/plug.vim')
 if !filereadable(vimplug_exists)
     if !executable("curl")
         echoerr "You have to install curl or first install vim-plug yourself!"
@@ -31,14 +28,14 @@ if !filereadable(vimplug_exists)
     autocmd VimEnter * PlugInstall
 endif
 
-if isdirectory(vim_home . '/plugged') == 0
-    execute "silent !mkdir -p \"" .  vim_home . "/plugged\" > /dev/null 2>&1"
+if isdirectory(g:vim_home . '/plugged') == 0
+    execute "silent !mkdir -p \"" .  g:vim_home . "/plugged\" > /dev/null 2>&1"
 endif
 
 " Setup plugins
-call plug#begin(expand(vim_home . '/plugged'))
+call plug#begin(expand(g:vim_home . '/plugged'))
 
-for f in split(glob(vim_source.'/packages/*.vim'), '\n')
+for f in split(glob(g:vim_source.'/packages/*.vim'), '\n')
     exe 'source' f
 endfor
 

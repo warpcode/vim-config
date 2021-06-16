@@ -7,10 +7,9 @@ IMAGE_RUN_NAME:=warpcode-nvim-test
 
 install: install-nvim install-vim
 
-install-nvim:
+install-nvim: clean-nvim
 ifdef NVIM_BIN
-	test -d ~/.config/nvim/ || mkdir -p ~/.config/nvim/
-	test -h ~/.config/nvim/init.vim || ln -s "$(ROOT_DIR)/.vimrc" ~/.config/nvim/init.vim
+	test -h ~/.config/nvim || ln -s "$(ROOT_DIR)" ~/.config/nvim
 	$(NVIM_BIN) --headless +PlugInstall +qall
 else
 	@echo "Neovim is not installed. Skipping"
@@ -35,7 +34,7 @@ test-run:
 clean: clean-nvim clean-vim
 
 clean-nvim:
-	rm -f ~/.config/nvim/init.vim
+	rm -rf ~/.config/nvim
 
 clean-vim:
 	rm -f ~/.vimrc
