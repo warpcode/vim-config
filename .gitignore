@@ -2,4 +2,5 @@
 *.un~
 session/
 plugged/
+undo/
 tags
