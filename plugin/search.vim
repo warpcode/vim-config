@@ -27,3 +27,6 @@ set wildignore+=**/ios/*
 " Whilst in command mode, after doing a search, an extra Carriage return turns
 " off highlighting
 nnoremap <CR> :noh<CR><CR>
+
+set grepprg=grep\ -IrsnH
+
