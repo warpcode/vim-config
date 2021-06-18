@@ -7,7 +7,6 @@ set backspace=indent,eol,start
 " Set default encoding
 set encoding=utf-8
 
-
 " Backup
 " if isdirectory(vim_home . '/backup') == 0
 "     execute "silent !mkdir -p \"" .  vim_home . "/backup\" > /dev/null 2>&1"
@@ -50,3 +49,6 @@ if exists('+undofile')
     let &undodir=target_path
     set undofile
 endif
+
+" Reload config
+nnoremap <leader><CR> :so $MYVIMRC<CR>
