@@ -35,3 +35,6 @@ nnoremap <leader>K :silent! execute 'grep! "\b"'.expand("<cword>").'"\b"'<CR>:cw
 
 " Search the current word in the buffer
 nnoremap <leader>bs /<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>
+
+" Search vim help of the current word
+nnoremap <leader>ghw :h <C-R>=expand("<cword>")<CR><CR>
