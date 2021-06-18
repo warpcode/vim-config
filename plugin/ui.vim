@@ -17,12 +17,20 @@ set colorcolumn=80,120
 set number
 set relativenumber
 
-augroup WARPCODE_BUFFER_FOCUS_NUMBER_TOGGLE
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-augroup END
-
 " Whitespace
 set listchars=eol:¬,tab:\|\ ,trail:~,extends:>,precedes:<,nbsp:·
 set list
+
+" Resize verticle pane split incrementally
+nnoremap <Leader>+ :vertical resize +5<CR>
+nnoremap <Leader>- :vertical resize -5<CR>
+
+" Maximise verticle split
+nnoremap <Leader>rp :resize 100<CR>
+
+augroup WARPCODE_BUFFER_FOCUS_NUMBER_TOGGLE
+  autocmd!
+  " Auto set line numbers when changing buffers
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
