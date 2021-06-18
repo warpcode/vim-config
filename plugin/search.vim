@@ -32,3 +32,6 @@ set grepprg=grep\ -IrsnH
 
 " Search the project for the keyword under the cursor and open a quick fix list
 nnoremap <leader>K :silent! execute 'grep! "\b"'.expand("<cword>").'"\b"'<CR>:cw<CR>
+
+" Search the current word in the buffer
+nnoremap <leader>bs /<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>
