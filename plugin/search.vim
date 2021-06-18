@@ -33,8 +33,13 @@ set grepprg=grep\ -IrsnH
 " Search the project for the keyword under the cursor and open a quick fix list
 nnoremap <leader>K :silent! execute 'grep! "\b"'.expand("<cword>").'"\b"'<CR>:cw<CR>
 
-" Search the current word in the buffer
-nnoremap <leader>bs /<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>
+" " Search the current word in the buffer
+" nnoremap <leader>bs /<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>
+" vnoremap <leader>bs hy/<C-r>h<CR><ESC>
+
+" " find replace in current buffer
+" nnoremap <leader>br :%s/\<<C-r><C-w>\>/<C-r><C-w>/gcI<Left><Left><Left>
+" vnoremap <leader>br "hy:%s/<C-r>h/<C-r>h/gcI<left><left><left>
 
 " Search vim help of the current word
 nnoremap <leader>ghw :h <C-R>=expand("<cword>")<CR><CR>
