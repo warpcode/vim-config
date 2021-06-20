@@ -10,8 +10,6 @@ else
     let g:vim_source=fnamemodify(resolve(expand('~/.vimrc')), ':h')
 endif
 
-echo g:vim_home
-
 " Setup Plug
 let vimplug_exists=expand(g:vim_home . '/autoload/plug.vim')
 if !filereadable(vimplug_exists)
