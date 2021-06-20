@@ -40,7 +40,7 @@ vnoremap <leader>bs :<C-U>execute '/' .  warpcode#ui#getSelectedText()<CR><ESC>
 
 " find replace in current buffer
 nnoremap <leader>br :%s/\<<C-r><C-w>\>/<C-r><C-w>/gcI<Left><Left><Left><Left>
-vnoremap <leader>br "hy:%s/<C-r>=warpcode#string#escapeVimRegex(warpcode#ui#getSelectedText())<CR>/<C-r>=escape(warpcode#ui#getSelectedText(), '/')<CR>/gcI<left><left><left>
+vnoremap <leader>br :<C-U>%s/<C-r>=warpcode#string#escapeVimRegex(warpcode#ui#getSelectedText())<CR>/<C-r>=escape(warpcode#ui#getSelectedText(), '/')<CR>/gcI<left><left><left><left>
 
 " Search vim help of the current word
 nnoremap <leader>sh :execute 'h ' . expand("<cword>")<CR><CR>
