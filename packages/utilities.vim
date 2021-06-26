@@ -1,3 +1,6 @@
+" Autoclose delimiters
+Plug 'Raimondi/delimitMate'
+
 " Change encapsulating quotes
 Plug 'tpope/vim-surround'
 
