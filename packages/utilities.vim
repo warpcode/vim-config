@@ -1,3 +1,6 @@
+" Auto comment out code
+Plug 'tpope/vim-commentary'
+
 " Autoclose delimiters
 Plug 'Raimondi/delimitMate'
 
