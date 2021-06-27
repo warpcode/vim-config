@@ -9,6 +9,7 @@ install: install-nvim install-vim
 
 install-nvim: clean-nvim
 ifdef NVIM_BIN
+	test -h ~/.config || mkdir -p ~/.config
 	test -h ~/.config/nvim || ln -s "$(ROOT_DIR)" ~/.config/nvim
 	$(NVIM_BIN) --headless +PlugInstall +qall
 else
