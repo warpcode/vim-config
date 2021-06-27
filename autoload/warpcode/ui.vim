@@ -7,3 +7,9 @@ function! warpcode#ui#getSelectedText()
   exe "norm \<Esc>"
   return l:ret
 endfunction
+
+
+function! warpcode#ui#prevChrIsSpace() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
