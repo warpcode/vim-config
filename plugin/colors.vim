@@ -20,7 +20,7 @@ else
 endif
 
 " highlight ColorColumn ctermbg=0 guibg=grey
-" hi SignColumn guibg=none
+hi SignColumn guibg=none
 " hi CursorLineNR guibg=None
 " highlight Normal guibg=none
 " " highlight LineNr guifg=#ff8659
