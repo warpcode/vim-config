@@ -1,17 +1,17 @@
 let g:coc_data_home = g:vim_home . '/coc/'
 
-let g:coc_global_extensions = [
-    \ 'coc-css',
-    \ 'coc-json',
-    \ 'coc-git',
-    \ 'coc-html',
-    \ 'coc-phpls',
-    \ 'coc-prettier',
-    \ 'coc-snippets',
-    \ 'coc-texlab',
-    \ 'coc-sh',
-    \ 'coc-vimlsp'
-    \ ]
+" let g:coc_global_extensions = [
+"     \ 'coc-css',
+"     \ 'coc-json',
+"     \ 'coc-git',
+"     \ 'coc-html',
+"     \ 'coc-phpls',
+"     \ 'coc-prettier',
+"     \ 'coc-snippets',
+"     \ 'coc-texlab',
+"     \ 'coc-sh',
+"     \ 'coc-vimlsp'
+"     \ ]
 
 
 " Use tab for trigger completion with characters ahead and navigate.
@@ -35,4 +35,3 @@ endif
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
-
