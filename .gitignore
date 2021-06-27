@@ -1,6 +1,7 @@
 *.swp
 *.un~
 autoload/plug.vim
+coc/
 session/
 plugged/
 undo/
