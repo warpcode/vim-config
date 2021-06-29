@@ -2,7 +2,6 @@
 *.un~
 autoload/plug.vim
 coc/
-!plugin/packages/coc/
 session/
 plugged/
 undo/
