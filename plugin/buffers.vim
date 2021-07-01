@@ -5,12 +5,12 @@ set splitbelow
 let no_buffers_menu=1
 
 " Buffer nav
-noremap <leader>bl :buffers<CR>:b<space>
-noremap <leader>bp :bp<CR>
-noremap <leader>bn :bn<CR>
-noremap <leader>bc :bd<CR>
-noremap <leader>bq :bp <BAR> bd #<cr>
+nnoremap <leader>bl :buffers<CR>:b<space>
+nnoremap <leader>bp :bp<CR>
+nnoremap <leader>bn :bn<CR>
+nnoremap <leader>bc :bd<CR>
+nnoremap <leader>bq :bp <BAR> bd #<cr>
 
 " Split
-noremap <Leader>sh :<C-u>split<CR>
-noremap <Leader>sv :<C-u>vsplit<CR>
+nnoremap <Leader>sh :<C-u>split<CR>
+nnoremap <Leader>sv :<C-u>vsplit<CR>
