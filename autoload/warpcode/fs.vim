@@ -7,12 +7,12 @@ function! warpcode#fs#detectFileInParents(filename) abort
         let current_dir = fnamemodify(current_dir, ':h')
 
         if current_dir_prev == current_dir
-            break
+            " we've hit the same path twice so return empty
+            return ''
         endif
 
         let fullpath = fnamemodify(current_dir, ':p') . a:filename
     endwhile
-
 
     if filereadable(fullpath)
         return fullpath
