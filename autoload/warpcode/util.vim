@@ -1,4 +1,4 @@
-function! warpcode#ui#getSelectedText()
+function! warpcode#util#getSelectedText()
   let l:old_reg = getreg('"')
   let l:old_regtype = getregtype('"')
   norm gvy
@@ -9,7 +9,7 @@ function! warpcode#ui#getSelectedText()
 endfunction
 
 
-function! warpcode#ui#prevChrIsSpace() abort
+function! warpcode#util#prevChrIsSpace() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
