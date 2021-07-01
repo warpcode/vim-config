@@ -19,7 +19,9 @@ let g:coc_data_home = g:vim_home . '/coc/'
 inoremap <silent><expr> <TAB>
             \ pumvisible() ? "\<C-n>" :
             \ warpcode#util#prevChrIsSpace() ? "\<TAB>" :
-            \ coc#refresh()
+            \ warpcode#plugin#coc#loaded() ? coc#refresh() :
+            \ "\<TAB>"
+
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " Use <c-space> to trigger completion.
