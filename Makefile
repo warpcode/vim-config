@@ -16,9 +16,10 @@ else
 	@echo "Neovim is not installed. Skipping"
 endif
 
-install-vim:
+install-vim: clean-vim
 ifdef VIM_BIN
-	test -h ~/.vimrc || ln -s "$(ROOT_DIR)/.vimrc" ~/.vimrc
+	test -h ~/.vim || ln -s "$(ROOT_DIR)" ~/.vim
+	test -h ~/.vimrc || ln -s "$(ROOT_DIR)/vimrc" ~/.vimrc
 	$(VIM_BIN) +PlugInstall +qall
 else
 	@echo "Vim is not installed. Skipping"
@@ -38,4 +39,5 @@ clean-nvim:
 	rm -rf ~/.config/nvim
 
 clean-vim:
-	rm -f ~/.vimrc
+	rm -rf ~/.vimrc
+	rm -rf ~/.vim
