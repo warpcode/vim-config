@@ -28,7 +28,8 @@ set wildignore+=**/ios/*
 " off highlighting
 nnoremap <CR> :noh<CR><CR>
 
-nnoremap <silent> <leader>f :FZF<CR>
+nnoremap <silent><expr> <leader>f warpcode#search#findFilesShow()
+" command! -nargs=1 FindFile call warpcode#search#findFiles(<q-args>)
 
 set grepprg=grep\ -IrsnH
 
