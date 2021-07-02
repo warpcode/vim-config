@@ -1,5 +1,6 @@
 *.swp
 *.un~
+.netrwhist
 autoload/plug.vim
 coc/
 session/
