@@ -17,12 +17,7 @@ let g:coc_data_home = g:vim_home . '/coc/'
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ warpcode#util#prevChrIsSpace() ? "\<TAB>" :
-            \ warpcode#plugin#coc#loaded() ? coc#refresh() :
-            \ "\<TAB>"
-
+inoremap <silent><expr> <TAB> warpcode#completion#complete()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " Use <c-space> to trigger completion.
