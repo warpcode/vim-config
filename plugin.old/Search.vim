@@ -1,5 +1,5 @@
 if !has('nvim')
-    set grepprg=grep\ -IrsnH
+    set grepprg=grep\ -IrsnH\ --
     let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
 
     " The Silver Searcher
@@ -16,6 +16,4 @@ if !has('nvim')
     endif
 
     "cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-    nnoremap <silent> <leader>f :FZF -m<CR>
-    noremap <silent> <leader>b :Buffers<CR>
 endif

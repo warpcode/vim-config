@@ -5,7 +5,10 @@ set splitbelow
 let no_buffers_menu=1
 
 " Buffer nav
-nnoremap <leader>bl :buffers<CR>:b<space>
+nnoremap <expr> <leader>bb
+            \ exists(':Buffers') ? ":Buffers\<CR>" :
+            \ ":buffers\<CR>:b<space>"
+
 nnoremap <leader>bp :bp<CR>
 nnoremap <leader>bn :bn<CR>
 nnoremap <leader>bc :bd<CR>

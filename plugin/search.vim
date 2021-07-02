@@ -28,6 +28,8 @@ set wildignore+=**/ios/*
 " off highlighting
 nnoremap <CR> :noh<CR><CR>
 
+nnoremap <silent> <leader>f :FZF<CR>
+
 set grepprg=grep\ -IrsnH
 
 " Search the project for the highlighted keyword
