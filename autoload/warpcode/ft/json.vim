@@ -1,7 +1,7 @@
 function warpcode#ft#json#format() abort
-    " if warpcode#plugin#coc#runFormat()
-    "     return 1
-    " endif
+    if warpcode#plugin#coc#runFormat()
+        return 1
+    endif
 
     if executable('python')
         silent! %!python -m json.tool
