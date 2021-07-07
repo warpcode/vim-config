@@ -7,9 +7,10 @@ function warpcode#completion#complete() abort
         return "\<TAB>"
     endif
 
-    if warpcode#plugin#coc#loaded()
+    try
         return coc#refresh()
-    endif
+    catch /.*/
+    endtry
 
     return "\<TAB>"
 endfunction
