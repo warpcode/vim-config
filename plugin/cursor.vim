@@ -1,5 +1,6 @@
 " disable the cursor line
 set nocursorline
+set updatetime=1000
 
 augroup WARPCODE_REMEMBER_CURSOR_POS
     autocmd!
