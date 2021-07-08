@@ -1,6 +1,6 @@
 function! warpcode#cursor#highlight() abort
     try
-        call CocActionAsync('highlight')
+        return CocActionAsync('highlight')
     catch /.*/
     endtry
 endfunction
