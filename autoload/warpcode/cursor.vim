@@ -3,4 +3,6 @@ function! warpcode#cursor#highlight() abort
         return CocActionAsync('highlight')
     catch /.*/
     endtry
+
+    return ""
 endfunction
