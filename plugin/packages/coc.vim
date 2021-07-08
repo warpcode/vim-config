@@ -42,7 +42,6 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR
 " nmap <silent> gi <Plug>(coc-implementation)
 " nmap <silent> gr <Plug>(coc-references)
 
-autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " " Symbol renaming.
 " nmap <leader>rn <Plug>(coc-rename)
