@@ -1,8 +1,3 @@
-if has('unnamedplus')
-    " Ensure we can access the system clipboard at the +/* register
-    set clipboard^=unnamed,unnamedplus
-endif
-
 " When pasting, send the highlighted text to a black hole register
 " This stops the replaced text from going into the normal clipboard registers
 vnoremap <leader>p "_dP
