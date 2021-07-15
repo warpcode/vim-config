@@ -1,4 +1,5 @@
 {
+    "html.format.indentInnerHtml": true,
     "sh.highlightParsingErrors": true,
     "vimlsp.suggest.fromRuntimepath": true
 }
