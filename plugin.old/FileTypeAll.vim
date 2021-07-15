@@ -1,7 +1,4 @@
 if !has('nvim')
-    " Disable some polyglot highlighting
-    let g:polyglot_disabled = ['elm', 'python']
-
     " Synastic settings for syntax checking
     let g:syntastic_always_populate_loc_list=1
     let g:syntastic_error_symbol='✗'
