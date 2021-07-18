@@ -12,4 +12,5 @@ else
 endif
 
 " Take over <CR> for completion checking
-inoremap <silent><expr> <cr> pumvisible() ? warpcode#completion#select() : "\<C-g>u\<CR>\<C-r>=warpcode#completion#iOnEnter()\<CR>"
+" inoremap <silent><expr> <cr> pumvisible() ? warpcode#completion#select() : "\<C-g>u\<CR>\<C-r>=warpcode#completion#iOnEnter()\<CR>"
+inoremap <silent><expr> <cr> pumvisible() ? warpcode#completion#select() : "\<C-g>u\<CR>"
