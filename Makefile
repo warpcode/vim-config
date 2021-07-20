@@ -1,27 +1,17 @@
-VIM_BIN:=$(shell command -v vim 2> /dev/null)
-NVIM_BIN:=$(shell command -v nvim 2> /dev/null)
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 IMAGE_NAME:=warpcode/nvim:latest
 IMAGE_RUN_NAME:=warpcode-nvim-test
 
 install-nvim: clean-nvim
-ifdef NVIM_BIN
 	test -h ~/.config || mkdir -p ~/.config
 	test -h ~/.config/nvim || ln -s "$(ROOT_DIR)" ~/.config/nvim
 	$(NVIM_BIN) --headless +PlugInstall +qall
-else
-	@echo "Neovim is not installed. Skipping"
-endif
 
 install-vim: clean-vim
-ifdef VIM_BIN
 	test -h ~/.vim || ln -s "$(ROOT_DIR)" ~/.vim
 	test -h ~/.vimrc || ln -s "$(ROOT_DIR)/vimrc" ~/.vimrc
 	$(VIM_BIN) +PlugInstall +qall
-else
-	@echo "Vim is not installed. Skipping"
-endif
 
 test: test-build test-run
 
