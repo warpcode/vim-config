@@ -4,7 +4,8 @@ Love it or hate it but this is my personal vim config. This is tailor made to me
 ## Install
 ### Install the latest NVIM
 
-This config requires at least neovim 0.50
+This config requires at least neovim 0.50.
+
 As of writing this, it's only availbale from the github releases page or the unstable PPA
 ```
 sudo add-apt-repository ppa:neovim-ppa/unstable
