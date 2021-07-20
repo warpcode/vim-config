@@ -5,8 +5,6 @@ ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 IMAGE_NAME:=warpcode/nvim:latest
 IMAGE_RUN_NAME:=warpcode-nvim-test
 
-install: install-nvim install-vim
-
 install-nvim: clean-nvim
 ifdef NVIM_BIN
 	test -h ~/.config || mkdir -p ~/.config
@@ -32,8 +30,6 @@ test-build:
 
 test-run:
 	docker run --name $(IMAGE_RUN_NAME) --rm -it -e PUID=$(shell id -u) -e PGID=$(shell id -g) -v $(ROOT_DIR):/data $(IMAGE_NAME) /bin/bash
-
-clean: clean-nvim clean-vim
 
 clean-nvim:
 	rm -rf ~/.config/nvim
