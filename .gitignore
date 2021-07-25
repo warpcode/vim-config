@@ -3,7 +3,8 @@
 .netrwhist
 autoload/plug.vim
 coc/
-session/
+node_modules/
 plugged/
+sessions/
 undo/
 tags
