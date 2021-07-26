@@ -2,7 +2,11 @@
 Plug 'bronson/vim-trailing-whitespace'
 
 " show indent guides
-Plug 'Yggdroot/indentLine'
+if has('nvim')
+    Plug 'lukas-reineke/indent-blankline.nvim'
+else
+    Plug 'Yggdroot/indentLine'
+endif
 
 " Syntax Highlighting
 Plug 'sheerun/vim-polyglot'
