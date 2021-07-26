@@ -9,7 +9,7 @@ else
 endif
 
 " Syntax Highlighting
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 
 if has('nvim')
     " Neovim Tree shitter
