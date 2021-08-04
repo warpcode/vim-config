@@ -14,8 +14,3 @@ if exists('+undofile')
     let &undodir=target_path
     set undofile
 endif
-
-" inoremap <buffer> . .<c-g>u
-" inoremap <buffer> ! !<c-g>u
-" inoremap <buffer> ? ?<c-g>u
-" inoremap <buffer> , ,<c-g>u
