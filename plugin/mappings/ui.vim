@@ -17,6 +17,10 @@ nnoremap gV `[v`]
 " Move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
+inoremap <c-j> <esc>:m .+1<CR>==i
+inoremap <c-k> <esc>:m .-2<CR>==i
+nnoremap <leader>j :m .+1<CR>==
+nnoremap <leader>k :m .-2<CR>==
 
 
 " Override K to show documentation in preview window.
