@@ -14,3 +14,6 @@ vnoremap <leader>y "+y
 " Yank entire buffer to system clipboard
 " And then return to the last cursor position
 nnoremap <leader>Y gg"+yG<C-o>
+
+" Make Y behave like C and D
+nnoremap Y y$
