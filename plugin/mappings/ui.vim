@@ -17,8 +17,8 @@ nnoremap gV `[v`]
 " Move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
-inoremap <c-j> <esc>:m .+1<CR>==i
-inoremap <c-k> <esc>:m .-2<CR>==i
+inoremap <c-j> <esc>:m .+1<CR>==gi
+inoremap <c-k> <esc>:m .-2<CR>==gi
 nnoremap <leader>j :m .+1<CR>==
 nnoremap <leader>k :m .-2<CR>==
 
