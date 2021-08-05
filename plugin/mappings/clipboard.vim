@@ -16,4 +16,4 @@ vnoremap <leader>y "+y
 nnoremap <leader>Y gg"+yG<C-o>
 
 " Make Y behave like C and D
-nnoremap Y y$
+nnoremap Y yg_

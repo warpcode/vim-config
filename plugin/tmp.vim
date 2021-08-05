@@ -2,10 +2,6 @@
 
 " https://github.com/sudormrfbin/cheatsheet.nvim
 
-" " g_ is the last non-blank character of the line
-" " Because often times when I paste, esp. in middle or beginning of a line, I never want the carriage-return.
-" nnoremap Y yg_
-
 " " tpope/surround abent way of doing surrounds
 " vnoremap <leader>' <esc>`>a'<esc>`<i'<esc>
 " vnoremap <leader>" <esc>`>a"<esc>`<i"<esc>
