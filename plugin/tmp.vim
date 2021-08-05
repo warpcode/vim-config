@@ -31,22 +31,6 @@
 " map <leader>ev :vsp %%
 " map <leader>et :tabe %%
 
-" " Whitespaces and indentation
-" function! Preserve(command)
-" 	" Preparation: save last search, and cursor position.
-" 	let _s=@/
-" 	let l = line(".")
-" 	let c = col(".")
-" 	" Do the business:
-" 	execute a:command
-" 	" Clean up: restore previous search history, and cursor position
-" 	let @/=_s
-" 	call cursor(l, c)
-" endfunction
-" nnoremap <silent>_$ :call Preserve("%s/\\s\\+$//e")<CR>
-" nnoremap <silent>_= :call Preserve("normal gg=G")<CR>
-
-
 " " Great remaps! For the n/N centering, the only issue is that the first one your search goes to won't be centered. I found a solution for that on StackOverflow:
 " function! CenterSearch()
 "   let cmdtype = getcmdtype()
