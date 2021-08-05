@@ -1,5 +1,5 @@
-function warpcode#ft#all#formatGeneric() abort
-    execute 'normal gg=G'
+function! warpcode#ft#all#formatGeneric() abort
+    call warpcode#util#runCommandPreserveCursor('normal gg=G')
     return 1
 endfunction
 
