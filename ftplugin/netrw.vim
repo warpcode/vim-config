@@ -3,4 +3,4 @@ if exists("b:did_ftplugin")
 endif
 let b:did_ftplugin = 1
 
-autocmd filetype netrw nmap <buffer> <c-a> <cr>:wincmd W<cr>
+nmap <buffer> <c-a> <cr>:wincmd W<cr>
