@@ -10,6 +10,7 @@ noremap <A-j> <C-w>j
 noremap <A-k> <C-w>k
 noremap <A-l> <C-w>l
 noremap <A-h> <C-w>h
+noremap <A-w> <C-w>w
 
 " highlight last inserted text
 nnoremap gV `[v`]
