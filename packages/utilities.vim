@@ -12,3 +12,6 @@ Plug 'vim-utils/vim-man'
 
 " Visual way to explore vim's undo tree
 Plug 'mbbill/undotree'
+
+" Syntax checkers
+Plug 'scrooloose/syntastic' " Syntax checking
