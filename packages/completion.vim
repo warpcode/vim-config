@@ -14,6 +14,7 @@ Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'iamcco/coc-vimlsp', {'do': 'yarn install --frozen-lockfile'}
 
 " Utilities
+Plug 'iamcco/coc-diagnostic', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
