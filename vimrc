@@ -10,6 +10,8 @@ else
     let g:vim_source=fnamemodify(resolve(expand('~/.vimrc')), ':h')
 endif
 
+let g:vim_node_bin=g:vim_home . '/node_modules/.bin'
+
 " Setup Plug
 let vimplug_exists=expand(g:vim_home . '/autoload/plug.vim')
 if !filereadable(vimplug_exists)
