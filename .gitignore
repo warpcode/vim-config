@@ -1,6 +1,11 @@
 *.swp
 *.un~
-autoload/
-session/
+.netrwhist
+autoload/plug.vim
+coc/
+node_modules/
 plugged/
+sessions/
+undo/
+undo-nvim/
 tags
