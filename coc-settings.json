@@ -43,7 +43,9 @@
         }
     },
     "diagnostic-languageserver.formatFiletypes": {
-        "php": "phpcbf"
+        "php": [
+            "phpcbf"
+        ]
     },
     "diagnostic-languageserver.formatters": {
         "phpcbf": {
