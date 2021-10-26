@@ -1,6 +1,6 @@
 {
     "dependencies": {
-        "dockerfile-language-server-nodejs": "^0.4.1",
-        "yarn": "^1.22.11"
+        "dockerfile-language-server-nodejs": "^0.7.2",
+        "yarn": "^1.22.17"
     }
 }
