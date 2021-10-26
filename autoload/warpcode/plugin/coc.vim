@@ -10,7 +10,8 @@ endfunction
 
 function! warpcode#plugin#coc#addLsp(name, config) abort
     try
-        let lsps = get(g:coc_user_config, 'languageserver', {})
+        " let lsps = get(g:coc_user_config, 'languageserver', {})
+        let lsps = {}
         let lsps[a:name] = a:config
         call coc#config('languageserver', lsps)
     catch /.*/
