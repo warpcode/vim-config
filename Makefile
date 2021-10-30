@@ -4,12 +4,12 @@ IMAGE_NAME:=warpcode/nvim:latest
 IMAGE_RUN_NAME:=warpcode-nvim-test
 
 install-nvim: clean-nvim
-	test -h ~/.config || mkdir -p ~/.config
-	test -h ~/.config/nvim || ln -s "$(ROOT_DIR)" ~/.config/nvim
+	test -h ~/.config/nvim || mkdir -p ~/.config/nvim
+	test -h ~/.config/nvim || ln -s "$(ROOT_DIR)/vimrc" ~/.config/nvim/init.vim
 	nvim --headless +PlugInstall +qall
 
 install-vim: clean-vim
-	test -h ~/.vim || ln -s "$(ROOT_DIR)" ~/.vim
+	test -h ~/.vim || mkdir -p ~/.vim
 	test -h ~/.vimrc || ln -s "$(ROOT_DIR)/vimrc" ~/.vimrc
 	vim +PlugInstall +qall
 

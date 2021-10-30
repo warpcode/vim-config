@@ -10,7 +10,7 @@ else
     let g:vim_source=fnamemodify(resolve(expand('~/.vimrc')), ':h')
 endif
 
-let g:vim_node_bin=g:vim_home . '/node_modules/.bin'
+let g:vim_node_bin = g:vim_source . '/node_modules/.bin'
 
 " Setup Plug
 let vimplug_exists=expand(g:vim_home . '/autoload/plug.vim')
@@ -34,6 +34,7 @@ endif
 
 " Setup plugins
 call plug#begin(expand(g:vim_home . '/plugged'))
+Plug g:vim_source
 
 for f in split(glob(g:vim_source.'/packages/*.vim'), '\n')
     exe 'source' f
