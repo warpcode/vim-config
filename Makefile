@@ -23,6 +23,7 @@ test-run:
 
 clean-nvim:
 	rm -rf ~/.config/nvim
+	rm -rf ~/.local/share/nvim
 
 clean-vim:
 	rm -rf ~/.vimrc
