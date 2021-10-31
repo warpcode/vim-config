@@ -6,7 +6,7 @@ IMAGE_RUN_NAME:=warpcode-nvim-test
 install-nvim: clean-nvim
 	test -h ~/.config/nvim || mkdir -p ~/.config/nvim
 	test -h ~/.config/nvim || ln -s "$(ROOT_DIR)/vimrc" ~/.config/nvim/init.vim
-	nvim --headless +PlugInstall +qall
+	# nvim --headless -c 'autocmd User PackerComplete quitall'
 
 install-vim: clean-vim
 	test -h ~/.vim || mkdir -p ~/.vim
