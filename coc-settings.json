@@ -1,5 +1,9 @@
 {
     "html.format.indentInnerHtml": true,
+    "Lua.workspace.library": [
+        "/usr/share/nvim/runtime/lua",
+        "/usr/share/nvim/runtime/lua/vim/lsp"
+    ],
     "sh.highlightParsingErrors": true,
     "vimlsp.suggest.fromRuntimepath": true,
     "diagnostic-languageserver.filetypes": {
