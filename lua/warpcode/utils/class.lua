@@ -15,7 +15,7 @@ return function(base)
    local mt = {}
    mt.__call = function(class_tbl, ...)
    local obj = {}
-   setmetatable(obj,c)
+   setmetatable(obj, c)
    if class_tbl.init then
        class_tbl.init(obj,...)
    else 
@@ -29,7 +29,7 @@ return function(base)
    c.init = init
    c.is_a = function(self, klass)
       local m = getmetatable(self)
-      while m do 
+      while m do
          if m == klass then return true end
          m = m._base
       end
