@@ -1,15 +1,9 @@
 local class = require('warpcode.utils.class')
+local string = require('warpcode.utils.string')
+local wvim = require('warpcode.utils.vim')
 local merge_tables = require('warpcode.utils.tables').merge_tables
-local has_nvim  = vim.fn.has('nvim') == 1
-local vim_home = ''
-local vim_source = ''
-if has_nvim then
-    vim_home = vim.g.vim_home
-    vim_source = vim.g.vim_source
-else
-    vim_home = vim.eval('g:vim_home')
-    vim_source = vim.eval('g:vim_source')
-end
+local vim_home = wvim.get_var('vim_home', 'g')
+local vim_source = wvim.get_var('vim_source', 'g')
 
 local PackageManager = class()
 
@@ -30,7 +24,7 @@ function PackageManager:run()
     self:__install_package_manager()
 
     if self.pm == 'packer' then
-        vim.cmd [[packadd packer.nvim]]
+        wvim.cmd [[packadd packer.nvim]]
 
         require('packer').init({
             package_root = vim.fn.stdpath('config') .. '/pack',
@@ -49,13 +43,13 @@ function PackageManager:run()
             -- end
         end)
     else
+
+        wvim.cmd([[command! -nargs=0 PackageManagerVimEnter lua PKGS:VimEnter()]])
+        wvim.cmd([[autocmd! VimEnter * :PackageManagerVimEnter]])
+
         vim.fn['plug#begin'](vim_home .. '/plugged')
         self:__autoload_packages()
         vim.fn['plug#end']()
-
-        for _, config in pairs(self.configs.start) do
-            config()
-        end
     end
 end
 
@@ -102,24 +96,21 @@ function PackageManager:__install_package_manager()
 end
 
 function PackageManager:__autoload_packages()
-    local glob_result = vim.fn.glob(vim_source..'/lua/warpcode/package-manager/packages/*.lua')
-    local file_list = vim.fn.split(glob_result, "\n")
+    local glob_result = vim.fn.glob(vim_source..'/lua/warpcode/packages/*.lua')
+    local file_list = string.split(glob_result, "\n")
 
     for _, value in pairs(file_list) do
         local filename = vim.fn.fnamemodify(value, ':t:r')
-        require('warpcode.package-manager.packages.' .. filename)(self)
+        require('warpcode.packages.' .. filename)(self)
     end
 end
 
 function PackageManager:load_packages(config_list)
     for key, value in pairs(config_list) do
         -- Grab the packer manager specific config
-        local opts = value[self.pm] or {}
+        local opts = value or {}
 
-        if vim.fn.has('nvim') == 0 then
-            -- vim expects it's own dictionary format
-            opts = vim.dict(opts)
-        elseif not next(opts) then
+        if vim.fn.has('nvim') == 1 and not next(opts) then
             -- If the dictionary is empty in nvim, we must force an empty dictionary
             opts = vim.empty_dict()
         end
@@ -127,28 +118,37 @@ function PackageManager:load_packages(config_list)
         if self.pm == 'packer' then
             self.pm_object(merge_tables({key}, opts))
         else
-            -- Process aliases
-            opts['do'] = opts.run
-            opts.run = nil
+            if not opts.disable then
+                -- Process aliases
+                opts['do'] = opts.run
+                opts.run = nil
 
-            opts['for'] = opts.ft
-            opts.ft = nil
+                opts['for'] = opts.ft
+                opts.ft = nil
 
-            vim.fn['plug#'](key, opts)
+                opts.on = opts.cmd
+                opts.cmd = nil
 
-            -- Add support to load config
-            if type(opts.config) == 'function' then
-                local plugin = opts.as or self:__get_package_name(key)
+                -- Add support to load config
+                if type(opts.config) == 'function' then
+                    local plugin = opts.as or self:__get_package_name(key)
 
-                if opts['for'] == nil and opts.on == nil then
-                    self.configs.start[plugin] = opts.config
-                else
+                    if opts['for'] == nil and opts.on == nil then
+                        opts.on = 'PackageManagerVimEnter'
+                    end
+
                     self.configs.lazy[plugin] = opts.config
 
-                    -- local user_cmd = [[ autocmd! User %s ++once lua VimPlugApplyConfig('%s') ]]
-                    -- vim.cmd(user_cmd:format(plugin, plugin))
+                    local user_cmd = [[ autocmd! User %s ++once lua PKGS:run_lazy_load_config('%s') ]]
+
+                    wvim.cmd(user_cmd:format(plugin, plugin))
                 end
 
+                if vim.fn.has('nvim') == 0 then
+                    opts = vim.dict(opts)
+                end
+                -- Load the plugin conf to vim-plug
+                vim.fn['plug#'](key, opts)
             end
         end
     end
@@ -158,10 +158,27 @@ function PackageManager:__get_package_name(repo)
     return repo:match("^[%w-]+/([%w-_.]+)$")
 end
 
+function PackageManager:run_lazy_load_config(plugin_name)
+  local fn = self.configs.lazy[plugin_name]
+  if type(fn) == 'function' then fn() end
+end
+
+function PackageManager:VimEnter()
+    -- Dummy method for vim enter to run and vim-plug to pick up
+end
+
+function PackageManager:load_configs()
+    if self.pm == 'vim-plug' then
+        for _, config in pairs(self.configs.start) do
+            config()
+        end
+    end
+end
+
 local pm = PackageManager()
 
 if vim.fn.has('nvim') == 1 then
     pm:set_package_manager('packer')
 end
 
-return pm
+_G.PKGS = pm
