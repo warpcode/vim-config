@@ -77,17 +77,17 @@ function PackageManager:__install_package_manager()
     local cmd_output = nil
 
     if self.pm == 'packer' then
-        if vim.fn.executable("git") == 0 then
+        if not wvim.has_executable('git') then
             error("You have to install git or first install packer yourself!")
         end
 
-        cmd_output = vim.fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+        cmd_output = os.execute('git clone --depth 1 https://github.com/wbthomason/packer.nvim "' .. install_path .. '"')
     else
-        if vim.fn.executable("curl") == 0 then
+        if not wvim.has_executable('curl') then
             error("You have to install curl or first install vim-plug yourself!")
         end
 
-        cmd_output = vim.fn.system({'curl', '-fLo', install_path, '--create-dirs', 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'})
+        cmd_output = os.execute('curl -fLo "' .. install_path .. '" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
     end
 
     if not self:__install_path_exists() then
@@ -177,7 +177,7 @@ end
 
 local pm = PackageManager()
 
-if vim.fn.has('nvim') == 1 then
+if wvim.is_nvim() then
     pm:set_package_manager('packer')
 end
 
