@@ -41,7 +41,7 @@ call warpcode#packages#add('gruvbox-community/gruvbox')
 " File Managers
 call warpcode#packages#add('junegunn/fzf', {'do': {-> fzf#install()}})
 call warpcode#packages#add('junegunn/fzf.vim')
-call warpcode#packages#add('scrooloose/nerdtree', {'do': 'NERDTreeToggle'})
+call warpcode#packages#add('scrooloose/nerdtree')
 call warpcode#packages#add('jistr/vim-nerdtree-tabs')
 call warpcode#packages#add('Xuyuanp/nerdtree-git-plugin')
 
