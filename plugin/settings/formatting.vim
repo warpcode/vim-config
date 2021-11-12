@@ -1,5 +1,7 @@
-set fileformats=unix,dos,mac
-set fileformat=unix
+if &modifiable
+    set fileformats=unix,dos,mac
+    set fileformat=unix
+end
 set autoindent
 set smartindent
 set smarttab

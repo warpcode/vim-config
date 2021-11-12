@@ -4,14 +4,16 @@ IMAGE_NAME:=warpcode/nvim:latest
 IMAGE_RUN_NAME:=warpcode-nvim-test
 
 install-nvim: clean-nvim
-	test -h ~/.config/nvim || mkdir -p ~/.config/nvim
-	test -h ~/.config/nvim || ln -s "$(ROOT_DIR)/vimrc" ~/.config/nvim/init.vim
+	test -h ~/.config/nvim/pack/warpcode/opt/ || mkdir -p ~/.config/nvim/pack/warpcode/opt
+	test -h ~/.config/nvim/pack/warpcode/opt/vim-config || ln -s "$(ROOT_DIR)" ~/.config/nvim/pack/warpcode/opt/
+	test -h ~/.config/nvim/init.vim || ln -s "$(ROOT_DIR)/vimrc" ~/.config/nvim/init.vim
 	# nvim --headless -c 'autocmd User PackerComplete quitall'
 
 install-vim: clean-vim
-	test -h ~/.vim || mkdir -p ~/.vim
+	test -h ~/.vim/pack/warpcode/opt/ || mkdir -p ~/.vim/pack/warpcode/opt
+	test -h ~/.vim/pack/warpcode/opt/vim-config || ln -s "$(ROOT_DIR)" ~/.vim/pack/warpcode/opt/vim-config
 	test -h ~/.vimrc || ln -s "$(ROOT_DIR)/vimrc" ~/.vimrc
-	vim +PlugInstall +qall
+	vim 
 
 test: test-build test-run
 
