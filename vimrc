@@ -61,7 +61,6 @@ call warpcode#packages#add('lukas-reineke/indent-blankline.nvim', {'disable_vim'
 call warpcode#packages#add('Yggdroot/indentLine', {'disable_nvim': 1})
 call warpcode#packages#add('sheerun/vim-polyglot')
 call warpcode#packages#add('nvim-treesitter/nvim-treesitter', {'do':':TSUpdate | TSInstall all', 'disable_vim': 1})
-call warpcode#packages#add('nvim-treesitter/nvim-treesitter', {'disable_vim': 1})
 call warpcode#packages#add('nvim-treesitter/playground', {'disable_vim': 1})
 
 " Utils
