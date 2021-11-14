@@ -3,17 +3,22 @@ ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 IMAGE_NAME:=warpcode/nvim:latest
 IMAGE_RUN_NAME:=warpcode-nvim-test
 
-install-nvim: clean-nvim
+pre-setup:
+	npm i
+
+install-nvim: clean-nvim pre-setup
 	test -h ~/.config/nvim/pack/warpcode/opt/ || mkdir -p ~/.config/nvim/pack/warpcode/opt
 	test -h ~/.config/nvim/pack/warpcode/opt/vim-config || ln -s "$(ROOT_DIR)" ~/.config/nvim/pack/warpcode/opt/
 	test -h ~/.config/nvim/init.vim || ln -s "$(ROOT_DIR)/vimrc" ~/.config/nvim/init.vim
-	# nvim --headless -c 'autocmd User PackerComplete quitall'
+	# nvim --headless -c 'quitall'
+	nvim
 
-install-vim: clean-vim
+install-vim: clean-vim pre-setup
 	test -h ~/.vim/pack/warpcode/opt/ || mkdir -p ~/.vim/pack/warpcode/opt
 	test -h ~/.vim/pack/warpcode/opt/vim-config || ln -s "$(ROOT_DIR)" ~/.vim/pack/warpcode/opt/vim-config
 	test -h ~/.vimrc || ln -s "$(ROOT_DIR)/vimrc" ~/.vimrc
-	vim 
+	# vim -c "quitall"
+	vim
 
 test: test-build test-run
 
