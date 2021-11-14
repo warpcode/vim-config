@@ -18,10 +18,10 @@ packadd vim-config
 " Themes
 call warpcode#packages#add('chriskempson/base16-vim')
 call warpcode#packages#add('flazz/vim-colorschemes')
-call warpcode#packages#add('gruvbox-community/gruvbox')
+call warpcode#packages#add('gruvbox-community/gruvbox', {'config': { -> execute('colorscheme gruvbox')}})
 
 " Completion
-" call warpcode#packages#add('neoclide/coc.nvim', { 'branch': 'release' })
+call warpcode#packages#add('neoclide/coc.nvim', { 'branch': 'release' })
 " call warpcode#packages#add('neoclide/coc-css', { 'do': '!' . g:vim_node_bin . '/yarn install --frozen-lockfile' })
 " call warpcode#packages#add('neoclide/coc-eslint', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile' })
 " call warpcode#packages#add('neoclide/coc-json', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile' })

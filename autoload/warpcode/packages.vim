@@ -61,6 +61,13 @@ function! s:install_package_manager() abort
     return 1
 endfunction
 
+function! s:get_plugin_name(name) abort
+    let new_name = matchstr(a:name, '[/\\]\zs[^/\\]\+$')
+    let new_name = substitute(new_name, '\C\.git$', '', '')
+
+    return new_name
+endfunction
+
 function! s:load_packages() abort
     let k = keys(s:packages)
     for i in k
@@ -85,7 +92,8 @@ function! s:load_packages() abort
             " Grab configs to run after loading the plugins
             " TODO check for lazy load hooks like on filetype or on command to
             " also lazy load the config
-            let s:post_callback[i] = options['config']
+            let plugin_name = s:get_plugin_name(i)
+            let s:post_callback[plugin_name] = options['config']
             unlet options['config']
         endif
 
@@ -100,15 +108,27 @@ function! s:load_packages() abort
             call minpac#add(i, options)
         else
             Plug i, options
+            " Setup lazy load configs
+            " Because we only load configs if the module is loaded
+            " s:load_configs() automatically works well with lazy loading
+            exe "autocmd! User " . s:get_plugin_name(i) . " call <SID>load_configs()"
         end
     endfor
 endfunction
 
-function! s:get_plugin_name(name) abort
-    let new_name = matchstr(a:name, '[/\\]\zs[^/\\]\+$')
-    let new_name = substitute(new_name, '\C\.git$', '', '')
+" Load configs or loaded modules
+" Can be called repeatdely for catching lazy loaded plugins
+function! s:load_configs() abort
+    let k = keys(s:post_callback)
+    for i in k
+        if warpcode#packages#is_module_loaded(i)
+            call call(s:post_callback[i], [])
+            echo i
 
-    return new_name
+            " Unload the config when we're done with it
+            unlet s:post_callback[i]
+        end
+    endfor
 endfunction
 
 function! warpcode#packages#install() abort
@@ -155,5 +175,25 @@ function! warpcode#packages#run() abort
     if s:run_install
         call warpcode#packages#install()
     end
+
+    augroup WARPCODE_PACKAGES
+        autocmd!
+        autocmd VimEnter * call <SID>load_configs()
+    augroup END
 endfunction
 
+" Whilst not perfect, package names should be unique enough to work reliably
+
+" @param name
+" @return bool
+function! warpcode#packages#is_module_loaded(name) abort
+    let paths_list = split(&rtp, ',')
+
+    for i in paths_list
+        if s:get_plugin_name(i) == a:name
+            return 1
+        end
+    endfor
+
+    return 0
+endfunction
