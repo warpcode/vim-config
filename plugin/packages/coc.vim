@@ -1,5 +1,6 @@
 let g:coc_disable_startup_warning = 1
 let g:coc_data_home = g:vim_home . '/coc/'
+let g:coc_config_home = g:vim_source
 
 " let g:coc_global_extensions = [
 "     \ 'coc-css',
