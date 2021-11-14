@@ -15,6 +15,18 @@ let g:vim_node_bin = g:vim_source . '/node_modules/.bin'
 " set packpath^=~/.vim§
 packadd vim-config
 
+function! s:setup_treesitter()
+lua <<EOF
+    require'nvim-treesitter.configs'.setup {
+        ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+        highlight = {
+            -- false will disable the whole extension
+            enable = true
+        },
+    }
+EOF
+endfunction
+
 " Themes
 call warpcode#packages#add('chriskempson/base16-vim')
 call warpcode#packages#add('flazz/vim-colorschemes')
@@ -60,7 +72,7 @@ call warpcode#packages#add('bronson/vim-trailing-whitespace')
 call warpcode#packages#add('lukas-reineke/indent-blankline.nvim', {'disable_vim': 1})
 call warpcode#packages#add('Yggdroot/indentLine', {'disable_nvim': 1})
 call warpcode#packages#add('sheerun/vim-polyglot')
-call warpcode#packages#add('nvim-treesitter/nvim-treesitter', {'do':':TSUpdate | TSInstall all', 'disable_vim': 1})
+call warpcode#packages#add('nvim-treesitter/nvim-treesitter', {'config': {-> s:setup_treesitter()}, 'disable_vim': 1})
 call warpcode#packages#add('nvim-treesitter/playground', {'disable_vim': 1})
 
 " Utils
