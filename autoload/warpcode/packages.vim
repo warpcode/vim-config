@@ -123,7 +123,6 @@ function! s:load_configs() abort
     for i in k
         if warpcode#packages#is_module_loaded(i)
             call call(s:post_callback[i], [])
-            echo i
 
             " Unload the config when we're done with it
             unlet s:post_callback[i]
