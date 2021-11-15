@@ -116,7 +116,7 @@ function! s:load_packages() abort
     endfor
 endfunction
 
-" Load configs or loaded modules
+" Load configs of loaded modules
 " Can be called repeatdely for catching lazy loaded plugins
 function! s:load_configs() abort
     let k = keys(s:post_callback)
