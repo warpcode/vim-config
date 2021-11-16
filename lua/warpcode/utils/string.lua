@@ -11,4 +11,10 @@ M.split = function(inputstr, sep)
     return t
 end
 
+-- Converts the first letter to upper case
+-- @param string str
+M.ucfirst = function(str)
+    return (str:gsub("^%l", string.upper))
+end
+
 return M

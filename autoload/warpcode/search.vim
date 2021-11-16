@@ -1,4 +1,8 @@
 function! warpcode#search#findFilesShow()
+    if exists(':Telescope')
+        return ":Telescope git_files\<CR>"
+    endif
+
     if exists(':FZF')
         return ":FZF\<CR>"
     endif

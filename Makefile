@@ -5,6 +5,7 @@ IMAGE_RUN_NAME:=warpcode-nvim-test
 
 pre-setup:
 	npm i
+	composer install
 
 install-nvim: clean-nvim pre-setup
 	test -h ~/.config/nvim/pack/warpcode/opt/ || mkdir -p ~/.config/nvim/pack/warpcode/opt

@@ -15,53 +15,79 @@ let g:vim_node_bin = g:vim_source . '/node_modules/.bin'
 " set packpath^=~/.vim§
 packadd vim-config
 
-function! s:setup_treesitter()
-lua <<EOF
-    require'nvim-treesitter.configs'.setup {
-        ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-        highlight = {
-            -- false will disable the whole extension
-            enable = true
-        },
-    }
-EOF
-endfunction
+let s:new_config = 0
 
 " Themes
-call warpcode#packages#add('chriskempson/base16-vim')
-call warpcode#packages#add('flazz/vim-colorschemes')
+" call warpcode#packages#add('chriskempson/base16-vim')
+" call warpcode#packages#add('flazz/vim-colorschemes')
 call warpcode#packages#add('gruvbox-community/gruvbox', {'config': { -> execute('colorscheme gruvbox')}})
 
-" Completion
-call warpcode#packages#add('neoclide/coc.nvim', { 'branch': 'release' })
-call warpcode#packages#add('neoclide/coc-css', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile' })
-call warpcode#packages#add('neoclide/coc-eslint', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile' })
-call warpcode#packages#add('neoclide/coc-json', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile' })
-call warpcode#packages#add('neoclide/coc-highlight', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile' })
-call warpcode#packages#add('neoclide/coc-html', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile' })
-call warpcode#packages#add('xiyaowong/coc-sumneko-lua', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile' })
-call warpcode#packages#add('marlonfan/coc-phpls', {'do': g:vim_node_bin . '/yarn install --frozen-lockfile' })
-call warpcode#packages#add('josa42/coc-sh', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile' })
-call warpcode#packages#add('neoclide/coc-tsserver', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile' })
-call warpcode#packages#add('iamcco/coc-vimlsp', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile' })
-call warpcode#packages#add('iamcco/coc-diagnostic', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile' })
-call warpcode#packages#add('neoclide/coc-emmet', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile' })
-call warpcode#packages#add('neoclide/coc-lists', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile' })
-call warpcode#packages#add('neoclide/coc-snippets', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile' })
-call warpcode#packages#add('honza/vim-snippets')
+if s:new_config
+    " Completion
+    call warpcode#packages#add('hrsh7th/cmp-nvim-lsp', {'disable_vim': 1})
+    call warpcode#packages#add('hrsh7th/cmp-buffer', {'disable_vim': 1})
+    call warpcode#packages#add('hrsh7th/cmp-path', {'disable_vim': 1})
+    call warpcode#packages#add('hrsh7th/cmp-cmdline', {'disable_vim': 1})
+    call warpcode#packages#add('hrsh7th/nvim-cmp', {'disable_vim': 1, 'config': {-> execute('lua require("warpcode.packages.nvim-cmp")')}})
+    call warpcode#packages#add('onsails/lspkind-nvim', {'disable_vim': 1, 'config': {-> execute('lua require("warpcode.packages.lspkind-nvim")')}})
+    call warpcode#packages#add('hrsh7th/cmp-vsnip', {'disable_vim': 1})
+    call warpcode#packages#add('hrsh7th/vim-vsnip', {'disable_vim': 1})
+    " call warpcode#packages#add('tzachar/cmp-tabnine', {'do': './install.sh', 'disable_vim': 1})
+    " call warpcode#packages#add('simrat39/symbols-outline.nvim', {'disable_vim': 1, 'config': {-> execute('lua require("warpcode.packages.symbols-outline")')}})
 
-" File Managers
-call warpcode#packages#add('junegunn/fzf', {'do': {-> fzf#install()}})
-call warpcode#packages#add('junegunn/fzf.vim')
+    " lsp
+    call warpcode#packages#add('neovim/nvim-lspconfig', {'disable_vim': 1})
+    call warpcode#packages#add('glepnir/lspsaga.nvim', {'disable_vim': 1, 'config': {-> execute('lua require("warpcode.packages.lspsaga")')}})
+    " call warpcode#packages#add('williamboman/nvim-lsp-installer', {'disable_vim': 1})
+
+    " Snippets
+    call warpcode#packages#add('rafamadriz/friendly-snippets', {'disable_vim': 1})
+
+    " File Managers
+    call warpcode#packages#add('nvim-lua/plenary.nvim', {'disable_vim': 1})
+    call warpcode#packages#add('nvim-telescope/telescope.nvim', {'disable_vim': 1, 'config': {-> execute('lua require("warpcode.packages.telescope")')}})
+    call warpcode#packages#add('nvim-telescope/telescope-fzf-native.nvim', {'disable_vim': 1, 'do': 'make'})
+
+    " Utils
+    call warpcode#packages#add('nvim-treesitter/nvim-treesitter', {'disable_vim': 1, 'config': {-> execute('lua require("warpcode.packages.nvim-treesitter")')}})
+    call warpcode#packages#add('nvim-treesitter/playground', {'disable_vim': 1})
+else
+    " Completion
+    call warpcode#packages#add('neoclide/coc.nvim', { 'branch': 'release'})
+    call warpcode#packages#add('neoclide/coc-css', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
+    call warpcode#packages#add('neoclide/coc-eslint', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
+    call warpcode#packages#add('neoclide/coc-json', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
+    call warpcode#packages#add('neoclide/coc-highlight', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
+    call warpcode#packages#add('neoclide/coc-html', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
+    call warpcode#packages#add('xiyaowong/coc-sumneko-lua', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
+    call warpcode#packages#add('marlonfan/coc-phpls', {'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
+    call warpcode#packages#add('josa42/coc-sh', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
+    call warpcode#packages#add('neoclide/coc-tsserver', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
+    call warpcode#packages#add('iamcco/coc-vimlsp', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
+    call warpcode#packages#add('iamcco/coc-diagnostic', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
+    call warpcode#packages#add('neoclide/coc-emmet', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
+    call warpcode#packages#add('neoclide/coc-lists', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
+    call warpcode#packages#add('neoclide/coc-snippets', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
+
+    " Snippets
+    call warpcode#packages#add('honza/vim-snippets')
+
+    " File Managers
+    call warpcode#packages#add('junegunn/fzf', {'do': {-> fzf#install()}})
+    call warpcode#packages#add('junegunn/fzf.vim')
+end
+
+
+
 call warpcode#packages#add('scrooloose/nerdtree')
 call warpcode#packages#add('jistr/vim-nerdtree-tabs')
 call warpcode#packages#add('Xuyuanp/nerdtree-git-plugin')
 
 " ft-css
-call warpcode#packages#add('hail2u/vim-css3-syntax')
+" call warpcode#packages#add('hail2u/vim-css3-syntax')
 
 " ft-html
-call warpcode#packages#add('mattn/emmet-vim')
+" call warpcode#packages#add('mattn/emmet-vim')
 
 " Status bar
 call warpcode#packages#add('vim-airline/vim-airline')
@@ -71,9 +97,6 @@ call warpcode#packages#add('vim-airline/vim-airline-themes')
 call warpcode#packages#add('bronson/vim-trailing-whitespace')
 call warpcode#packages#add('lukas-reineke/indent-blankline.nvim', {'disable_vim': 1})
 call warpcode#packages#add('Yggdroot/indentLine', {'disable_nvim': 1})
-call warpcode#packages#add('sheerun/vim-polyglot')
-call warpcode#packages#add('nvim-treesitter/nvim-treesitter', {'config': {-> s:setup_treesitter()}, 'disable_vim': 1})
-call warpcode#packages#add('nvim-treesitter/playground', {'disable_vim': 1})
 
 " Utils
 call warpcode#packages#add('tpope/vim-commentary')

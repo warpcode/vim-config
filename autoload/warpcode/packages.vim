@@ -181,8 +181,8 @@ function! warpcode#packages#run() abort
     augroup END
 endfunction
 
-" Whilst not perfect, package names should be unique enough to work reliably
-
+"" Whilst not perfect, package names should be unique enough to work reliably
+"
 " @param name
 " @return bool
 function! warpcode#packages#is_module_loaded(name) abort

@@ -2,7 +2,7 @@
 " off highlighting
 nnoremap <CR> :noh<CR><CR>
 
-nnoremap <silent><expr> <leader>f warpcode#search#findFilesShow()
+nnoremap <silent><expr> <leader>ff warpcode#search#findFilesShow()
 " command! -nargs=1 FindFile call warpcode#search#findFiles(<q-args>)
 
 " Search the project for the highlighted keyword
