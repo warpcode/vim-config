@@ -1,4 +1,4 @@
-function! warpcode#search#findFilesShow()
+function! warpcode#search#find_files_show()
     if exists(':Telescope')
         return ":Telescope git_files\<CR>"
     endif
@@ -10,11 +10,11 @@ function! warpcode#search#findFilesShow()
     return ":find "
 endfunction
 
-function! warpcode#search#findFilesShowRun()
-    execute warpcode#search#findFilesShow()
+function! warpcode#search#find_files_show_run()
+    execute warpcode#search#find_files_show()
 endfunction
 
-function! warpcode#search#findFiles(filename)
+function! warpcode#search#find_files(filename)
     let error_file=tempname()
     silent! exe 'silent !find .
                 \| grep -Pis "'.a:filename.'" -- -

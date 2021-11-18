@@ -3,7 +3,7 @@ function warpcode#completion#complete() abort
         return "\<C-n>"
     endif
 
-    if warpcode#util#prevChrIsSpace()
+    if warpcode#util#prev_chr_is_space()
         return "\<TAB>"
     endif
 
