@@ -28,6 +28,3 @@ au BufEnter *
             \ b:NERDTreeType == "primary") |
             \   q |
             \ endif
-
-" Toggle NERDTREE
-nnoremap <leader>t :NERDTreeToggle<CR>
