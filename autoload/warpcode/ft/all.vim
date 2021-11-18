@@ -1,5 +1,5 @@
-function! warpcode#ft#all#formatGeneric() abort
-    call warpcode#util#runCommandPreserveCursor('normal gg=G')
+function! warpcode#ft#all#format_generic() abort
+    call warpcode#util#run_command_preserve_cursor('normal gg=G')
     return 1
 endfunction
 
@@ -35,6 +35,6 @@ function! warpcode#ft#all#format(...) abort
         endtry
     endif
 
-    call warpcode#ft#all#formatGeneric()
+    call warpcode#ft#all#format_generic()
     return 1
 endfunction

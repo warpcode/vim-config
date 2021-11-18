@@ -4,7 +4,7 @@ endif
 let b:did_ftplugin_warpcode = 1
 
 if filereadable(g:vim_node_bin . "/docker-langserver")
-    call warpcode#plugin#coc#addLsp('dockerfile', {
+    call warpcode#plugin#coc#add_lsp('dockerfile', {
     \       "command": g:vim_node_bin . "/docker-langserver",
     \       "args": ["--stdio"],
     \       "filetypes": ["dockerfile"]
