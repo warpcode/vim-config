@@ -8,5 +8,5 @@ augroup WARPCODE_CURSOR
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
     " On cursor hold, run the highlight function
-    autocmd CursorHold * silent call warpcode#cursor#highlight()
+    autocmd CursorHold * silent call warpcode#lsp#hover()
 augroup END

@@ -127,28 +127,28 @@ end
 
 -- -- require("lspconfig").tsserver.setup(config())
 
--- -- require("lspconfig").phpactor.setup(config({
--- -- 	cmd = {wvim.get_var('vim_source', 'g') .. '/vendor/bin/phpactor', 'language-server'},
--- -- }))
-
-
--- require("lspconfig").intelephense.setup(config({
--- 	cmd = {wvim.get_var('vim_node_bin', 'g') .. '/intelephense', '--stdio'},
+-- require("lspconfig").phpactor.setup(config({
+-- 	cmd = {wvim.get_var('vim_source', 'g') .. '/vendor/bin/phpactor', 'language-server'},
 -- }))
 
 
--- require("lspconfig").cssls.setup(config({
--- 	cmd = {wvim.get_var('vim_node_bin', 'g') .. '/vscode-css-language-server', '--stdio'},
--- }))
+require("lspconfig").intelephense.setup(config({
+	cmd = {wvim.get_var('vim_node_bin', 'g') .. '/intelephense', '--stdio'},
+}))
 
 
--- require("lspconfig").html.setup(config({
--- 	cmd = {wvim.get_var('vim_node_bin', 'g') .. '/vscode-html-language-server', '--stdio'},
--- }))
+require("lspconfig").cssls.setup(config({
+	cmd = {wvim.get_var('vim_node_bin', 'g') .. '/vscode-css-language-server', '--stdio'},
+}))
 
--- require("lspconfig").jsonls.setup(config({
--- 	cmd = {wvim.get_var('vim_node_bin', 'g') .. '/vscode-json-language-server', '--stdio'},
--- }))
+
+require("lspconfig").html.setup(config({
+	cmd = {wvim.get_var('vim_node_bin', 'g') .. '/vscode-html-language-server', '--stdio'},
+}))
+
+require("lspconfig").jsonls.setup(config({
+	cmd = {wvim.get_var('vim_node_bin', 'g') .. '/vscode-json-language-server', '--stdio'},
+}))
 
 require("lspconfig").vimls.setup(config({
 	cmd = {wvim.get_var('vim_node_bin', 'g') .. '/vim-language-server', '--stdio'},
