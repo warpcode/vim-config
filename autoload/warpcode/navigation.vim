@@ -33,7 +33,7 @@ endfunction
 
 function! warpcode#navigation#find_files_cmd()
     if exists(':Telescope')
-        return ":Telescope git_files\<CR>"
+        return ":lua require('warpcode.packages.telescope').project_files()\<CR>"
     endif
 
     if exists(':FZF')
