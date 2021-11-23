@@ -9,4 +9,7 @@ augroup WARPCODE_CURSOR
 
     " On cursor hold, run the highlight function
     autocmd CursorHold * silent call warpcode#lsp#hover()
+    autocmd CursorHoldI * silent call warpcode#lsp#hover()
+    autocmd CursorMoved * silent call warpcode#lsp#hover_clear()
+    autocmd CursorMovedI * silent call warpcode#lsp#hover_clear()
 augroup END
