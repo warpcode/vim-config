@@ -1,3 +1,7 @@
+if vim.fn['warpcode#packages#is_module_loaded']('lspaga.nvim') == 0 then
+    return
+end
+
 local saga = require 'lspsaga'
 
 -- add your config value here

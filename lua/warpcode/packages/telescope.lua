@@ -1,3 +1,7 @@
+if vim.fn['warpcode#packages#is_module_loaded']('telescope.nvim') == 0 then
+    return
+end
+
 local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {

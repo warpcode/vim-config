@@ -28,16 +28,16 @@ if s:new_config && has('nvim')
     call warpcode#packages#add('hrsh7th/cmp-buffer', {'disable_vim': 1})
     call warpcode#packages#add('hrsh7th/cmp-path', {'disable_vim': 1})
     call warpcode#packages#add('hrsh7th/cmp-cmdline', {'disable_vim': 1})
-    call warpcode#packages#add('hrsh7th/nvim-cmp', {'disable_vim': 1, 'config': {-> execute('lua require("warpcode.packages.nvim-cmp")')}})
-    call warpcode#packages#add('onsails/lspkind-nvim', {'disable_vim': 1, 'config': {-> execute('lua require("warpcode.packages.lspkind-nvim")')}})
+    call warpcode#packages#add('hrsh7th/nvim-cmp', {'disable_vim': 1})
+    call warpcode#packages#add('onsails/lspkind-nvim', {'disable_vim': 1})
     call warpcode#packages#add('hrsh7th/cmp-vsnip', {'disable_vim': 1})
     call warpcode#packages#add('hrsh7th/vim-vsnip', {'disable_vim': 1})
     " call warpcode#packages#add('tzachar/cmp-tabnine', {'do': './install.sh', 'disable_vim': 1})
-    " call warpcode#packages#add('simrat39/symbols-outline.nvim', {'disable_vim': 1, 'config': {-> execute('lua require("warpcode.packages.symbols-outline")')}})
+    call warpcode#packages#add('simrat39/symbols-outline.nvim', {'disable_vim': 1})
 
     " lsp
     call warpcode#packages#add('neovim/nvim-lspconfig', {'disable_vim': 1})
-    call warpcode#packages#add('glepnir/lspsaga.nvim', {'disable_vim': 1, 'config': {-> execute('lua require("warpcode.packages.lspsaga")')}})
+    call warpcode#packages#add('glepnir/lspsaga.nvim', {'disable_vim': 1})
     " call warpcode#packages#add('williamboman/nvim-lsp-installer', {'disable_vim': 1})
 
     " Snippets
@@ -45,11 +45,11 @@ if s:new_config && has('nvim')
 
     " File Managers
     call warpcode#packages#add('nvim-lua/plenary.nvim', {'disable_vim': 1})
-    call warpcode#packages#add('nvim-telescope/telescope.nvim', {'disable_vim': 1, 'config': {-> execute('lua require("warpcode.packages.telescope")')}})
+    call warpcode#packages#add('nvim-telescope/telescope.nvim', {'disable_vim': 1})
     call warpcode#packages#add('nvim-telescope/telescope-fzf-native.nvim', {'disable_vim': 1, 'do': 'make'})
 
     " Utils
-    call warpcode#packages#add('nvim-treesitter/nvim-treesitter', {'disable_vim': 1, 'config': {-> execute('lua require("warpcode.packages.nvim-treesitter")')}})
+    call warpcode#packages#add('nvim-treesitter/nvim-treesitter', {'disable_vim': 1})
     call warpcode#packages#add('nvim-treesitter/playground', {'disable_vim': 1})
 else
     " Completion
@@ -118,3 +118,7 @@ call warpcode#packages#add('tveskag/nvim-blame-line', { 'disable': !executable('
 call warpcode#packages#run()
 
 filetype plugin indent on
+
+if has('nvim')
+    lua require('warpcode')
+endif

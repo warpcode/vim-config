@@ -1,3 +1,7 @@
+if vim.fn['warpcode#packages#is_module_loaded']('symbols-outline') == 0 then
+    return
+end
+
 -- local opts = {
 -- 	-- whether to highlight the currently hovered symbol
 -- 	-- disable if your cpu usage is higher than you want it
