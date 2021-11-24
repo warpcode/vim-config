@@ -13,3 +13,8 @@ nnoremap <leader>nw :Lexplore<CR>
 nnoremap <silent><expr> <leader>ff warpcode#navigation#find_files_cmd()
 " command! -nargs=1 FindFile call warpcode#search#findFiles(<q-args>)
 
+" move vertically by visual line (ie will go into a wrapped line that's
+" visually on the next line)
+nnoremap j gj
+nnoremap k gk
+
