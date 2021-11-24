@@ -28,7 +28,7 @@ function! warpcode#lsp#code_action() abort
 endfunction
 
 function warpcode#lsp#code_action_range() abort
-    
+
 endfunction
 
 function warpcode#lsp#declaration() abort
@@ -55,9 +55,9 @@ function warpcode#lsp#diagnostic_next() abort
     catch /.*/
     endtry
 
-   if has('nvim')
-       lua vim.lsp.diagnostic.goto_next()
-       return
+    if has('nvim')
+        lua vim.lsp.diagnostic.goto_next()
+        return
     endif 
 endfunction
 
@@ -70,22 +70,22 @@ function warpcode#lsp#diagnostic_prev() abort
     catch /.*/
     endtry
 
-   if has('nvim')
-       lua vim.lsp.diagnostic.goto_prev()
-       return
+    if has('nvim')
+        lua vim.lsp.diagnostic.goto_prev()
+        return
     endif 
 endfunction
 
 function warpcode#lsp#format() abort
     try
-        if warpcode#plugin#coc#ready()
+        if warpcode#plugin#coc#ready() && CocHasProvider('format') == v:true
             return CocAction('format')
         endif
     catch /.*/
     endtry
 
     if has('nvim')
-        lua vim.lsp.buf.formatting()
+        lua vim.lsp.buf.formatting_sync()
         return
     endif
 
@@ -93,18 +93,39 @@ function warpcode#lsp#format() abort
     call warpcode#util#run_command_preserve_cursor('normal gg=G')
 endfunction
 
-function warpcode#lsp#hover() abort
+function warpcode#lsp#format_selected() abort
     try
         if warpcode#plugin#coc#ready()
-            return CocActionAsync('highlight')
+            exe "norm \<Plug>(coc-format-selected)"
+            return
         endif
     catch /.*/
     endtry
 
     if has('nvim')
-        lua vim.lsp.buf.document_highlight()
+        lua vim.lsp.buf.range_formatting()
         return
     endif
+
+    " If all else fails, run vim's native way of formatting
+    call warpcode#util#run_command_preserve_cursor('normal ==')
+endfunction
+
+function warpcode#lsp#hover() abort
+    try
+        if warpcode#plugin#coc#ready() && CocHasProvider('highlight') == v:true
+            return CocActionAsync('highlight')
+        endif
+    catch /.*/
+    endtry
+
+    try
+        if has('nvim')
+            lua vim.lsp.buf.document_highlight()
+            return
+        endif
+    catch /.*/
+    endtry
 endfunction
 
 function warpcode#lsp#hover_clear() abort
@@ -120,7 +141,7 @@ function warpcode#lsp#hover_documentation() abort
         return
     endif
 
-    if (warpcode#plugin#coc#ready())
+    if warpcode#plugin#coc#ready() && CocHasProvider('doHover') == v:true
         call CocActionAsync('doHover')
         return
     endif
@@ -163,8 +184,8 @@ function warpcode#lsp#rename() abort
     catch /.*/
     endtry
 
-   if has('nvim')
-       lua vim.lsp.buf.rename()
-       return
+    if has('nvim')
+        lua vim.lsp.buf.rename()
+        return
     endif 
 endfunction
