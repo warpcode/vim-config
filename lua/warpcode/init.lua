@@ -1,4 +1,4 @@
-require('warpcode.packages.symbolds-outline')
+require('warpcode.packages.symbols-outline')
 require('warpcode.packages.treesitter')
 require('warpcode.packages.telescope')
 require('warpcode.packages.cmp')
