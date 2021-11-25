@@ -39,18 +39,6 @@ if s:new_config && has('nvim')
     call warpcode#packages#add('neovim/nvim-lspconfig', {'disable_vim': 1})
     call warpcode#packages#add('glepnir/lspsaga.nvim', {'disable_vim': 1})
     " call warpcode#packages#add('williamboman/nvim-lsp-installer', {'disable_vim': 1})
-
-    " Snippets
-    call warpcode#packages#add('rafamadriz/friendly-snippets', {'disable_vim': 1})
-
-    " File Managers
-    call warpcode#packages#add('nvim-lua/plenary.nvim', {'disable_vim': 1})
-    call warpcode#packages#add('nvim-telescope/telescope.nvim', {'disable_vim': 1})
-    call warpcode#packages#add('nvim-telescope/telescope-fzf-native.nvim', {'disable_vim': 1, 'do': 'make'})
-
-    " Utils
-    call warpcode#packages#add('nvim-treesitter/nvim-treesitter', {'disable_vim': 1})
-    call warpcode#packages#add('nvim-treesitter/playground', {'disable_vim': 1})
 else
     " Completion
     call warpcode#packages#add('neoclide/coc.nvim', { 'branch': 'release'})
@@ -68,17 +56,14 @@ else
     call warpcode#packages#add('neoclide/coc-emmet', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
     call warpcode#packages#add('neoclide/coc-lists', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
     call warpcode#packages#add('neoclide/coc-snippets', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
-
-    " Snippets
-    call warpcode#packages#add('honza/vim-snippets')
-
-    " File Managers
-    call warpcode#packages#add('junegunn/fzf', {'do': {-> fzf#install()}})
-    call warpcode#packages#add('junegunn/fzf.vim')
 end
 
-
-
+" File Managers
+call warpcode#packages#add('junegunn/fzf', {'do': {-> fzf#install()}, 'disable_nvim': 1})
+call warpcode#packages#add('junegunn/fzf.vim', {'disable_nvim': 1})
+call warpcode#packages#add('nvim-lua/plenary.nvim', {'disable_vim': 1})
+call warpcode#packages#add('nvim-telescope/telescope.nvim', {'disable_vim': 1})
+call warpcode#packages#add('nvim-telescope/telescope-fzf-native.nvim', {'disable_vim': 1, 'do': 'make'})
 call warpcode#packages#add('scrooloose/nerdtree')
 call warpcode#packages#add('jistr/vim-nerdtree-tabs')
 call warpcode#packages#add('Xuyuanp/nerdtree-git-plugin')
@@ -98,16 +83,18 @@ call warpcode#packages#add('bronson/vim-trailing-whitespace')
 call warpcode#packages#add('lukas-reineke/indent-blankline.nvim', {'disable_vim': 1})
 call warpcode#packages#add('Yggdroot/indentLine', {'disable_nvim': 1})
 
+" Snippets
+call warpcode#packages#add('rafamadriz/friendly-snippets', {'disable_vim': 1})
+call warpcode#packages#add('honza/vim-snippets', {'disable_nvim': 1})
+
 " Utils
 call warpcode#packages#add('tpope/vim-commentary')
-" Autoclose delimiters
 call warpcode#packages#add('Raimondi/delimitMate')
-" Change encapsulating quotes
 call warpcode#packages#add('tpope/vim-surround')
-" View man pages in vim
 call warpcode#packages#add('vim-utils/vim-man')
-" Visual way to explore vim's undo tree
 call warpcode#packages#add('mbbill/undotree')
+call warpcode#packages#add('nvim-treesitter/nvim-treesitter', {'disable_vim': 1})
+call warpcode#packages#add('nvim-treesitter/playground', {'disable_vim': 1})
 
 " Version Control
 call warpcode#packages#add('tpope/vim-fugitive', { 'disable': !executable('git') })
