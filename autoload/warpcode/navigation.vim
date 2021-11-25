@@ -4,11 +4,11 @@ function! warpcode#navigation#buffers() abort
 endfunction
 
 function! warpcode#navigation#buffers_cmd() abort
-    if exists(':Telescope')
+    if warpcode#packages#is_module_loaded('telescope.nvim')
         return ":lua require('telescope.builtin').buffers()\<CR>"
     endif
 
-    if exists(':Buffers')
+    if warpcode#packages#is_module_loaded('fzf.vim')
         return ":Buffers\<CR>"
     endif
 
@@ -32,11 +32,11 @@ function! warpcode#navigation#find_files()
 endfunction
 
 function! warpcode#navigation#find_files_cmd()
-    if exists(':Telescope')
+    if warpcode#packages#is_module_loaded('telescope.nvim')
         return ":lua require('warpcode.packages.telescope').project_files()\<CR>"
     endif
 
-    if exists(':FZF')
+    if warpcode#packages#is_module_loaded('fzf.vim')
         return ":FZF\<CR>"
     endif
 
