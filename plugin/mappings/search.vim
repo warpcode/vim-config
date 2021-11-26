@@ -2,9 +2,6 @@
 " off highlighting
 nnoremap <CR> :noh<CR><CR>
 
-nnoremap <silent><expr> <leader>f warpcode#search#findFilesShow()
-" command! -nargs=1 FindFile call warpcode#search#findFiles(<q-args>)
-
 " Search the project for the highlighted keyword
 nnoremap <leader>ps :execute 'silent! grep! ' . shellescape(expand("<cword>"))<CR>:cw<CR>
 vnoremap <leader>ps :<C-U>execute 'silent! grep! ' . shellescape(warpcode#string#escapeVimCommands(warpcode#util#getSelectedText()))<CR>:cw<CR>

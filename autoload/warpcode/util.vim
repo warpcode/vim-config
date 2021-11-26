@@ -1,4 +1,4 @@
-function! warpcode#util#detectFileInParents(filename) abort
+function! warpcode#util#detect_file_in_parents(filename) abort
     " We need to search for the first instance of the file working up the tree from our file
     let current_dir = expand('%:p:h')
     let fullpath = fnamemodify(current_dir, ':p') . a:filename
@@ -21,14 +21,14 @@ function! warpcode#util#detectFileInParents(filename) abort
     return ''
 endfunction
 
-function! warpcode#util#emptyRegisters() abort
+function! warpcode#util#empty_registers() abort
     let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
     for r in regs
         call setreg(r, [])
     endfor
 endfunction
 
-function! warpcode#util#getSelectedText()
+function! warpcode#util#get_selected_text()
     let l:old_reg = getreg('"')
     let l:old_regtype = getregtype('"')
     norm gvy
@@ -38,12 +38,12 @@ function! warpcode#util#getSelectedText()
     return l:ret
 endfunction
 
-function! warpcode#util#prevChrIsSpace() abort
+function! warpcode#util#prev_chr_is_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-function! warpcode#util#runCommandPreserveCursor(command)
+function! warpcode#util#run_command_preserve_cursor(command)
     " Preparation: save last search, and cursor position.
     let _s=@/
     let l = line(".")
@@ -54,4 +54,3 @@ function! warpcode#util#runCommandPreserveCursor(command)
     let @/=_s
     call cursor(l, c)
 endfunction
-
