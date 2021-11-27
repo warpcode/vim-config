@@ -13,3 +13,15 @@ function! warpcode#buffers#selection_cmd() abort
 
     return ":buffers\<CR>:b\<space>"
 endfunction
+
+function! warpcode#buffers#get_all_buffer_ids()
+    return map(copy(getbufinfo()), 'v:val.bufnr')
+endfunction
+
+function! warpcode#buffers#get_listed_buffers()
+    return filter(copy(getbufinfo()), 'v:val.listed')
+endfunction
+
+function! warpcode#buffers#get_listed_buffer_ids()
+    return map(warpcode#buffers#get_listed_buffers(), 'v:val.bufnr')
+endfunction
