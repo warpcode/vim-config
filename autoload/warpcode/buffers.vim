@@ -1,17 +1,19 @@
 function! warpcode#buffers#selection() abort
-    execute warpcode#buffers#selection_cmd()
-endfunction
-
-function! warpcode#buffers#selection_cmd() abort
     if warpcode#packages#is_module_loaded('telescope.nvim')
-        return ":lua require('telescope.builtin').buffers()\<CR>"
+        lua require('telescope.builtin').buffers()
+        return
     endif
 
     if warpcode#packages#is_module_loaded('fzf.vim')
-        return ":Buffers\<CR>"
+        Buffers
+        return
     endif
 
-    return ":buffers\<CR>:b\<space>"
+    buffers
+    call inputsave()
+    let content = input('Buffer: ')
+    call inputrestore()
+    exe "b " . content
 endfunction
 
 function! warpcode#buffers#get_all_buffer_ids()
