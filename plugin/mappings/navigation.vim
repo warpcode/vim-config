@@ -1,5 +1,5 @@
 " Buffers
-nnoremap <expr> <leader>bb warpcode#navigation#buffers_cmd()
+nnoremap <leader>bb :call warpcode#buffers#selection()<CR>
 nnoremap <leader>bp :bp<CR>
 nnoremap <leader>bn :bn<CR>
 nnoremap <leader>bc :bd<CR>

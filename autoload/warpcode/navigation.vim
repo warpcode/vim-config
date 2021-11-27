@@ -1,19 +1,4 @@
 
-function! warpcode#navigation#buffers() abort
-    execute warpcode#navigation#buffers_cmd()
-endfunction
-
-function! warpcode#navigation#buffers_cmd() abort
-    if warpcode#packages#is_module_loaded('telescope.nvim')
-        return ":lua require('telescope.builtin').buffers()\<CR>"
-    endif
-
-    if warpcode#packages#is_module_loaded('fzf.vim')
-        return ":Buffers\<CR>"
-    endif
-
-    return ":buffers\<CR>:b\<space>"
-endfunction
 
 function! warpcode#navigation#file_explorer() abort
     execute warpcode#navigation#file_explorer_cmd()
