@@ -1,8 +1,8 @@
 function! warpcode#windows#loclist_toggle()
     if warpcode#windows#loclist_visible()
-        execute ":lclose"
+        lclose
     else
-        execute ":lopen"
+        lopen
     endif
 endfunction
 
@@ -12,9 +12,9 @@ endfunction
 
 function! warpcode#windows#quickfix_toggle()
     if warpcode#windows#quickfix_visible()
-        execute ":cclose"
+        cclose
     else
-        execute ":copen"
+        copen
     endif
 endfunction
 
