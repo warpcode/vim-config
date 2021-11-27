@@ -1,31 +1,29 @@
 
 
 function! warpcode#navigation#file_explorer() abort
-    execute warpcode#navigation#file_explorer_cmd()
-endfunction
-
-function! warpcode#navigation#file_explorer_cmd() abort
     if warpcode#packages#is_module_loaded('nerdtree')
-        return ":NERDTreeToggle\<CR>"
+        NERDTreeToggle
+        return
     endif
 
-    return ":Lexplore\<CR>"
+    Lexplore
 endfunction
 
 function! warpcode#navigation#find_files()
-    execute warpcode#navigation#find_files_cmd()
-endfunction
-
-function! warpcode#navigation#find_files_cmd()
     if warpcode#packages#is_module_loaded('telescope.nvim')
-        return ":lua require('warpcode.packages.telescope').project_files()\<CR>"
+        lua require('warpcode.packages.telescope').project_files()
+        return
     endif
 
     if warpcode#packages#is_module_loaded('fzf.vim')
-        return ":FZF\<CR>"
+        FZF
+        return
     endif
 
-    return ":find "
+    call inputsave()
+    let content = input('Find: ')
+    call inputrestore()
+    exe "find " . content
 endfunction
 
 " function! warpcode#navigation#find_files(filename)
