@@ -36,8 +36,6 @@ if s:new_config && has('nvim')
     call warpcode#packages#add('simrat39/symbols-outline.nvim', {'disable_vim': 1})
 
     " lsp
-    call warpcode#packages#add('neovim/nvim-lspconfig', {'disable_vim': 1})
-    call warpcode#packages#add('glepnir/lspsaga.nvim', {'disable_vim': 1})
     " call warpcode#packages#add('williamboman/nvim-lsp-installer', {'disable_vim': 1})
 else
     " Completion
@@ -75,6 +73,8 @@ call warpcode#packages#add('Xuyuanp/nerdtree-git-plugin')
 " call warpcode#packages#add('mattn/emmet-vim')
 
 " lsp
+call warpcode#packages#add('neovim/nvim-lspconfig', {'disable_vim': 1})
+call warpcode#packages#add('glepnir/lspsaga.nvim', {'disable_vim': 1})
 call warpcode#packages#add('jose-elias-alvarez/null-ls.nvim', {'disable_vim': 1})
 
 " Status bar
