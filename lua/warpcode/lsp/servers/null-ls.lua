@@ -1,4 +1,6 @@
-if vim.fn['warpcode#packages#is_module_loaded']('null-ls.nvim') == 0 then
+local packages = require('warpcode.utils.packages')
+
+if not packages.is_loaded('null-ls.nvim') then
     return
 end
 

@@ -1,4 +1,6 @@
-if vim.fn['warpcode#packages#is_module_loaded']('symbols-outline') == 0 then
+local packages = require('warpcode.utils.packages')
+
+if not packages.is_loaded('symbols-outline') then
     return
 end
 

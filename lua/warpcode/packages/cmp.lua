@@ -1,8 +1,9 @@
-if vim.fn['warpcode#packages#is_module_loaded']('nvim-cmp') == 0 then
+local packages = require('warpcode.utils.packages')
+local strings = require('warpcode.utils.string')
+
+if not packages.is_loaded('nvim-cmp') then
     return
 end
-
-local strings = require('warpcode.utils.string')
 
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
