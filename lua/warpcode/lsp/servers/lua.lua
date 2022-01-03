@@ -1,2 +1,1 @@
--- local wvim = require('warpcode.utils.vim')
 -- local config = require('warpcode.utils.lsp').config

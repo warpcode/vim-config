@@ -11,23 +11,6 @@ M.cmd = function(command)
     end
 end
 
---- Wrapper to get a variable from vim/nvim
--- @param var Variable name
--- @param scope Variable scope
-M.get_var = function(var, scope)
-    if M.is_nvim() then
-        return vim[scope][var]
-    else
-        return vim.eval(scope .. ':' .. var)
-    end
-end
-
---- Check if an executable is accessible
--- @param executable Executable to check if exists
-M.has_executable = function(executable)
-    return vim.fn.executable(executable) == 1
-end
-
 --- Check whether we are in neovim
 -- @return bool
 M.is_nvim = function()

@@ -1,1 +1,1 @@
-cnoreabbrev g G
+" cnoreabbrev g G

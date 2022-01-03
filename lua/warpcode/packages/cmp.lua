@@ -2,7 +2,6 @@ if vim.fn['warpcode#packages#is_module_loaded']('nvim-cmp') == 0 then
     return
 end
 
-local wvim = require('warpcode.utils.vim')
 local strings = require('warpcode.utils.string')
 
 local has_words_before = function()

@@ -1,11 +1,10 @@
-local wvim = require('warpcode.utils.vim')
 local config = require('warpcode.utils.lsp').config
 
 -- require("lspconfig").phpactor.setup(config({
---     cmd = {wvim.get_var('vim_source', 'g') .. '/vendor/bin/phpactor', 'language-server'},
+--     cmd = {vim.g.vim_source .. '/php_modules/vendor/bin/phpactor', 'language-server'},
 -- }))
 
 
 -- require("lspconfig").intelephense.setup(config({
---     cmd = {wvim.get_var('vim_node_bin', 'g') .. '/intelephense', '--stdio'},
+--     cmd = {vim.g.vim_source .. '/node_modules/.bin/intelephense', '--stdio'},
 -- }))
