@@ -24,6 +24,25 @@ function! s:install_path_exists() abort
     return empty(glob(s:get_install_path())) < 1
 endfunction
 
+function! s:install_node_dependencies() abort
+    if !executable('npm')
+        return
+    endif
+
+    echo "Installing node dependencies"
+    exe '!cd "' . g:vim_source. '" && npm i' | redraw
+endfunction
+
+function! s:install_php_dependencies() abort
+    if !executable('php')
+        return
+    endif
+
+    echo "Installing PHP dependencies"
+    exe '!cd "' . g:vim_source. '/bin" && wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet ' | redraw
+    exe '!cd "' . g:vim_source . '" && php bin/composer.phar install'
+endfunction
+
 function! s:install_package_manager() abort
     if s:install_path_exists()
         " If already installed, skip it
@@ -115,6 +134,9 @@ function! s:load_configs() abort
 endfunction
 
 function! warpcode#packages#install() abort
+    call s:install_node_dependencies()
+    call s:install_php_dependencies()
+
     PlugUpdate
 endfunction
 

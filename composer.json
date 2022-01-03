@@ -8,6 +8,9 @@
     },
     "config": {
         "process-timeout": 1800,
-        "vendor-dir": "php_modules/"
+        "vendor-dir": "php_modules/",
+        "allow-plugins": {
+            "composer/package-versions-deprecated": false
+        }
     }
 }
