@@ -17,11 +17,7 @@ let s:post_callback = {}
 let s:run_install = 0
 
 function! s:get_install_path() abort
-    if s:package_manager == 'minpac'
-        return g:vim_home . '/pack/minpac/opt/minpac'
-    else
-        return g:vim_home . '/autoload/plug.vim'
-    end
+    return g:vim_home . '/autoload/plug.vim'
 endfunction
 
 function! s:install_path_exists() abort
@@ -37,18 +33,10 @@ function! s:install_package_manager() abort
     let install_path = s:get_install_path()
 
     echo "Installing package manager: " . s:package_manager
-    if s:package_manager == 'minpac'
-        if executable('git')
-            exe 'silent !git clone https://github.com/k-takata/minpac.git "' . install_path . '"' | redraw
-        else
-            echoerr("You have to install git or first install minpac yourself!")
-        end
+    if executable('curl')
+        exe 'silent !curl -fLo "' . install_path . '" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' | redraw
     else
-        if executable('curl')
-            exe 'silent !curl -fLo "' . install_path . '" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' | redraw
-        else
-            echoerr("You have to install curl or first install vim-plug yourself!")
-        end
+        echoerr("You have to install curl or first install vim-plug yourself!")
     end
 
     if !s:install_path_exists()
@@ -104,15 +92,11 @@ function! s:load_packages() abort
             unlet options['pre_config']
         endif
 
-        if s:package_manager == 'minpac'
-            call minpac#add(i, options)
-        else
-            Plug i, options
-            " Setup lazy load configs
-            " Because we only load configs if the module is loaded
-            " s:load_configs() automatically works well with lazy loading
-            exe "autocmd! User " . s:get_plugin_name(i) . " call <SID>load_configs()"
-        end
+        Plug i, options
+        " Setup lazy load configs
+        " Because we only load configs if the module is loaded
+        " s:load_configs() automatically works well with lazy loading
+        exe "autocmd! User " . s:get_plugin_name(i) . " call <SID>load_configs()"
     endfor
 endfunction
 
@@ -131,11 +115,7 @@ function! s:load_configs() abort
 endfunction
 
 function! warpcode#packages#install() abort
-    if s:package_manager == 'minpac'
-        call minpac#update()
-    else
-        PlugUpdate
-    end
+    PlugUpdate
 endfunction
 
 function! warpcode#packages#add(...) abort
@@ -159,17 +139,9 @@ function! warpcode#packages#run() abort
         return
     end
 
-    if s:package_manager == 'minpac'
-        packadd minpac
-        call minpac#init()
-        " minpac must have {'type': 'opt'} so that it can be loaded with `packadd`.
-        call minpac#add('k-takata/minpac', {'type': 'opt'})
-        call s:load_packages()
-    else
-        call plug#begin(g:vim_home . '/plugged')
-        call s:load_packages()
-        call plug#end()
-    end
+    call plug#begin(g:vim_home . '/plugged')
+    call s:load_packages()
+    call plug#end()
 
     if s:run_install
         call warpcode#packages#install()
