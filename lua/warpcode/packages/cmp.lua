@@ -123,40 +123,6 @@ cmp.setup.cmdline(':', {
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local function config(_config)
-	return vim.tbl_deep_extend("force", {
-		capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
-	}, _config or {})
-end
-
--- -- require("lspconfig").tsserver.setup(config())
-
--- require("lspconfig").phpactor.setup(config({
--- 	cmd = {wvim.get_var('vim_source', 'g') .. '/vendor/bin/phpactor', 'language-server'},
--- }))
-
-
-require("lspconfig").intelephense.setup(config({
-	cmd = {wvim.get_var('vim_node_bin', 'g') .. '/intelephense', '--stdio'},
-}))
-
-
-require("lspconfig").cssls.setup(config({
-	cmd = {wvim.get_var('vim_node_bin', 'g') .. '/vscode-css-language-server', '--stdio'},
-}))
-
-
-require("lspconfig").html.setup(config({
-	cmd = {wvim.get_var('vim_node_bin', 'g') .. '/vscode-html-language-server', '--stdio'},
-}))
-
-require("lspconfig").jsonls.setup(config({
-	cmd = {wvim.get_var('vim_node_bin', 'g') .. '/vscode-json-language-server', '--stdio'},
-}))
-
-require("lspconfig").vimls.setup(config({
-	cmd = {wvim.get_var('vim_node_bin', 'g') .. '/vim-language-server', '--stdio'},
-}))
 
 --[[  I cannot seem to get this woring on new computer..
 require("lspconfig").clangd.setup(config({

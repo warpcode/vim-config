@@ -3,15 +3,20 @@ if vim.fn['warpcode#packages#is_module_loaded']('telescope.nvim') == 0 then
 end
 
 local actions = require('telescope.actions')
-require('telescope').setup{
+local builtins = require("telescope.builtin")
+local previewers = require("telescope.previewers")
+local sorters = require("telescope.sorters")
+local telescope = require('telescope')
+
+telescope.setup{
   defaults = {
-    file_sorter = require("telescope.sorters").get_fzf_sorter,
+    file_sorter = sorters.get_fzf_sorter,
     prompt_prefix = " >",
     color_devicons = true,
 
-    file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-    grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-    qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+    file_previewer = previewers.vim_buffer_cat.new,
+    grep_previewer = previewers.vim_buffer_vimgrep.new,
+    qflist_previewer = previewers.vim_buffer_qflist.new,
     mappings = {
       i = {
         ["<C-h>"] = "which_key",
@@ -36,12 +41,12 @@ require('telescope').setup{
     }
   }
 
-require('telescope').load_extension('fzf')
+telescope.load_extension('fzf')
 
 local M = {}
 
 M.search_dotfiles = function()
-    require("telescope.builtin").find_files({
+    builtins.find_files({
         prompt_title = "< VimRC >",
         cwd = vim.g.vim_source,
         hidden = true,
@@ -49,7 +54,7 @@ M.search_dotfiles = function()
 end
 
 M.git_branches = function()
-    require("telescope.builtin").git_branches({
+    builtins.git_branches({
         attach_mappings = function(_, map)
             map("i", "<c-d>", actions.git_delete_branch)
             map("n", "<c-d>", actions.git_delete_branch)
@@ -60,8 +65,8 @@ end
 
 M.project_files = function()
   local opts = {} -- define here if you want to define something
-  local ok = pcall(require'telescope.builtin'.git_files, opts)
-  if not ok then require'telescope.builtin'.find_files(opts) end
+  local ok = pcall(builtins.git_files, opts)
+  if not ok then builtins.find_files(opts) end
 end
 
 return M
