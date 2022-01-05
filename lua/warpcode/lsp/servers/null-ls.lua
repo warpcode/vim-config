@@ -4,7 +4,7 @@ if not packages.is_loaded('null-ls.nvim') then
     return
 end
 
-local null_ls = require("null-ls")
+local null_ls = require('null-ls')
 
 local sources = {
     -- JSON
