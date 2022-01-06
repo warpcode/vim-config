@@ -69,9 +69,6 @@ call warpcode#packages#add('Xuyuanp/nerdtree-git-plugin')
 " ft-css
 " call warpcode#packages#add('hail2u/vim-css3-syntax')
 
-" ft-html
-" call warpcode#packages#add('mattn/emmet-vim')
-
 " lsp
 call warpcode#packages#add('neovim/nvim-lspconfig', {'disable_vim': 1})
 call warpcode#packages#add('glepnir/lspsaga.nvim', {'disable_vim': 1})
