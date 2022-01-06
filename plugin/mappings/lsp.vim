@@ -1,10 +1,16 @@
 
 " Override K to show documentation in preview window.
-nnoremap <silent> K :call warpcode#lsp#hover_documentation()<CR>
+" nnoremap <silent> K :call warpcode#lsp#hover_documentation()<CR>
+nnoremap <expr> K   index(['vim','help'], &filetype) >= 0 ?
+                    \ ":execute 'h ' . expand('<cword>')<CR>" :
+                    \ warpcode#plugin#coc#ready() && CocHasProvider('doHover') == v:true ?
+                        \ CocActionAsync('doHover') :
+                        \ ":execute '!' . &keywordprg . ' ' . expand('<cword>')<CR>"
 
-nmap <silent> [d :call warpcode#lsp#diagnostic_prev()<CR>
-nmap <silent> ]d :call warpcode#lsp#diagnostic_next()<CR>
 
-" " Symbol renaming.
+nmap <expr> [d  warpcode#plugin#coc#ready() ? exe "norm \<Plug>(coc-diagnostic-prev)" : ""
+nmap <expr> ]d  warpcode#plugin#coc#ready() ? exe "norm \<Plug>(coc-diagnostic-next)" : ""
+
+" Symbol renaming.
 nmap <leader>lrn :call warpcode#lsp#rename()<CR>
 
