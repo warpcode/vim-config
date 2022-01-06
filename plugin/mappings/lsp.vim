@@ -12,5 +12,5 @@ nmap <expr> [d  warpcode#plugin#coc#ready() ? exe "norm \<Plug>(coc-diagnostic-p
 nmap <expr> ]d  warpcode#plugin#coc#ready() ? exe "norm \<Plug>(coc-diagnostic-next)" : ""
 
 " Symbol renaming.
-nmap <leader>lrn :call warpcode#lsp#rename()<CR>
+nmap <expr> <leader>lrn warpcode#plugin#coc#ready() ? exe "norm \<Plug>(coc-rename)" : ""
 

@@ -57,18 +57,3 @@ function warpcode#lsp#hover_clear() abort
         return
     endif
 endfunction
-
-function warpcode#lsp#rename() abort
-    try
-        if warpcode#plugin#coc#ready()
-            exe "norm \<Plug>(coc-rename)"
-            return
-        endif
-    catch /.*/
-    endtry
-
-    if has('nvim')
-        lua vim.lsp.buf.rename()
-        return
-    endif 
-endfunction
