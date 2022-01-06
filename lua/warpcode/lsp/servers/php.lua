@@ -1,10 +1,24 @@
-local config = require('warpcode.utils.lsp').config
+local packages = require('warpcode.utils.packages')
 
--- require("lspconfig").phpactor.setup(config({
---     cmd = {vim.g.vim_source .. '/php_modules/vendor/bin/phpactor', 'language-server'},
--- }))
+if not packages.is_loaded('nvim-lspconfig') then
+    return
+end
+
+local config = require('warpcode.lsp.config')
+local lspconfig = require('lspconfig')
+local path = require('warpcode.utils.path')
+local bin_intelephense = path.find_exe_path('intelephense')
+local bin_phpactor = path.find_exe_path('phpactor')
 
 
--- require("lspconfig").intelephense.setup(config({
---     cmd = {vim.g.vim_source .. '/node_modules/.bin/intelephense', '--stdio'},
--- }))
+-- if bin_phpactor ~= '' then 
+--     lspconfig.phpactor.setup(config.common({
+--         cmd = {bin_phpactor, 'language-server'},
+--     }))
+-- end
+
+if bin_intelephense ~= '' then 
+    lspconfig.intelephense.setup(config.common({
+        cmd = {bin_intelephense, '--stdio'},
+    }))
+end

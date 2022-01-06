@@ -5,25 +5,30 @@ if not packages.is_loaded('null-ls.nvim') then
 end
 
 local null_ls = require('null-ls')
+local path = require('warpcode.utils.path')
+local bin_jsonlint = path.find_exe_path('jsonlint')
+local bin_phpcbf = path.find_exe_path('phpcbf')
+local bin_phpcs = path.find_exe_path('phpcs')
+local bin_phpcsfixer = path.find_exe_path('php-cs-fixer')
 
 local sources = {
     -- JSON
     null_ls.builtins.diagnostics.jsonlint.with({
-        command = vim.g.vim_source .. '/node_modules/.bin/jsonlint',
+        command = bin_jsonlint,
     }),
 
     -- PHP
     null_ls.builtins.diagnostics.php,
     null_ls.builtins.formatting.phpcbf.with({
-        command = vim.g.vim_source .. '/php_modules/bin/phpcbf',
+        command = bin_phpcbf,
         args = {'--standard=PSR12', '-'},
     }),
     null_ls.builtins.diagnostics.phpcs.with({
-        command = vim.g.vim_source .. '/php_modules/bin/phpcs',
+        command = bin_phpcs,
         args = {'--standard=PSR12', '--report=json', '-s', '-'},
     }),
     null_ls.builtins.formatting.phpcsfixer.with({
-        command = vim.g.vim_source .. '/php_modules/bin/php-cs-fixer',
+        command = bin_phpcsfixer,
     }),
 }
 
