@@ -17,8 +17,8 @@ local bin_phpactor = path.find_exe_path('phpactor')
 --     }))
 -- end
 
-if bin_intelephense ~= '' then 
-    lspconfig.intelephense.setup(config.common({
-        cmd = {bin_intelephense, '--stdio'},
-    }))
-end
+-- if bin_intelephense ~= '' then 
+--     lspconfig.intelephense.setup(config.common({
+--         cmd = {bin_intelephense, '--stdio'},
+--     }))
+-- end
