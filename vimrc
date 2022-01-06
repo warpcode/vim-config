@@ -73,6 +73,7 @@ call warpcode#packages#add('Xuyuanp/nerdtree-git-plugin')
 call warpcode#packages#add('neovim/nvim-lspconfig', {'disable_vim': 1})
 call warpcode#packages#add('glepnir/lspsaga.nvim', {'disable_vim': 1})
 call warpcode#packages#add('jose-elias-alvarez/null-ls.nvim', {'disable_vim': 1})
+call warpcode#packages#add('ray-x/lsp_signature.nvim', {'disable_vim': 1})
 
 " Status bar
 call warpcode#packages#add('vim-airline/vim-airline')
