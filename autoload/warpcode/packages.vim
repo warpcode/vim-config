@@ -30,7 +30,7 @@ function! s:install_node_dependencies() abort
     endif
 
     echo "Installing node dependencies"
-    exe '!cd "' . g:vim_source. '" && npm i' | redraw
+    exe '!cd "' . g:vim_source. '/modules/node" && npm i' | redraw
 endfunction
 
 function! s:install_php_dependencies() abort
@@ -39,8 +39,8 @@ function! s:install_php_dependencies() abort
     endif
 
     echo "Installing PHP dependencies"
-    exe '!cd "' . g:vim_source. '/bin" && wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet ' | redraw
-    exe '!cd "' . g:vim_source . '" && php bin/composer.phar install'
+    exe '!cd "' . g:vim_source . '/modules/php/" && wget https://getcomposer.org/download/latest-stable/composer.phar -O bin/composer.phar -q' | redraw
+    exe '!cd "' . g:vim_source . '/modules/php" && php bin/composer.phar install'
 endfunction
 
 function! s:install_package_manager() abort
