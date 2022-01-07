@@ -33,6 +33,8 @@ if s:new_config && has('nvim')
     call warpcode#packages#add('hrsh7th/cmp-vsnip', {'disable_vim': 1})
     call warpcode#packages#add('hrsh7th/vim-vsnip', {'disable_vim': 1})
     " call warpcode#packages#add('tzachar/cmp-tabnine', {'do': './install.sh', 'disable_vim': 1})
+    
+    " commented out, causing errors
     " call warpcode#packages#add('simrat39/symbols-outline.nvim', {'disable_vim': 1})
 
     " lsp
