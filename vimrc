@@ -51,7 +51,6 @@ else
     call warpcode#packages#add('josa42/coc-sh', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
     call warpcode#packages#add('neoclide/coc-tsserver', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
     call warpcode#packages#add('iamcco/coc-diagnostic', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'}, {'disable_nvim': 1})
-    call warpcode#packages#add('neoclide/coc-emmet', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
     call warpcode#packages#add('neoclide/coc-lists', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
     call warpcode#packages#add('neoclide/coc-snippets', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
 end
