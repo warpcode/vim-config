@@ -1,6 +1,5 @@
 
 " Override K to show documentation in preview window.
-" nnoremap <silent> K :call warpcode#lsp#hover_documentation()<CR>
 nnoremap <expr> K   index(['vim','help'], &filetype) >= 0 ?
                     \ ":execute 'h ' . expand('<cword>')<CR>" :
                     \ warpcode#plugin#coc#ready() && CocHasProvider('doHover') == v:true ?
