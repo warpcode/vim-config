@@ -42,7 +42,6 @@ else
     call warpcode#packages#add('neoclide/coc.nvim', { 'branch': 'release'})
     call warpcode#packages#add('neoclide/coc-css', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
     call warpcode#packages#add('neoclide/coc-eslint', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
-    call warpcode#packages#add('neoclide/coc-json', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
     call warpcode#packages#add('neoclide/coc-highlight', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
     call warpcode#packages#add('neoclide/coc-html', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
     call warpcode#packages#add('xiyaowong/coc-sumneko-lua', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
