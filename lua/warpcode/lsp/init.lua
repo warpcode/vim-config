@@ -1,4 +1,5 @@
 require('warpcode.lsp.servers.null-ls')
+require('warpcode.lsp.servers.bash')
 require('warpcode.lsp.servers.css')
 require('warpcode.lsp.servers.docker')
 require('warpcode.lsp.servers.emmet')
