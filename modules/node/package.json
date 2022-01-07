@@ -4,6 +4,7 @@
         "dockerfile-language-server-nodejs": "^0.7.2",
         "intelephense": "^1.7.1",
         "jsonlint": "^1.6.3",
+        "typescript-language-server": "^0.9.1",
         "vim-language-server": "^2.2.5",
         "vscode-langservers-extracted": "^3.0.1",
         "yarn": "^1.22.17"
