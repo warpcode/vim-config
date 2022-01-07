@@ -1,8 +1,3 @@
--- local config = require('warpcode.utils.lsp').config
-
--- require("lspconfig").cssls.setup(config({
---     cmd = {vim.g.vim_source .. '/node_modules/.bin/vscode-css-language-server', '--stdio'},
--- }))
 local packages = require('warpcode.utils.packages')
 
 if not packages.is_loaded('nvim-lspconfig') then
