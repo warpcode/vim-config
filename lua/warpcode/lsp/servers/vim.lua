@@ -1,5 +1,17 @@
--- local config = require('warpcode.utils.lsp').config
+local packages = require('warpcode.utils.packages')
 
--- require("lspconfig").vimls.setup(config({
---     cmd = {vim.g.vim_source .. '/node_modules/.bin/vim-language-server', '--stdio'},
--- }))
+if not packages.is_loaded('nvim-lspconfig') then
+    return
+end
+
+local config = require('warpcode.lsp.config')
+local lspconfig = require('lspconfig')
+local path = require('warpcode.utils.path')
+local bin_vimls = path.find_exe_path('vim-language-server')
+
+if bin_vimls ~= '' then 
+    lspconfig.vimls.setup(config.common({
+        cmd = {bin_vimls, '--stdio'},
+    }))
+end
+
