@@ -190,3 +190,20 @@ function! warpcode#packages#is_module_loaded(name) abort
 
     return 0
 endfunction
+
+
+"" Whilst not perfect, package names should be unique enough to work reliably
+"
+" @param name
+" @return bool
+function! warpcode#packages#module_loaded_path(name) abort
+    let paths_list = split(&rtp, ',')
+
+    for i in paths_list
+        if s:get_plugin_name(i) == a:name
+            return i
+        end
+    endfor
+
+    return ''
+endfunction

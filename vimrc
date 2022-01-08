@@ -30,8 +30,9 @@ if s:new_config && has('nvim')
     call warpcode#packages#add('hrsh7th/cmp-cmdline', {'disable_vim': 1})
     call warpcode#packages#add('hrsh7th/nvim-cmp', {'disable_vim': 1})
     call warpcode#packages#add('onsails/lspkind-nvim', {'disable_vim': 1})
-    call warpcode#packages#add('hrsh7th/cmp-vsnip', {'disable_vim': 1})
-    call warpcode#packages#add('hrsh7th/vim-vsnip', {'disable_vim': 1})
+    call warpcode#packages#add('saadparwaiz1/cmp_luasnip', {'disable_vim': 1})
+    call warpcode#packages#add('L3MON4D3/LuaSnip', {'disable_vim': 1})
+
     " call warpcode#packages#add('tzachar/cmp-tabnine', {'do': './install.sh', 'disable_vim': 1})
     
     " commented out, causing errors
@@ -84,7 +85,7 @@ call warpcode#packages#add('Yggdroot/indentLine', {'disable_nvim': 1})
 
 " Snippets
 call warpcode#packages#add('rafamadriz/friendly-snippets', {'disable_vim': 1})
-call warpcode#packages#add('honza/vim-snippets', {'disable_nvim': 1})
+call warpcode#packages#add('honza/vim-snippets')
 
 " Utils
 call warpcode#packages#add('tpope/vim-commentary')
