@@ -44,16 +44,9 @@ if s:new_config && has('nvim')
 else
     " Completion
     call warpcode#packages#add('neoclide/coc.nvim', { 'branch': 'release'})
-    " call warpcode#packages#add('neoclide/coc-css', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
-    " call warpcode#packages#add('neoclide/coc-eslint', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
     call warpcode#packages#add('neoclide/coc-highlight', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
-    " call warpcode#packages#add('neoclide/coc-html', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
     call warpcode#packages#add('xiyaowong/coc-sumneko-lua', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
-    " call warpcode#packages#add('marlonfan/coc-phpls', {'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
-    " call warpcode#packages#add('neoclide/coc-tsserver', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
-    call warpcode#packages#add('iamcco/coc-diagnostic', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'}, {'disable_nvim': 1})
     call warpcode#packages#add('neoclide/coc-lists', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
-    call warpcode#packages#add('neoclide/coc-snippets', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
 end
 
 " File Managers

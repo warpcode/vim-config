@@ -9,7 +9,6 @@ local util = require('lspconfig.util')
 local path = require('warpcode.utils.path')
 local bin_sqlls = path.find_exe_path('sql-language-server')
 
-
 if bin_sqlls ~= '' then 
     lspconfig.sqlls.setup(config.common({
         cmd = {bin_sqlls, 'up', '--method', 'stdio'},
