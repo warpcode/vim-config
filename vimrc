@@ -24,6 +24,7 @@ call warpcode#packages#add('gruvbox-community/gruvbox', {'config': { -> execute(
 
 if s:new_config && has('nvim')
     " Completion
+    " call warpcode#packages#add('github/copilot.vim', {'disable_vim': 1})
     call warpcode#packages#add('hrsh7th/cmp-nvim-lsp', {'disable_vim': 1})
     call warpcode#packages#add('hrsh7th/cmp-buffer', {'disable_vim': 1})
     call warpcode#packages#add('hrsh7th/cmp-path', {'disable_vim': 1})
