@@ -1,10 +1,9 @@
-local packages = require('warpcode.utils.packages')
+local lspkind_status, lspkind = pcall(require, 'lspkind')
 
-if not packages.is_loaded('lspkind-nvim') then
+if (not lspkind_status) then  
     return
 end
 
-local lspkind = require("lspkind")
 lspkind.init({
     with_text = true,
 })

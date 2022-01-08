@@ -1,10 +1,9 @@
-local packages = require('warpcode.utils.packages')
+local null_ls_status, null_ls = pcall(require, 'null-ls')
 
-if not packages.is_loaded('null-ls.nvim') then
+if (not null_ls_status) then
     return
 end
 
-local null_ls = require('null-ls')
 local path = require('warpcode.utils.path')
 local bin_jsonlint = path.find_exe_path('jsonlint')
 local bin_phpcbf = path.find_exe_path('phpcbf')

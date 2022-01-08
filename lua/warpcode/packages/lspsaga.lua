@@ -1,10 +1,8 @@
-local packages = require('warpcode.utils.packages')
+local lspsaga_status, lspsaga = pcall(require, 'lspsaga')
 
-if not packages.is_loaded('lspaga.nvim') then
+if (not lspsaga_status) then  
     return
 end
-
-local saga = require 'lspsaga'
 
 -- add your config value here
 -- default value
@@ -47,4 +45,4 @@ local saga = require 'lspsaga'
 -- }
 
 -- or --use default config
-saga.init_lsp_saga()
+lspsaga.init_lsp_saga()

@@ -1,11 +1,10 @@
-local packages = require('warpcode.utils.packages')
+local cmp_status, cmp = pcall(require, 'cmp')
+local luasnip_status, luasnip = pcall(require, 'luasnip')
 local strings = require('warpcode.utils.string')
 
-if not packages.is_loaded('nvim-cmp') then
+if (not cmp_status) then  
     return
 end
-
-local luasnip = require('luasnip')
 
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -17,7 +16,6 @@ local feedkey = function(key, mode)
 end
 
 -- Setup nvim-cmp.
-local cmp = require("cmp")
 local source_mapping = {
 	buffer = "[Buf]",
 	nvim_lsp = "[LSP]",
@@ -25,7 +23,7 @@ local source_mapping = {
 	cmp_tabnine = "[TN]",
 }
 
-cmp.setup({
+local opts = {
 	completion = {
 		completeopt = 'menu,menuone,noinsert',
 	},
@@ -35,7 +33,9 @@ cmp.setup({
             -- vim.fn["vsnip#anonymous"](args.body)
 
             -- For `luasnip` user.
-            luasnip.lsp_expand(args.body)
+            if luasnip_status then
+                luasnip.lsp_expand(args.body)
+            end
 
             -- For `ultisnips` user.
             -- vim.fn["UltiSnips#Anon"](args.body)
@@ -54,7 +54,7 @@ cmp.setup({
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
-			elseif luasnip.expand_or_jumpable() then
+			elseif luasnip_status and luasnip.expand_or_jumpable() then
 				luasnip.expand_or_jump()
 			elseif has_words_before() then
 				cmp.complete()
@@ -65,7 +65,7 @@ cmp.setup({
 		["<S-Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
-			elseif luasnip.jumpable(-1) then
+			elseif luasnip_status and luasnip.jumpable(-1) then
 				luasnip.jump(-1)
 			else
 				fallback()
@@ -102,7 +102,9 @@ cmp.setup({
 		{ name = "buffer" },
 		{ name = "path" },
 	},
-})
+}
+
+cmp.setup(opts)
 --
 -- Use buffer source for `/`.
 cmp.setup.cmdline('/', {
@@ -133,9 +135,6 @@ cmp.setup.cmdline(':', {
 -- })
 
 -- vim.lsp.set_log_level("debug")
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 
 --[[  I cannot seem to get this woring on new computer..

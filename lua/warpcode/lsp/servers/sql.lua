@@ -1,12 +1,11 @@
-local packages = require('warpcode.utils.packages')
+local lspconfig_status, lspconfig = pcall(require, 'lspconfig')
 
-if not packages.is_loaded('nvim-lspconfig') then
+if (not lspconfig_status) then
     return
 end
 
 local config = require('warpcode.lsp.config')
-local lspconfig = require('lspconfig')
-local util = require 'lspconfig.util'
+local util = require('lspconfig.util')
 local path = require('warpcode.utils.path')
 local bin_sqlls = path.find_exe_path('sql-language-server')
 

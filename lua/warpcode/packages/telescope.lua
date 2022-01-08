@@ -1,6 +1,6 @@
-local packages = require('warpcode.utils.packages')
+local telescope_status, telescope = pcall(require, 'telescope')
 
-if not packages.is_loaded('telescope.nvim') then
+if (not telescope_status) then  
     return
 end
 
@@ -8,7 +8,6 @@ local actions = require('telescope.actions')
 local builtins = require("telescope.builtin")
 local previewers = require("telescope.previewers")
 local sorters = require("telescope.sorters")
-local telescope = require('telescope')
 
 telescope.setup{
   defaults = {

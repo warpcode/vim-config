@@ -1,11 +1,10 @@
-local packages = require('warpcode.utils.packages')
+local lspconfig_status, lspconfig = pcall(require, 'lspconfig')
 
-if not packages.is_loaded('nvim-lspconfig') then
+if (not lspconfig_status) then
     return
 end
 
 local config = require('warpcode.lsp.config')
-local lspconfig = require('lspconfig')
 local path = require('warpcode.utils.path')
 local bin_ansiblels = path.find_exe_path('ansible-language-server')
 
