@@ -4,6 +4,7 @@
         "bash-language-server": "^2.0.0",
         "dockerfile-language-server-nodejs": "^0.7.2",
         "emmet-ls": "^0.2.0",
+        "eslint": "^8.6.0",
         "fixjson": "^1.1.2",
         "intelephense": "^1.7.1",
         "jsonlint": "^1.6.3",

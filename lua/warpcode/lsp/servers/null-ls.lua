@@ -6,6 +6,7 @@ end
 
 local path = require('warpcode.utils.path')
 local attachments = require('warpcode.lsp.attachments')
+local bin_eslint = path.find_exe_path('eslint')
 local bin_jsonlint = path.find_exe_path('jsonlint')
 local bin_fixjson = path.find_exe_path('fixjson')
 local bin_phpcbf = path.find_exe_path('phpcbf')
@@ -13,6 +14,11 @@ local bin_phpcs = path.find_exe_path('phpcs')
 local bin_phpcsfixer = path.find_exe_path('php-cs-fixer')
 
 local sources = {
+    -- Javascript
+    null_ls.builtins.diagnostics.eslint.with({
+        command = bin_eslint,
+    }),
+
     -- JSON
     null_ls.builtins.diagnostics.jsonlint.with({
         command = bin_jsonlint,
