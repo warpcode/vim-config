@@ -46,35 +46,50 @@ M.find_file_in_paths = function (filename, paths)
     return ''
 end
 
-M.find_first_path_in_parents = function(paths, _base_path)
-    -- Ensure we get the full path to traverse
-    local base_path = vim.fn.fnamemodify(_base_path or '/', ':p')
-    base_path = M.remove_trailing_slash(base_path)
+M.root_pattern = function (_files, _base_path, _match_all)
+    if not _files then
+        -- no files to match. abort
+        return nil
+    end
 
-    -- Search this current path for one of the provided files
-    for _, path in pairs(paths) do
-        path = M.remove_trailing_slash(path)
-        local fullpath = base_path .. '/' .. path
+    local base_path = M.remove_trailing_slash(_base_path or '/')
+    if vim.fn.filereadable(base_path) == 1 then
+        -- Detected a file as the base path so strip the filename
+        base_path = vim.fn.fnamemodify(base_path, ':h')
+        base_path = M.remove_trailing_slash(base_path)
+    end
 
-        if base_path == '/' then
-            fullpath = base_path .. path
-        end
+    local matches = 0
+    for _, file in pairs(_files) do
+        file = M.remove_trailing_slash(file)
 
-        if vim.fn.filereadable(fullpath) == 1 then
-            return fullpath
-        elseif vim.fn.isdirectory(fullpath) == 1 then
-            return fullpath .. '/'
+        local fullpath = M.add_trailing_slash(base_path) .. file
+        local is_file = vim.fn.filereadable(fullpath) == 1
+        local is_dir = not is_file and vim.fn.isdirectory(fullpath) == 1
+
+        if is_file or is_dir then
+            matches = matches + 1
+
+            if not _match_all then
+                -- If we don't need to match all, just return the current base_path
+                return M.add_trailing_slash(base_path)
+            end
         end
     end
 
-    -- File not found and we are at relative or absolute root, return empty string
+    if _match_all and matches > 0 and #_files == matches then
+        -- Matched all files, return the path
+        return M.add_trailing_slash(base_path)
+    end
+
+    -- Some files were not found and we're at root so return nil
     if base_path == '/' then
-        return ''
+        return nil
     end
 
     -- strip of the current path segment and search the next parent
     base_path = M.dirname(base_path)
-    return M.find_first_path_in_parents(paths, base_path)
+    return M.root_pattern(_files, base_path, _match_all)
 end
 
 M.remove_trailing_slash = function (path)
@@ -84,4 +99,19 @@ M.remove_trailing_slash = function (path)
 
     return path
 end
+
+M.add_trailing_slash = function (path)
+    path = path or '/'
+
+    if path == '/' then
+        return path
+    end
+
+    if string.sub(path, -1, -1) ~= "/" then
+        path = path .. '/'
+    end
+
+    return path
+end
+
 return M
