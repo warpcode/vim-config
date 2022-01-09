@@ -15,10 +15,15 @@ local bin_phpcsfixer = path.find_exe_path('php-cs-fixer')
 
 local sources = {
     -- Javascript
+    null_ls.builtins.code_actions.eslint.with({
+        command = bin_eslint,
+    }),
     null_ls.builtins.diagnostics.eslint.with({
         command = bin_eslint,
     }),
-
+    null_ls.builtins.formatting.eslint.with({
+        command = bin_eslint,
+    }),
     -- JSON
     null_ls.builtins.diagnostics.jsonlint.with({
         command = bin_jsonlint,
