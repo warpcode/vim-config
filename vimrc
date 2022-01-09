@@ -15,14 +15,12 @@ let g:vim_node_bin = g:vim_source . '/modules/node/node_modules/.bin'
 " set packpath^=~/.vim§
 packadd vim-config
 
-let s:new_config = 0
-
 " Themes
 " call warpcode#packages#add('chriskempson/base16-vim')
 " call warpcode#packages#add('flazz/vim-colorschemes')
 call warpcode#packages#add('gruvbox-community/gruvbox', {'config': { -> execute('colorscheme gruvbox')}})
 
-if s:new_config && has('nvim')
+if has('nvim')
     " Completion
     " call warpcode#packages#add('github/copilot.vim', {'disable_vim': 1})
     call warpcode#packages#add('hrsh7th/cmp-nvim-lsp', {'disable_vim': 1})
