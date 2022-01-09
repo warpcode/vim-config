@@ -1,0 +1,74 @@
+{
+    "if": {
+        "prefix": "if",
+        "body": [
+            "%if(${1:variable})",
+            "\t$2",
+            "%endif()"
+        ],
+        "description": "Martini HTML - Defines an if statement",
+        "scope": "text.html"
+    },
+    "ife": {
+        "prefix": "ife",
+        "body": [
+            "%if(${1:variable})",
+            "\t$2",
+            "%else()",
+            "\t$3",
+            "%endif()"
+        ],
+        "description": "Martini HTML - Defines an if/else statement",
+        "scope": "text.html"
+    },
+    "ifi": {
+        "prefix": "ifi",
+        "body": [
+            "%if(${1:variable})$2%endif()"
+        ],
+        "description": "Martini HTML - Defines an inline if statement",
+        "scope": "text.html"
+    },
+    "ifei": {
+        "prefix": "ifei",
+        "body": [
+            "%if(${1:variable})$2%else()%3%endif()"
+        ],
+        "description": "Martini HTML - Defines an inline if/else statement",
+        "scope": "text.html"
+    },
+    "section": {
+        "prefix": "section",
+        "body": [
+            "%section(${1:section_name})",
+            "\t$2",
+            "%endsection()"
+        ],
+        "description": "Martini HTML - Defines an section statement",
+        "scope": "text.html"
+    },
+    "escape": {
+        "prefix": "escape",
+        "body": [
+            "%escape(${1:variable})"
+        ],
+        "description": "Martini HTML - Defines an escape statement",
+        "scope": "text.html"
+    },
+    "escapejs": {
+        "prefix": "escapejs",
+        "body": [
+            "%escapejs(${1:variable})"
+        ],
+        "description": "Martini HTML - Defines an escapejs statement",
+        "scope": "text.html"
+    },
+    "raw": {
+        "prefix": "raw",
+        "body": [
+            "%raw(${1:variable})"
+        ],
+        "description": "Martini HTML - Defines an raw statement",
+        "scope": "text.html"
+    }
+}

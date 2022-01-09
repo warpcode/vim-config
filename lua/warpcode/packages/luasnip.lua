@@ -13,18 +13,25 @@ local snippets_snipmate_module_paths = function()
 			table.insert(paths, path)
 		end
 	end
+
+    -- Include our own snippets
+    -- table.insert(paths, vim.g.vim_source .. '/modules/snippets_snipmate/')
+
 	return paths
 end
 
 local snippets_vscode_module_paths = function()
 	local plugins = { "friendly-snippets" }
-	local paths = {}
+	local paths = {
+        vim.g.vim_source .. '/modules/snippets_vscode'
+    }
 	for _, plug in ipairs(plugins) do
 		local path = vim.fn['warpcode#packages#module_loaded_path'](plug)
 		if path ~= '' and vim.fn.isdirectory(path) ~= 0 then
 			table.insert(paths, path)
 		end
 	end
+
 	return paths
 end
 
@@ -36,11 +43,11 @@ if #snippets_snipmate_paths > 0 then
     -- One peculiarity of honza/vim-snippets is that the file with the global snippets is _.snippets, so global snippets
     -- are stored in `ls.snippets._`.
     -- We need to tell luasnip that "_" contains global snippets:
-    luasnip.filetype_extend("all", { "_" })
+    -- luasnip.filetype_extend("all", { "_" })
 
-    require("luasnip.loaders.from_snipmate").lazy_load({
-        path = snippets_snipmate_paths
-    })
+    -- require("luasnip.loaders.from_snipmate").lazy_load({
+    --     path = snippets_snipmate_paths
+    -- })
 end
 
 -- Load vscode style snippets

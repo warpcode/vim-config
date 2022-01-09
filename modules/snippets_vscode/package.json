@@ -1,0 +1,19 @@
+{
+    "name": "warpcode-snippets-vscode",
+    "engines": {
+        "vscode": "^1.11.0"
+    },
+    "contributes": {
+        "snippets": [
+            {
+                "language": [
+                    "html",
+                    "jade",
+                    "pug",
+                    "eruby"
+                ],
+                "path": "./snippets/html.json"
+            }
+        ]
+    }
+}
