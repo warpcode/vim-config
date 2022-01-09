@@ -6,16 +6,15 @@ end
 
 local snippets_snipmate_module_paths = function()
 	local plugins = { "vim-snippets" }
-	local paths = {}
+	local paths = {
+        vim.g.vim_source .. '/modules/snippets_snipmate'
+    }
 	for _, plug in ipairs(plugins) do
 		local path = vim.fn['warpcode#packages#module_loaded_path'](plug)
 		if path ~= '' and vim.fn.isdirectory(path) ~= 0 then
 			table.insert(paths, path)
 		end
 	end
-
-    -- Include our own snippets
-    -- table.insert(paths, vim.g.vim_source .. '/modules/snippets_snipmate/')
 
 	return paths
 end
