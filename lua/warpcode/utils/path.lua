@@ -19,7 +19,7 @@ M.find_exe_path = function (exe_name)
 
     local fullpath = M.find_file_in_paths(exe_name, search_paths)
 
-    if fullpath ~= '' then
+    if fullpath ~= nil then
         return fullpath
     end
     
@@ -29,7 +29,7 @@ M.find_exe_path = function (exe_name)
     end
 
     -- Empty string denotes no executable was found
-    return ''
+    return nil
 end
 
 M.find_file_in_paths = function (filename, paths)
@@ -43,7 +43,7 @@ M.find_file_in_paths = function (filename, paths)
         end
     end
 
-    return ''
+    return nil
 end
 
 M.root_pattern = function (_files, _base_path, _match_all)

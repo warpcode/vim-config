@@ -8,7 +8,7 @@ local config = require('warpcode.lsp.config')
 local path = require('warpcode.utils.path')
 local bin_ansiblels = path.find_exe_path('ansible-language-server')
 
-if bin_ansiblels ~= '' then 
+if bin_ansiblels then 
     lspconfig.ansiblels.setup(config.common({
         cmd = {bin_ansiblels, '--stdio'},
     }))
