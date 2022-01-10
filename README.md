@@ -39,20 +39,20 @@ These commands will remove any old config
 On the first load, if vim-plug is not installed, the script will auto install it provided curl is installed.
 To update use one of the following depending on whether you are using vim or nvim
 
-`nvim +PlugInstall +qall`
+`nvim "+call warpcode#packages#install()"`
 
 or
 
-`vim +PlugInstall +qall`
+`vim "+call warpcode#packages#install()"`
 
 ## Dependencies
 These dependencies are for ubuntu based systems as this is what i primarily use
 
 ```
 build-essential
-cmake
-python3-dev
-exuberant-ctags
-silversearcher-ag
-php-codesniffer
+git
+curl
+php
+nodejs
+ripgrep
 ```
