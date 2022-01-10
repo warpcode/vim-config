@@ -11,3 +11,16 @@ require('warpcode.lsp.servers.php')
 require('warpcode.lsp.servers.sql')
 require('warpcode.lsp.servers.typescript')
 require('warpcode.lsp.servers.vim')
+
+local format_diagnostic = function (diagnostic)
+    return string.format('[%s] %s', diagnostic.source, diagnostic.message)
+end
+
+vim.diagnostic.config({
+    float = {
+        format = format_diagnostic,
+    },
+    virtual_text = {
+        format = format_diagnostic,
+    },
+})
