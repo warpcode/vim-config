@@ -46,6 +46,18 @@ M.find_file_in_paths = function (filename, paths)
     return nil
 end
 
+M.get_file_buf_or_cwd = function (file)
+    if not file or file == '' then 
+        file = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+    end
+
+    if not file or file == '' then 
+        file = vim.fn.getcwd()
+    end
+
+    return file
+end
+
 M.root_pattern = function (_files, _base_path, _match_all)
     if not _files then
         -- no files to match. abort

@@ -6,3 +6,5 @@ require('warpcode.packages.luasnip')
 require('warpcode.packages.lspkind')
 require('warpcode.packages.lspsaga')
 require('warpcode.lsp')
+require('warpcode.globals')
+

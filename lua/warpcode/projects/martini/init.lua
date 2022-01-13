@@ -1,8 +1,16 @@
-local path = require('warpcode.utils.path')
-local M = {}
+local Base = require('warpcode.projects.base')
 
-M.get_project_root = function (file)
-    return path.root_pattern({'initMartini.sh'}, file or vim.fn.expand('%:p'))
+local Martini = Base:new()
+
+function Martini:new()
+    local o = Base:new()
+
+    setmetatable(o, self)
+    self.__index = self
+    self._base_files = {'initMartini.sh'}
+    self._require_all_base_files = true
+
+    return o
 end
 
-return M
+return Martini

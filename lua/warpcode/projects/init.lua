@@ -1,17 +1,38 @@
-local projects = {}
+local projects = {
+    martini = require 'warpcode.projects.martini'
+}
 
 local M = {}
 
-M.get_project = function(file)
+M.detect_project = function (file)
+    for name, project in pairs(projects) do
+        if M.has(name) then
+            local project = project:from_file(file)
+            
+            if project:is_project() then 
+                return project
+            end
+        end
+    end
+
     return nil
 end
 
-M.get_filetype = function(file)
+M.has = function (project, path)
+    return projects[project] ~= nil
+end
+
+M._autocmd_callback = function()
+    -- if vim.bo.filetype == '' or not vim.bo.filetype then 
+    --     vim.bo.filetype = 'ruby'
+    -- end
+end
+
+M._command_autocomplete = function()
 
 end
 
-M.get_filetype_extends = function(filetype)
-
-end
-
+vim.cmd([[
+    au BufRead,BufNewFile * lua warpcode.projects._autocmd_callback()
+]])
 return M
