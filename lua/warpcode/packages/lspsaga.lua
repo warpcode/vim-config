@@ -45,4 +45,6 @@ end
 -- }
 
 -- or --use default config
-lspsaga.init_lsp_saga()
+-- lspsaga.init_lsp_saga {
+--     use_saga_diagnostic_sign = false
+-- }
