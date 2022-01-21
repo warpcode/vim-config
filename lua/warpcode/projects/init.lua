@@ -42,6 +42,11 @@ M.get = function (buffnr)
     return initialised_projects[buffnr]
 end
 
+M.get_all = function()
+    M.cleanup()
+    return initialised_projects
+end
+
 --- Run through each instance and remove any where the buffer
 --- no longer exists
 M.cleanup = function ()
@@ -64,6 +69,7 @@ M._command_autocomplete = function()
 end
 
 vim.cmd([[
-    au BufRead,BufNewFile * lua warpcode.projects._autocmd_callback()
+    au BufRead,BufNewFile * lua require 'warpcode.projects'._autocmd_callback()
 ]])
+
 return M

@@ -1,5 +1,4 @@
 _G.warpcode = {
-    projects = require('warpcode.projects'),
     print = function (...)
         local objects = {}
         for i = 1, select('#', ...) do
