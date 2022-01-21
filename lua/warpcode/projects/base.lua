@@ -7,6 +7,8 @@ function Base:new(buffnr)
     local o = {}
     setmetatable(o, self)
     self.__index = self
+    self._project_name = ''
+    self._project_name_slug = ''
     self._root_detection = 'files'
     self._root_detection_type = 'loose'
     self._root_base_files = {}
@@ -22,6 +24,17 @@ function Base:new(buffnr)
     end
 
     return o
+end
+
+--- Simply return the name of the project
+---@param slug string
+---@return string
+function Base:get_project_name(slug)
+    if slug then
+        return self._project_name_slug
+    end
+
+    return self._project_name
 end
 
 --- Ensure root directory has been found
