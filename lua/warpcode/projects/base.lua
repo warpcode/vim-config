@@ -11,6 +11,7 @@ function Base:new(buffnr)
     self._require_all_base_files = false
     self._file = nil
     self._root = nil
+    self._ft_aliases = {}
 
     -- Register the buffer number so this instance is "attached" to a buffer
     if type(buffnr) == 'number' and buffnr > 0 then
@@ -73,4 +74,69 @@ function Base:is_project()
 
     return self._root ~= ''
 end
+
+--- Can be used with lua snip to load in additional filetype snippets
+--- The existing filetype must be passed through
+---@param filetype string|table
+---@return table
+function Base:get_filetypes()
+    local buffer_filetype = vim.api.nvim_buf_get_option(self._buffnr, 'filetype')
+    local filetypes = vim.split(buffer_filetype, '.', true)
+
+    if not self:is_project() then
+        -- Don't get extra file types if the file is not even in the project
+    return filetypes
+    end
+
+    -- Use deep copy as it would create an infinite loop
+    local new_ft = vim.deepcopy(filetypes)
+    for _, ft in pairs(filetypes) do
+        -- First check the simple mappings
+        -- These mappings apply no matter what if the filetype matches
+        local additional_ft = self:get_additional_filetypes_aliases(ft)
+        vim.list_extend(new_ft, additional_ft)
+
+        -- Now look for more dynamic custom mappings
+        local custom_ft = self:get_additional_filetypes_custom(ft)
+        vim.list_extend(new_ft, custom_ft)
+    end
+
+    return new_ft
+end
+
+--- Retrieve additional filetypes from the internal alias list
+--- This list is for only very simple mappings.
+---@param filetype string
+---@return table
+function Base:get_additional_filetypes_aliases(filetype)
+    local matches = {}
+
+    if type(self._ft_aliases) == 'table' then
+        local ft_aliases = {}
+        if type(self._ft_aliases[filetype]) == 'table' then
+            ft_aliases = self._ft_aliases[filetype]
+        elseif type(self._ft_aliases[filetype]) == 'string' then
+            ft_aliases = {self._ft_aliases[filetype]}
+        end 
+
+        vim.list_extend(matches, ft_aliases)
+    end
+
+    return matches
+end
+
+--- Retrieve additional filetypes from custom checks.
+--- This method should be overriden if dynamic checking is required.
+--- Example of use would be detecting whether a js file is 
+--- in a legacy js build, legacy legacy build or new build and add a mapping 
+--- depending on which the js file belongs to.
+--- For example you could have myproject-javascriptv2, myproject-javascript-legacy
+--- and then create extra luasnips snippets to have targeted snippets without poullting
+--- files that don't need them
+---@param filetype string
+---@return table
+function Base:get_additional_filetypes_custom(filetype)
+    return {}
+end
+
 return Base
