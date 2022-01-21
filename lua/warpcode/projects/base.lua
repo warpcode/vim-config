@@ -23,19 +23,6 @@ function Base:new(buffnr)
     return o
 end
 
---- Construct a new instance from a file path
----@param file string
-function Base:from_file(file)
-    file = path.get_file_buf_or_cwd(file)
-    local object = self:new()
-    local root_dir = object:get_project_root(file)
-
-    object._file = file
-    object._root = root_dir
-
-    return object
-end
-
 --- Ensure root directory has been found
 ---@param force boolean Force the class to re-find the root dir
 function Base:assert_root_directory(force)
