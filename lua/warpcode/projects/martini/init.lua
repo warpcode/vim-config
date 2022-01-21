@@ -9,8 +9,8 @@ function Martini:new(buffnr)
 
     setmetatable(o, self)
     self.__index = self
-    self._base_files = {'initMartini.sh'}
-    self._require_all_base_files = true
+    self._root_detection = 'files'
+    self._root_base_files = {'initMartini.sh'}
 
     return o
 end

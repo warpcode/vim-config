@@ -7,9 +7,10 @@ function Base:new(buffnr)
     local o = {}
     setmetatable(o, self)
     self.__index = self
-    self._base_files = {}
-    self._require_all_base_files = false
-    self._file = nil
+    self._root_detection = 'files'
+    self._root_detection_type = 'loose'
+    self._root_base_files = {}
+    self._root_folder_name = ''
     self._root = nil
     self._ft_aliases = {}
 
@@ -47,11 +48,22 @@ function Base:find_project_root(file)
         return nil
     end
 
-    return path.root_pattern(
-        self._base_files or {},
-        file,
-        self._require_all_base_files
-    )
+    local detection_type = self._root_detection_type == 'strict'
+    if self._root_detection == 'files' then
+        return path.root_pattern(
+            self._root_base_files or {},
+            file,
+            detection_type
+        )
+    elseif self._root_detection == 'folder_name' then
+        return path.root_pattern_by_parent_name(
+            self._root_folder_name or {},
+            file,
+            detection_type
+        )
+    end
+
+    return nil
 end
 
 --- Check if the current instance detected a root directory for this project type
