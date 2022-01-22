@@ -44,6 +44,10 @@ function Base:assert_root_directory(force)
         return
     end
 
+    if not vim.api.nvim_buf_is_valid(self._buffnr) then 
+        return
+    end
+
     local file = vim.api.nvim_buf_get_name(self._buffnr)
 
     if not file or file == '' then 
@@ -92,6 +96,10 @@ end
 ---@param filetype string|table
 ---@return table
 function Base:get_filetypes()
+    if not vim.api.nvim_buf_is_valid(self._buffnr) then 
+        return {}
+    end
+
     local buffer_filetype = vim.api.nvim_buf_get_option(self._buffnr, 'filetype')
     local filetypes = vim.split(buffer_filetype, '.', true)
 
