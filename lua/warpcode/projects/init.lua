@@ -1,5 +1,6 @@
 local projects = {
-    martini = require 'warpcode.projects.martini'
+    require 'warpcode.projects.martini',
+    require 'warpcode.projects.vim-config',
 }
 
 local initialised_projects = {}
@@ -9,7 +10,7 @@ local M = {}
 --- Detect a which project (if any) the specified buffer is part of
 ---@param buffnr number|nil
 M.detect = function (buffnr)
-    for name, project in pairs(projects) do
+    for _, project in pairs(projects) do
         local project = project:new(buffnr)
         if project:is_project() then 
             return project
