@@ -57,3 +57,18 @@ if #snippets_vscode_paths > 0 then
         exclude = {}
     })
 end
+
+
+luasnip.config.setup({
+    ft_func = function()
+        -- Grab the default from luasnip but also check cursor pos for inline highlighting
+        local project = require 'warpcode.projects'.get()
+
+        if project then
+            return project:get_filetypes()
+        end
+
+        return require 'luasnip.extras.filetype_functions'.from_pos_or_filetype() or {}
+    end
+})
+
