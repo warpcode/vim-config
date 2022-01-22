@@ -7,12 +7,15 @@
         "snippets": [
             {
                 "language": [
-                    "html",
-                    "jade",
-                    "pug",
-                    "eruby"
+                    "martini-html"
                 ],
-                "path": "./snippets/html.json"
+                "path": "./snippets/martini-html.json"
+            },
+            {
+                "language": [
+                    "martini-php"
+                ],
+                "path": "./snippets/martini-php.json"
             }
         ]
     }
