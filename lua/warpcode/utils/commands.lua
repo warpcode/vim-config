@@ -47,6 +47,8 @@ local M = {}
 --         },
 --     }
 -- }
+-- TODO: add params for additional autocompletion
+-- TODO: pass arguments to callbacks to generate command/children etc
 
 --- Run the specified command
 ---@param _args table
