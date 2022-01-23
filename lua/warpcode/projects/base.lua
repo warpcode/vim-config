@@ -1,3 +1,4 @@
+local commands = require('warpcode.utils.commands')
 local path = require('warpcode.utils.path')
 local Base = {}
 
@@ -15,6 +16,52 @@ function Base:new(buffnr)
     self._root_folder_name = ''
     self._root = nil
     self._ft_aliases = {}
+    self._project_commands = {
+        run = function() warpcode.print("test") end,
+        children = {
+            this = {
+                run = function() return {} end,
+            },
+            is = {
+                run = function() return {} end,
+                children = {
+                    aaaaa = {
+                        run = function() return {} end,
+                    },
+                },
+            },
+            are = function() return {
+                run = function() return {} end,
+                children = {
+                    aaaaa = {
+                        run = function() return {} end,
+                        children = function()
+                            return {
+                                test = {
+                                    run = function(...) warpcode.print({...}) end,
+                                },
+                            }
+                        end,
+                    },
+                }
+            }
+            end,
+            fail = function()
+                return {
+                }
+            end,
+            object = {
+                children = {
+                    one = {
+                    },
+                    two = {
+                    },
+                    three = {
+                    },
+                },
+            },
+        }
+    }
 
     -- Register the buffer number so this instance is "attached" to a buffer
     if type(buffnr) == 'number' and buffnr > 0 then
@@ -22,6 +69,8 @@ function Base:new(buffnr)
     else
         self._buffnr = vim.api.nvim_get_current_buf()
     end
+
+    o:command_register()
 
     return o
 end
@@ -105,7 +154,7 @@ function Base:get_filetypes()
 
     if not self:is_project() then
         -- Don't get extra file types if the file is not even in the project
-    return filetypes
+        return filetypes
     end
 
     -- Use deep copy as it would create an infinite loop
@@ -157,6 +206,25 @@ end
 ---@return table
 function Base:get_additional_filetypes_custom(filetype)
     return {}
+end
+
+function Base:command_register()
+    if not vim.api.nvim_buf_is_valid(self._buffnr) then 
+        return
+    end
+
+    vim.api.nvim_buf_add_user_command(self._buffnr, 'Project', function(...) return self:command_run(...) end, {
+        complete = function(...) return self:command_complete(...) end,
+        nargs = '+'
+    })
+end
+
+function Base:command_complete(arg, line, pos)
+    return commands.complete(arg, line, pos, self._project_commands)
+end
+
+function Base:command_run(args)
+    return commands.run(args, self._project_commands)
 end
 
 return Base

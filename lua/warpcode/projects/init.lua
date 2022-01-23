@@ -58,15 +58,13 @@ M.cleanup = function ()
     end
 end
 
+--- Callback to run when a buffer opens
 M._autocmd_callback = function()
-    -- initialise an instance for the buffer
-   M.get()
+   local project = M.get()
 
-    -- vim.api.nvim_buf_set_var(0, 'project', function() return project end)
-end
-
-M._command_autocomplete = function()
-
+   if not project then
+       return
+   end
 end
 
 vim.cmd([[
