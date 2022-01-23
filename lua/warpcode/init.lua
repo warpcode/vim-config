@@ -7,4 +7,4 @@ require('warpcode.packages.lspkind')
 require('warpcode.packages.lspsaga')
 require('warpcode.lsp')
 require('warpcode.globals')
-
+require('warpcode.projects')

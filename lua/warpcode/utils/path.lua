@@ -104,6 +104,37 @@ M.root_pattern = function (_files, _base_path, _match_all)
     return M.root_pattern(_files, base_path, _match_all)
 end
 
+--- Find a root directory by the name of the root directory
+---@param _name string
+---@param _base_path string
+---@param _full_match boolean
+---@return string|nil
+M.root_pattern_by_parent_name = function (_name, _base_path, _full_match)
+    if not _name or _name == '' then
+        -- Nothing sent to match
+        return nil
+    end
+
+    local base_path = M.remove_trailing_slash(_base_path or '/')
+
+    if base_path == '/' or base_path == '' then 
+        return nil
+    end
+
+    local split_path = vim.split(base_path, '/')
+    local last_segment = split_path[#split_path]
+
+    if _full_match and _name == last_segment then
+        return M.add_trailing_slash(base_path)
+    elseif not _full_match and string.match(last_segment, _name) then
+        return M.add_trailing_slash(base_path)
+    end
+
+    -- strip of the current path segment and search the next parent
+    base_path = M.dirname(base_path)
+    return M.root_pattern_by_parent_name(_name, base_path, _full_match)
+end
+
 M.remove_trailing_slash = function (path)
     if path ~= '/' and string.sub(path, -1, -1) == "/" then
         path = string.sub(path, 1, -2)

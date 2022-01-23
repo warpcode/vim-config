@@ -9,18 +9,11 @@ function Martini:new(buffnr)
 
     setmetatable(o, self)
     self.__index = self
-    self._project_name = 'Martini'
-    self._project_name_slug = 'martini'
+    self._project_name = 'Vim Config'
+    self._project_name_slug = 'vim-config'
     self._root_detection = 'files'
-    self._root_base_files = {'initMartini.sh'}
-    self._ft_aliases = {
-        html = {
-            'martini-html'
-        },
-        php = {
-            'martini-php'
-        },
-    }
+    self._root_detection_type = 'strict'
+    self._root_base_files = {'init.vim', 'vimrc'}
 
     return o
 end
