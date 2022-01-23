@@ -2,21 +2,55 @@ local M = {}
 
 -- Structure for commands
 -- {
---     run = function()end(),
+--     run = function() warpcode.print("test") end,
 --     children = {
---         subcommand1 = {
---             run = function()end(),
---             children = {},
+--         this = {
+--             run = function() return {} end,
 --         },
---         subcommand2 = function()
---             return {
---                 run = function()end(),
---                 children = {},
+--         is = {
+--             run = function() return {} end,
+--             children = {
+--                 aaaaa = {
+--                     run = function() return {} end,
+--                 },
+--             },
+--         },
+--         are = function() return {
+--             run = function() return {} end,
+--             children = {
+--                 aaaaa = {
+--                     run = function() return {} end,
+--                     children = function()
+--                         return {
+--                             test = {
+--                                 run = function(...) warpcode.print({...}) end,
+--                             },
+--                         }
+--                     end,
+--                 },
 --             }
---         end()
---     },
+--         }
+--         end,
+--         fail = function()
+--             return {
+--             }
+--         end,
+--         object = {
+--             children = {
+--                 one = {
+--                 },
+--                 two = {
+--                 },
+--                 three = {
+--                 },
+--             },
+--         },
+--     }
 -- }
 
+--- Run the specified command
+---@param _args table
+---@param _args_list table
 M.run = function (_args, _arg_list)
     local args = M.split(_args.args)
     local command_config, remaining_args = M.get_command(args, _arg_list)
@@ -34,6 +68,11 @@ M.run = function (_args, _arg_list)
 end
 
 --- Run the autocomplete check
+---@param _arg string
+---@param _line string
+---@param _pos number
+---@param _arg_list table
+---@return table
 M.complete = function (_arg, _line, _pos, _arg_list)
     local args = M.split(_line, true, true)
     local command_config, remaining_args = M.get_command(args, _arg_list)
@@ -69,6 +108,7 @@ M.get_command = function (_args, _arg_list)
         return arg_list, args
     end
 
+    -- Remove the first item as we're grabbing it for the next recursion
     table.remove(args, 1)
     return M.get_command(args, child_list[first_arg])
 end
