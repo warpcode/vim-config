@@ -17,46 +17,13 @@ function Base:new(buffnr)
     self._root = nil
     self._ft_aliases = {}
     self._project_commands = {
-        run = function() warpcode.print("test") end,
         children = {
-            this = {
-                run = function() return {} end,
-            },
-            is = {
-                run = function() return {} end,
+            get = {
                 children = {
-                    aaaaa = {
-                        run = function() return {} end,
-                    },
-                },
-            },
-            are = function() return {
-                run = function() return {} end,
-                children = {
-                    aaaaa = {
-                        run = function() return {} end,
-                        children = function()
-                            return {
-                                test = {
-                                    run = function(...) warpcode.print({...}) end,
-                                },
-                            }
+                    name = {
+                        run = function(name_type)
+                            warpcode.print(o:get_project_name(name_type == 'short'))
                         end,
-                    },
-                }
-            }
-            end,
-            fail = function()
-                return {
-                }
-            end,
-            object = {
-                children = {
-                    one = {
-                    },
-                    two = {
-                    },
-                    three = {
                     },
                 },
             },
