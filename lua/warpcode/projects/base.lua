@@ -22,7 +22,13 @@ function Base:new(buffnr)
                 children = {
                     name = {
                         run = function(name_type)
-                            warpcode.print(o:get_project_name(name_type == 'short'))
+                            print(o:get_project_name(name_type == 'short'))
+                        end,
+                    },
+                    root = {
+                        run = function(name_type)
+                            o:is_project()
+                            print(o._root)
                         end,
                     },
                 },
