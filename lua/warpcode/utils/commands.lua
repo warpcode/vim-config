@@ -72,7 +72,7 @@ M.run = function (_args, _arg_list)
         end
     end
 
-    command_config.run(unpack(remaining_args))
+    command_config.run(_args, remaining_args)
 end
 
 --- Run the autocomplete check

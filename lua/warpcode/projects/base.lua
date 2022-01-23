@@ -21,12 +21,12 @@ function Base:new(buffnr)
             get = {
                 children = {
                     name = {
-                        run = function(name_type)
-                            print(o:get_project_name(name_type == 'short'))
+                        run = function(args, extra_args)
+                            print(o:get_project_name(extra_args[1] == 'short'))
                         end,
                     },
                     root = {
-                        run = function(name_type)
+                        run = function()
                             o:is_project()
                             print(o._root)
                         end,
