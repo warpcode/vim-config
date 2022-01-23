@@ -1,3 +1,5 @@
+local table_util = require 'warpcode.utils.tables'
+
 local M = {}
 
 -- Structure for commands
@@ -47,8 +49,6 @@ local M = {}
 --         },
 --     }
 -- }
--- TODO: add params for additional autocompletion
--- TODO: pass arguments to callbacks to generate command/children etc
 
 --- Run the specified command
 ---@param _args table
@@ -61,7 +61,10 @@ M.run = function (_args, _arg_list)
         error("Command cannot be ran")
     end
 
-    local child_list = M.get_table_or_run_fn(command_config.children)
+    local child_list = M.get_table_or_run_fn(command_config.children, {
+        remaining_args = remaining_args
+    })
+
     if type(command_config.run) ~= 'function' then
         -- command has no run function
         -- Check if there are children available and display the appropriate message
@@ -89,12 +92,22 @@ M.complete = function (_arg, _line, _pos, _arg_list)
         return {}
     end
 
-    local child_list = M.get_table_or_run_fn(command_config.children)
-    if type(child_list) ~= 'table' then
-        return {}
+    -- If we have remaining args, it means a child was not matched
+    -- with the left over args
+    -- Therefore we are matching on params.
+    local child_list = {}
+    if #remaining_args == 0 then 
+        child_list = M.get_table_or_run_fn(command_config.children, {
+            remaining_args = remaining_args
+        }) or {}
     end
 
-    return vim.tbl_keys(child_list)
+    local params_list = M.get_table_or_run_fn(command_config.params, {
+        remaining_args = remaining_args
+    }) or {}
+
+    vim.list_extend(params_list, vim.tbl_keys(child_list))
+    return table_util.list_diff(params_list, remaining_args) 
 end
 
 --- Recursively scan the argument list for a command entry
@@ -102,7 +115,10 @@ end
 ---@param table|function _arg_list
 ---@return table|function|nil
 M.get_command = function (_args, _arg_list)
-    local arg_list = M.get_table_or_run_fn(_arg_list)
+    local arg_list = M.get_table_or_run_fn(_arg_list, {
+        remaining_args = _args
+    })
+
     local args = vim.deepcopy(_args)
 
     if type(args) ~= 'table' or #args == 0 then
@@ -110,7 +126,10 @@ M.get_command = function (_args, _arg_list)
     end
 
     local first_arg = args[1]
-    local child_list = M.get_table_or_run_fn(arg_list.children)
+    local child_list = M.get_table_or_run_fn(arg_list.children, {
+        remaining_args = _args
+    })
+
     if type(child_list) ~= 'table' or not child_list[first_arg] then
         -- no children so assume we're at our command with additional args
         return arg_list, args
