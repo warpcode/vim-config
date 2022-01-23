@@ -55,13 +55,19 @@ M.run = function (_args, _arg_list)
     local args = M.split(_args.args)
     local command_config, remaining_args = M.get_command(args, _arg_list)
 
-    warpcode.print(command_config)
     if type(command_config) ~= 'table' then
         error("Command cannot be ran")
     end
 
+    local child_list = M.get_table_or_run_fn(command_config.children)
     if type(command_config.run) ~= 'function' then
-        error('More parameters required')
+        -- command has no run function
+        -- Check if there are children available and display the appropriate message
+        if type(child_list) ~= 'table' or not next(child_list) then
+            error('Command cannot be ran')
+        else
+            error('More parameters required')
+        end
     end
 
     command_config.run(unpack(remaining_args))
