@@ -1,10 +1,10 @@
 local Base = require('warpcode.projects.base')
 
-local Martini = Base:new()
+local VimConfig = Base:new()
 
 --- Construct a new instance of the class
 ---@param buffnr int
-function Martini:new(buffnr)
+function VimConfig:new(buffnr)
     local o = Base:new(buffnr)
 
     setmetatable(o, self)
@@ -18,4 +18,4 @@ function Martini:new(buffnr)
     return o
 end
 
-return Martini
+return VimConfig
