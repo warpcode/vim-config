@@ -27,10 +27,8 @@ M.get = function (buffnr)
 
     buffnr = buffnr or vim.api.nvim_get_current_buf()
 
-    for i, x in pairs(initialised_projects) do
-        if i == buffnr then
-            return x
-        end
+    if type(initialised_projects[buffnr]) == 'table' then
+        return initialised_projects[buffnr]
     end
     
     local detected_project = M.detect(buffnr)
