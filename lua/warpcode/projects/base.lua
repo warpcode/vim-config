@@ -186,6 +186,7 @@ function Base:command_register()
         return
     end
 
+    pcall(vim.api.nvim_buf_del_user_command, self._buffnr, 'Project')
     vim.api.nvim_buf_add_user_command(self._buffnr, 'Project', function(...) return self:command_run(...) end, {
         complete = function(...) return self:command_complete(...) end,
         nargs = '+'
