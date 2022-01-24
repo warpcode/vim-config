@@ -59,6 +59,16 @@ function Base:get_project_name(slug)
     return self._project_name
 end
 
+--- Return the buffer number
+function Base:get_buffnr()
+    return self._buffnr 
+end
+
+--- Check if the buffer is valid
+function Base:has_valid_buffer()
+    return vim.api.nvim_buf_is_valid(self._buffnr) 
+end
+
 --- Ensure root directory has been found
 ---@param force boolean Force the class to re-find the root dir
 function Base:assert_root_directory(force)
@@ -66,7 +76,7 @@ function Base:assert_root_directory(force)
         return
     end
 
-    if not vim.api.nvim_buf_is_valid(self._buffnr) then 
+    if not self:has_valid_buffer() then 
         return
     end
 
@@ -118,7 +128,7 @@ end
 ---@param filetype string|table
 ---@return table
 function Base:get_filetypes()
-    if not vim.api.nvim_buf_is_valid(self._buffnr) then 
+    if not self:has_valid_buffer() then 
         return {}
     end
 
@@ -182,7 +192,7 @@ function Base:get_additional_filetypes_custom(filetype)
 end
 
 function Base:command_register()
-    if not vim.api.nvim_buf_is_valid(self._buffnr) then 
+    if self:has_valid_buffer() then 
         return
     end
 
