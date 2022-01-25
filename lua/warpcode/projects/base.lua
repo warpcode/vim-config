@@ -72,6 +72,10 @@ function Base:assert_root_directory(force)
         return
     end
 
+    -- Set _root to empty string as any failures from here
+    -- means a root directory could not be set
+    self._root = self._root or ''
+
     if not self:has_valid_buffer() then 
         return
     end
@@ -79,6 +83,8 @@ function Base:assert_root_directory(force)
     local file = vim.api.nvim_buf_get_name(self._buffnr)
 
     if not file or file == '' then 
+        -- if we have a valid buffer but it's not from a file
+        -- default to the current working directory
         file = vim.fn.getcwd()
     end
 
