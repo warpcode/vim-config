@@ -1,13 +1,11 @@
+local new_class = require('warpcode.utils.class')
 local commands = require('warpcode.utils.commands')
 local path = require('warpcode.utils.path')
-local Base = {}
+local Base = new_class:extend()
 
 --- Construct a new instance of the base projects class
 ---@param buffnr int
 function Base:new(buffnr)
-    local o = {}
-    setmetatable(o, self)
-    self.__index = self
     self._project_name = ''
     self._project_name_slug = ''
     self._root_detection = 'files'
@@ -43,9 +41,7 @@ function Base:new(buffnr)
         self._buffnr = vim.api.nvim_get_current_buf()
     end
 
-    o:command_register()
-
-    return o
+    self:command_register()
 end
 
 --- Simply return the name of the project
@@ -192,7 +188,7 @@ function Base:get_additional_filetypes_custom(filetype)
 end
 
 function Base:command_register()
-    if self:has_valid_buffer() then 
+    if not self:has_valid_buffer() then 
         return
     end
 

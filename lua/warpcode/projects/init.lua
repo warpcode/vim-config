@@ -11,7 +11,7 @@ local M = {}
 ---@param buffnr number|nil
 M.detect = function (buffnr)
     for _, project in pairs(projects) do
-        local project = project:new(buffnr)
+        local project = project(buffnr)
         if project:is_project() then 
             return project
         end
@@ -27,17 +27,16 @@ M.get = function (buffnr)
 
     buffnr = buffnr or vim.api.nvim_get_current_buf()
 
-    if type(initialised_projects[buffnr]) == 'table' then
-        return initialised_projects[buffnr]
+    if initialised_projects[buffnr] == nil then
+        local detected_project = M.detect(buffnr)
+
+        if not detected_project then
+            return nil
+        end
+
+        initialised_projects[buffnr] = detected_project
     end
     
-    local detected_project = M.detect(buffnr)
-    if not detected_project then
-        return nil
-    end
-
-    initialised_projects[buffnr] = detected_project
-
     return initialised_projects[buffnr]
 end
 
@@ -58,11 +57,11 @@ end
 
 --- Callback to run when a buffer opens
 M._autocmd_callback = function()
-   local project = M.get()
+   -- local project = M.get()
 
-   if not project then
-       return
-   end
+   -- if not project then
+   --     return
+   -- end
 end
 
 vim.cmd([[

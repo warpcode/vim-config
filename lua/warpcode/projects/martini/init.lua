@@ -1,14 +1,12 @@
 local Base = require('warpcode.projects.base')
 
-local Martini = Base:new()
+local Martini = Base:extend()
 
 --- Construct a new instance of the class
 ---@param buffnr int
 function Martini:new(buffnr)
-    local o = Base:new(buffnr)
+    Martini.super.new(self, buffnr)
 
-    setmetatable(o, self)
-    self.__index = self
     self._project_name = 'Martini'
     self._project_name_slug = 'martini'
     self._root_detection = 'files'
@@ -21,8 +19,6 @@ function Martini:new(buffnr)
             'martini-php'
         },
     }
-
-    return o
 end
 
 return Martini
