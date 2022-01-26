@@ -20,13 +20,13 @@ function Base:new(buffnr)
                 children = {
                     name = {
                         run = function(args, extra_args)
-                            print(o:get_project_name(extra_args[1] == 'short'))
+                            print(self:get_project_name(extra_args[1] == 'short'))
                         end,
                     },
                     root = {
                         run = function()
-                            o:is_project()
-                            print(o._root)
+                            self:is_project()
+                            print(self._root)
                         end,
                     },
                 },
