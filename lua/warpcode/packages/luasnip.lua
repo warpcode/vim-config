@@ -8,12 +8,12 @@ end
 local snippets_snipmate_module_paths = function()
 	local plugins = { "vim-snippets" }
 	local paths = {
-        vim.g.vim_source .. '/modules/snippets'
+        vim.g.vim_source .. '/modules/snippets/snippets'
     }
 	for _, plug in ipairs(plugins) do
 		local path = vim.fn['warpcode#packages#module_loaded_path'](plug)
-		if path ~= '' and vim.fn.isdirectory(path) ~= 0 then
-			table.insert(paths, path)
+		if path ~= '' and vim.fn.isdirectory(path .. '/snippets') ~= 0 then
+			table.insert(paths, path .. '/snippets')
 		end
 	end
 
@@ -46,7 +46,7 @@ if #snippets_snipmate_paths > 0 then
     luasnip.filetype_extend("all", { "_" })
 
     require("luasnip.loaders.from_snipmate").load({
-        path = snippets_snipmate_paths
+        paths = snippets_snipmate_paths
     })
 end
 
