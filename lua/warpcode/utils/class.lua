@@ -1,9 +1,11 @@
 local ClassObject = {}
 ClassObject.__index = ClassObject
 
-
+--- Used as a constructor
 function ClassObject:new() end
 
+--- When creating a new class, use this method
+--- to extend this base class
 function ClassObject:extend()
     local o = {}
     for k, v in pairs(self) do
@@ -17,6 +19,7 @@ function ClassObject:extend()
     return o
 end
 
+--- Use another classes methods in this class
 function ClassObject:implement(...)
     for _, o in pairs({...}) do
         for k, v in pairs(o) do
@@ -42,6 +45,8 @@ function ClassObject:__tostring()
     return "New Class Object"
 end
 
+--- Called like a function to instantiate the class
+--- e.g local instance = YourClass(arg1, arg2)
 function ClassObject:__call(...)
     local obj = setmetatable({}, self)
     obj:new(...)
