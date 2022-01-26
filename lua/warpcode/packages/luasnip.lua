@@ -42,22 +42,21 @@ if #snippets_snipmate_paths > 0 then
     -- One peculiarity of honza/vim-snippets is that the file with the global snippets is _.snippets, so global snippets
     -- are stored in `ls.snippets._`.
     -- We need to tell luasnip that "_" contains global snippets:
-    -- luasnip.filetype_extend("all", { "_" })
+    luasnip.filetype_extend("all", { "_" })
 
-    -- require("luasnip.loaders.from_snipmate").lazy_load({
-    --     path = snippets_snipmate_paths
-    -- })
+    require("luasnip.loaders.from_snipmate").load({
+        path = snippets_snipmate_paths
+    })
 end
 
 -- Load vscode style snippets
 if #snippets_vscode_paths > 0 then
-    require("luasnip.loaders.from_vscode").lazy_load({
+    require("luasnip.loaders.from_vscode").load({
         paths = snippets_vscode_paths,
         include = nil, -- Load all languages
         exclude = {}
     })
 end
-
 
 luasnip.config.setup({
     ft_func = function()
