@@ -57,11 +57,11 @@ end
 
 --- Callback to run when a buffer opens
 M._autocmd_callback = function()
-   -- local project = M.get()
+   local project = M.get()
 
-   -- if not project then
-   --     return
-   -- end
+   if not project then
+       return
+   end
 end
 
 vim.cmd([[
