@@ -74,6 +74,7 @@ call warpcode#packages#add('vim-airline/vim-airline-themes')
 call warpcode#packages#add('bronson/vim-trailing-whitespace')
 call warpcode#packages#add('lukas-reineke/indent-blankline.nvim', {'disable_vim': 1})
 call warpcode#packages#add('Yggdroot/indentLine', {'disable_nvim': 1})
+call warpcode#packages#add('ryanoasis/vim-devicons')
 
 " Snippets
 call warpcode#packages#add('rafamadriz/friendly-snippets', {'disable_vim': 1})
