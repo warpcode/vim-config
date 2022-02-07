@@ -50,7 +50,6 @@ end
 " File Managers
 call warpcode#packages#add('junegunn/fzf', {'do': {-> fzf#install()}, 'disable_nvim': 1})
 call warpcode#packages#add('junegunn/fzf.vim', {'disable_nvim': 1})
-call warpcode#packages#add('nvim-lua/plenary.nvim', {'disable_vim': 1})
 call warpcode#packages#add('nvim-telescope/telescope.nvim', {'disable_vim': 1})
 call warpcode#packages#add('nvim-telescope/telescope-fzf-native.nvim', {'disable_vim': 1, 'do': 'make'})
 call warpcode#packages#add('scrooloose/nerdtree')
@@ -81,6 +80,8 @@ call warpcode#packages#add('rafamadriz/friendly-snippets', {'disable_vim': 1})
 call warpcode#packages#add('honza/vim-snippets')
 
 " Utils
+call warpcode#packages#add('nvim-lua/plenary.nvim', {'disable_vim': 1})
+call warpcode#packages#add('nvim-lua/popup.nvim', {'disable_vim': 1})
 call warpcode#packages#add('tpope/vim-commentary')
 call warpcode#packages#add('Raimondi/delimitMate')
 call warpcode#packages#add('tpope/vim-surround')
@@ -88,6 +89,7 @@ call warpcode#packages#add('vim-utils/vim-man')
 call warpcode#packages#add('mbbill/undotree')
 call warpcode#packages#add('nvim-treesitter/nvim-treesitter', {'disable_vim': 1})
 call warpcode#packages#add('nvim-treesitter/playground', {'disable_vim': 1})
+call warpcode#packages#add('sudormrfbin/cheatsheet.nvim', {'disable_vim': 1})
 
 " Version Control
 call warpcode#packages#add('tpope/vim-fugitive', { 'disable': !executable('git') })
