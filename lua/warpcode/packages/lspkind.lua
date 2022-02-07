@@ -4,6 +4,6 @@ if (not lspkind_status) then
     return
 end
 
-lspkind.init({
-    with_text = true,
-})
+-- lspkind.init({
+--     with_text = true,
+-- })
