@@ -25,7 +25,12 @@ local source_mapping = {
 	path = "[path]",
 }
 
+
 local opts = {
+    experimental = {
+        -- native_menu = true,
+        ghost_text = true,
+    },
 	snippet = {
 		expand = function(args)
             -- For `vsnip` user.
