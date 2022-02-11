@@ -60,6 +60,9 @@ if #snippets_vscode_paths > 0 then
 end
 
 luasnip.config.setup({
+    history = true,
+    updateevents = 'TextChanged,TextChangedI',
+    enable_autosnippets = true,
     ft_func = function()
         -- Grab the default from luasnip but also check cursor pos for inline highlighting
         local project = require 'warpcode.projects'.get()
