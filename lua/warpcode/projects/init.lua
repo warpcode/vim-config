@@ -1,9 +1,8 @@
+local bufstore = require 'warpcode.bufstore'
 local projects = {
     require 'warpcode.projects.martini',
     require 'warpcode.projects.vim-config',
 }
-
-local initialised_projects = {}
 
 local M = {}
 
@@ -22,37 +21,23 @@ end
 
 --- Get the project for a particular buffer
 M.get = function (buffnr)
-    -- First cleanup any old instances
-    M.cleanup()
-
     buffnr = buffnr or vim.api.nvim_get_current_buf()
 
-    if initialised_projects[buffnr] == nil then
+    local bufconfig = bufstore.get(buffnr)
+
+    if bufconfig['detect_project'] == nil then
         local detected_project = M.detect(buffnr)
 
         if not detected_project then
             return nil
         end
 
-        initialised_projects[buffnr] = detected_project
+        bufconfig['detect_project'] = detected_project
+
+        bufstore.set(bufconfig, buffnr)
     end
     
-    return initialised_projects[buffnr]
-end
-
-M.get_all = function()
-    M.cleanup()
-    return initialised_projects
-end
-
---- Run through each instance and remove any where the buffer
---- no longer exists
-M.cleanup = function ()
-    for i, x in pairs(initialised_projects) do
-        if not vim.api.nvim_buf_is_loaded(i) then
-            initialised_projects[i] = nil
-        end
-    end
+    return bufconfig['detect_project']
 end
 
 --- Callback to run when a buffer opens
