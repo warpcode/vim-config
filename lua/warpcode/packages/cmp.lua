@@ -24,9 +24,6 @@ local source_mapping = {
 }
 
 local opts = {
-	completion = {
-		completeopt = 'menu,menuone,noinsert',
-	},
 	snippet = {
 		expand = function(args)
             -- For `vsnip` user.
