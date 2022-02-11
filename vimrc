@@ -23,14 +23,15 @@ call warpcode#packages#add('gruvbox-community/gruvbox', {'config': { -> execute(
 if has('nvim')
     " Completion
     " call warpcode#packages#add('github/copilot.vim', {'disable_vim': 1})
+    call warpcode#packages#add('hrsh7th/nvim-cmp', {'disable_vim': 1})
+    call warpcode#packages#add('hrsh7th/cmp-nvim-lua', {'disable_vim': 1})
     call warpcode#packages#add('hrsh7th/cmp-nvim-lsp', {'disable_vim': 1})
     call warpcode#packages#add('hrsh7th/cmp-buffer', {'disable_vim': 1})
     call warpcode#packages#add('hrsh7th/cmp-path', {'disable_vim': 1})
     call warpcode#packages#add('hrsh7th/cmp-cmdline', {'disable_vim': 1})
-    call warpcode#packages#add('hrsh7th/nvim-cmp', {'disable_vim': 1})
-    call warpcode#packages#add('onsails/lspkind-nvim', {'disable_vim': 1})
     call warpcode#packages#add('saadparwaiz1/cmp_luasnip', {'disable_vim': 1})
     call warpcode#packages#add('L3MON4D3/LuaSnip', {'disable_vim': 1})
+    call warpcode#packages#add('onsails/lspkind-nvim', {'disable_vim': 1})
 
     " call warpcode#packages#add('tzachar/cmp-tabnine', {'do': './install.sh', 'disable_vim': 1})
     

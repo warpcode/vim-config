@@ -17,10 +17,12 @@ end
 
 -- Setup nvim-cmp.
 local source_mapping = {
-	buffer = "[Buf]",
+	buffer = "[buf]",
+	cmp_tabnine = "[tab9]",
+	luasnip = "[snip]",
 	nvim_lsp = "[LSP]",
-	nvim_lua = "[Lua]",
-	cmp_tabnine = "[TN]",
+	nvim_lua = "[lua]",
+	path = "[path]",
 }
 
 local opts = {
@@ -90,13 +92,14 @@ local opts = {
         -- tabnine completion? yayaya
         -- { name = "cmp_tabnine" },
 		{ name = "nvim_lsp" },
+		{ name = "nvim_lua" },
         -- For vsnip user.
 		-- { name = 'vsnip' },
 		-- For luasnip user.
 		{ name = "luasnip" },
 		-- For ultisnips user.
 		-- { name = 'ultisnips' },
-		{ name = "buffer" },
+		{ name = "buffer", keyword_length = 5},
 		{ name = "path" },
 	},
 }
