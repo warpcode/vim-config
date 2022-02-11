@@ -87,9 +87,12 @@ call warpcode#packages#add('Raimondi/delimitMate')
 call warpcode#packages#add('tpope/vim-surround')
 call warpcode#packages#add('vim-utils/vim-man')
 call warpcode#packages#add('mbbill/undotree')
+call warpcode#packages#add('sudormrfbin/cheatsheet.nvim', {'disable_vim': 1})
+
+" Treesitter
 call warpcode#packages#add('nvim-treesitter/nvim-treesitter', {'disable_vim': 1})
 call warpcode#packages#add('nvim-treesitter/playground', {'disable_vim': 1})
-call warpcode#packages#add('sudormrfbin/cheatsheet.nvim', {'disable_vim': 1})
+call warpcode#packages#add('p00f/nvim-ts-rainbow', {'disable_vim': 1})
 
 " Version Control
 call warpcode#packages#add('tpope/vim-fugitive', { 'disable': !executable('git') })
