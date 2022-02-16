@@ -20,4 +20,23 @@ M.list_diff = function (a, b)
     return ret
 end
 
+M.contains = function(needle, haystack)
+    if type(needle) == 'table' then
+        for _, value in pairs(needle) do
+            if M.contains(value, haystack) then
+                return true 
+            end
+        end
+
+        return false
+    end
+
+    for _, value in pairs(haystack) do
+        if value == needle then
+            return true 
+        end
+    end
+    return false
+end
+
 return M
