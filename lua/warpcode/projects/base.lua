@@ -41,7 +41,7 @@ function Base:new(buffnr)
         self._buffnr = vim.api.nvim_get_current_buf()
     end
 
-    self:command_register()
+    self:_on_attach()
 end
 
 --- Simply return the name of the project
@@ -193,6 +193,20 @@ function Base:get_additional_filetypes_custom(filetype)
     return {}
 end
 
+--- Run this private method when attaching to the buffer
+function Base:_on_attach()
+    if not self:has_valid_buffer() then 
+        return
+    end
+
+    self:command_register()
+    self:on_attach()
+end
+
+--- Override this method for custom actions when attaching to the buffer 
+function Base:on_attach() end
+
+--- Register the project command
 function Base:command_register()
     if not self:has_valid_buffer() then 
         return
@@ -205,10 +219,12 @@ function Base:command_register()
     })
 end
 
+--- Core autocompletion for project commands
 function Base:command_complete(arg, line, pos)
     return commands.complete(arg, line, pos, self._project_commands)
 end
 
+--- Core function to run the specified command
 function Base:command_run(args)
     return commands.run(args, self._project_commands)
 end
