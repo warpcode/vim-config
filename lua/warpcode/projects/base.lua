@@ -76,14 +76,7 @@ function Base:assert_root_directory(force)
         return
     end
 
-    local file = vim.api.nvim_buf_get_name(self._buffnr)
-
-    if not file or file == '' then 
-        -- if we have a valid buffer but it's not from a file
-        -- default to the current working directory
-        file = vim.fn.getcwd()
-    end
-
+    local file = path.get_file_buf_or_cwd(self._buffnr)
     self._root = self:find_project_root(file) or ''
 end
 
@@ -125,23 +118,19 @@ end
 --- The existing filetype must be passed through
 ---@param filetype string|table
 ---@return table
-function Base:get_filetypes()
+function Base:get_filetypes(filetypes)
     if not self:has_valid_buffer() then 
         return {}
     end
 
-    local filetypes = buffers.get_file_types(self._buffnr)
+    local ft = wtables.list_force(filetypes or buffers.get_file_types(self._buffnr))
+    local new_ft = vim.deepcopy(ft)
 
-    if not self:is_project() then
-        -- Don't get extra file types if the file is not even in the project
-        return filetypes
-    end
-
-    -- Use deep copy as it would create an infinite loop
-    local new_ft = vim.deepcopy(filetypes)
-    for _, ft in pairs(filetypes) do
-        new_ft = wtables.list_extend(new_ft, self:get_additional_filetypes_aliases(ft))
-        new_ft = wtables.list_extend(new_ft, self:get_additional_filetypes_custom(ft))
+    if self:is_project() then
+        for _, ft in pairs(ft) do
+            new_ft = wtables.list_extend(new_ft, self:get_additional_filetypes_aliases(ft))
+            new_ft = wtables.list_extend(new_ft, self:get_additional_filetypes_custom(ft))
+        end
     end
 
     return wtables.list_unique(new_ft)

@@ -1,6 +1,9 @@
 local M = {}
 
-M.merge_tables = function (table1, table2)
+M.merge_tables = function (a, b)
+    local table1 = vim.deepcopy(M.list_force(a))
+    local table2 = vim.deepcopy(M.list_force(b))
+
     for key, value in pairs(table2) do
         table1[key] = value
     end
@@ -11,10 +14,10 @@ end
 -- Force the provided var to be a list table
 M.list_force = function (a)
     if type(a) == 'table' then
-        return a
+        return vim.deepcopy(a)
     end
 
-    return {a}
+    return vim.deepcopy({a})
 end
 
 M.list_diff = function (a, b)

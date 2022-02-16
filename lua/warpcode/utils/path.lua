@@ -1,3 +1,4 @@
+local wbuf = require 'warpcode.utils.buffers'
 local M = {}
 
 M.dirname = function (str)
@@ -46,10 +47,8 @@ M.find_file_in_paths = function (filename, paths)
     return nil
 end
 
-M.get_file_buf_or_cwd = function (file)
-    if not file or file == '' then 
-        file = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
-    end
+M.get_file_buf_or_cwd = function (buf)
+    file = vim.api.nvim_buf_get_name(wbuf.get_bufnr())
 
     if not file or file == '' then 
         file = vim.fn.getcwd()
