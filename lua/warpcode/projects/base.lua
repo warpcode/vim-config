@@ -1,5 +1,6 @@
 local new_class = require('warpcode.utils.class')
 local buffers = require('warpcode.utils.buffers')
+local wtables = require('warpcode.utils.tables')
 local commands = require('warpcode.utils.commands')
 local path = require('warpcode.utils.path')
 local Base = new_class:extend()
@@ -139,17 +140,11 @@ function Base:get_filetypes()
     -- Use deep copy as it would create an infinite loop
     local new_ft = vim.deepcopy(filetypes)
     for _, ft in pairs(filetypes) do
-        -- First check the simple mappings
-        -- These mappings apply no matter what if the filetype matches
-        local additional_ft = self:get_additional_filetypes_aliases(ft)
-        vim.list_extend(new_ft, additional_ft)
-
-        -- Now look for more dynamic custom mappings
-        local custom_ft = self:get_additional_filetypes_custom(ft)
-        vim.list_extend(new_ft, custom_ft)
+        new_ft = wtables.list_extend(new_ft, self:get_additional_filetypes_aliases(ft))
+        new_ft = wtables.list_extend(new_ft, self:get_additional_filetypes_custom(ft))
     end
 
-    return new_ft
+    return wtables.list_unique(new_ft)
 end
 
 --- Retrieve additional filetypes from the internal alias list
@@ -160,14 +155,7 @@ function Base:get_additional_filetypes_aliases(filetype)
     local matches = {}
 
     if type(self._ft_aliases) == 'table' then
-        local ft_aliases = {}
-        if type(self._ft_aliases[filetype]) == 'table' then
-            ft_aliases = self._ft_aliases[filetype]
-        elseif type(self._ft_aliases[filetype]) == 'string' then
-            ft_aliases = {self._ft_aliases[filetype]}
-        end 
-
-        vim.list_extend(matches, ft_aliases)
+        matches = wtables.list_extend(matches, self._ft_aliases[filetype] or {})
     end
 
     return matches
