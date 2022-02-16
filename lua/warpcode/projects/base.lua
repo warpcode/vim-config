@@ -35,13 +35,7 @@ function Base:new(buffnr)
         }
     }
 
-    -- Register the buffer number so this instance is "attached" to a buffer
-    if type(buffnr) == 'number' and buffnr > 0 then
-        self._buffnr = buffnr
-    else
-        self._buffnr = vim.api.nvim_get_current_buf()
-    end
-
+    self._buffnr = buffers.get_bufnr(buffnr)
     self:_on_attach()
 end
 
