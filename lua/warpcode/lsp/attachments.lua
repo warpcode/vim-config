@@ -5,7 +5,7 @@ local M = {}
 M.common = function (client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-    keymaps.common(bufnr)
+    keymaps.common(client, bufnr)
 
     -- Initialise plugins
     lsp_signature.on_attach(client)
