@@ -1,4 +1,5 @@
 local new_class = require('warpcode.utils.class')
+local buffers = require('warpcode.utils.buffers')
 local commands = require('warpcode.utils.commands')
 local path = require('warpcode.utils.path')
 local Base = new_class:extend()
@@ -134,8 +135,7 @@ function Base:get_filetypes()
         return {}
     end
 
-    local buffer_filetype = vim.api.nvim_buf_get_option(self._buffnr, 'filetype')
-    local filetypes = vim.split(buffer_filetype, '.', true)
+    local filetypes = buffers.get_file_types(self._buffnr)
 
     if not self:is_project() then
         -- Don't get extra file types if the file is not even in the project
