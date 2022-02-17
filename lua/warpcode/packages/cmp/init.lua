@@ -1,4 +1,5 @@
 local cmp_status, cmp = pcall(require, 'cmp')
+local _, cmp_compare = pcall(require, 'cmp.config.compare')
 local luasnip_status, luasnip = pcall(require, 'luasnip')
 local strings = require('warpcode.utils.string')
 
@@ -94,7 +95,20 @@ local opts = {
             return vim_item
         end
     },
-
+    sorting = {
+        priority_weight = 2,
+        comparators = {
+            require('cmp_tabnine.compare'),
+            cmp_compare.offset,
+            cmp_compare.exact,
+            cmp_compare.score,
+            cmp_compare.recently_used,
+            cmp_compare.kind,
+            cmp_compare.sort_text,
+            cmp_compare.length,
+            cmp_compare.order,
+        },
+    },
 	sources = cmp.config.sources({
         { name = "cmp_tabnine" },
 		{ name = "nvim_lsp" },
@@ -105,11 +119,11 @@ local opts = {
 		{ name = "luasnip" },
 		-- For ultisnips user.
 		-- { name = 'ultisnips' },
+        {name = 'calc'}, 
+        {name = 'emoji'},
     }, {
 		{ name = "omni" },
 		{ name = "nvim_lua" },
-        {name = 'calc'}, 
-        {name = 'emoji'},
     }, {
 		{
             name = "spell",
