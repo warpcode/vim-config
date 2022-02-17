@@ -12,10 +12,6 @@ local has_words_before = function()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-local feedkey = function(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
-
 -- Setup nvim-cmp.
 local source_mapping = {
     buffer = '[buf]',
@@ -121,6 +117,7 @@ local opts = {
 		-- { name = 'ultisnips' },
         {name = 'calc'}, 
         {name = 'emoji'},
+        {name = 'gh_issues'},
     }, {
 		{ name = "omni" },
 		{ name = "nvim_lua" },
@@ -139,7 +136,8 @@ local opts = {
 };
 
 cmp.setup(opts)
-cmp.register_source('spell', require('warpcode.packages.cmp.sources.spell').new())
+require('warpcode.packages.cmp.sources.spell')
+require('warpcode.packages.cmp.sources.gh_issues')
 
 -- Use buffer source for `/`.
 cmp.setup.cmdline('/', {

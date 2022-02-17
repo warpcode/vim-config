@@ -1,3 +1,5 @@
+local cmp = require 'cmp'
+
 -- Requires spell and spelllang to be set
 -- vim.opt.spell = true
 -- vim.opt.spelllang = { 'en_gb' }
@@ -29,4 +31,4 @@ function source:complete(request, callback)
     callback({ items = candidates(vim.fn.spellsuggest(input)), isIncomplete = true })
 end
 
-return source
+cmp.register_source('spell', source.new())
