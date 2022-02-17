@@ -169,7 +169,7 @@ function Base:command_register()
         return
     end
 
-    pcall(vim.api.nvim_buf_del_user_command, self._buffnr, command_name)
+    self:command_deregister()
     vim.api.nvim_buf_add_user_command(
         self._buffnr, 
         command_name, 
@@ -181,6 +181,16 @@ function Base:command_register()
             nargs = '+'
         }
     )
+end
+
+--- Register the project command
+function Base:command_deregister()
+    local command_name = self._project_command_name or ''
+    if command_name == '' then
+        return
+    end
+
+    pcall(vim.api.nvim_buf_del_user_command, self._buffnr, command_name)
 end
 
 --- Core autocompletion for project commands
