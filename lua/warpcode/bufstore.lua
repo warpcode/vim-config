@@ -1,12 +1,10 @@
+local buffers = require 'warpcode.utils.buffers'
 local M = {}
 local store = {}
 
-M.get = function (buf)
+M.get = function (bufnr)
     M.cleanup_all()
-    if type(buf) ~= 'number' then
-        buf = vim.api.nvim_get_current_buf()
-    end
-
+    local buf = buffers.get_bufnr(bufnr)
     if store[buf] == nil then
         return {}
     end
@@ -19,20 +17,14 @@ M.get_all = function ()
     return store
 end
 
-M.set = function (table, buf)
+M.set = function (table, bufnr)
     M.cleanup_all()
-    if type(buf) ~= 'number' then
-        buf = vim.api.nvim_get_current_buf()
-    end
-
+    local buf = buffers.get_bufnr(bufnr)
     store[buf] = table or {}
 end
 
-M.cleanup = function (buf)
-    if type(buf) ~= 'number' then
-        buf = vim.api.nvim_get_current_buf()
-    end
-
+M.cleanup = function (bufnr)
+    local buf = buffers.get_bufnr(bufnr)
     if not vim.api.nvim_buf_is_loaded(buf) then
         store[buf] = nil
     end
