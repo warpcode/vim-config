@@ -90,7 +90,6 @@ call warpcode#packages#add('p00f/nvim-ts-rainbow', {'disable_vim': 1})
 call warpcode#packages#add('tpope/vim-fugitive', { 'disable': !executable('git') })
 call warpcode#packages#add('airblade/vim-gitgutter', { 'disable': !executable('git') })
 call warpcode#packages#add('junegunn/gv.vim', { 'disable': !executable('git') })
-call warpcode#packages#add('tveskag/nvim-blame-line', { 'disable': !executable('git') })
 
 call warpcode#packages#run()
 
