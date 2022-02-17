@@ -11,6 +11,8 @@ function Martini:new(buffnr)
     self._project_name_slug = 'martini'
     self._root_detection = 'files'
     self._root_base_files = {'initMartini.sh'}
+    self._project_command_name = 'Martini'
+
     self._ft_aliases = {
         html = {
             'martini-html'
