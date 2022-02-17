@@ -4,13 +4,6 @@ function! warpcode#ft#all#format_generic() abort
 endfunction
 
 function! warpcode#ft#all#format(...) abort
-    if warpcode#plugin#coc#ready() == 1
-        if CocHasProvider('format') == v:true
-            call CocAction('format')
-            return 1
-        endif
-    endif
-
     if a:0 > 0
         " If we have an argument, check if we have a custom formatter
         try

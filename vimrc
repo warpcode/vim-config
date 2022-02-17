@@ -40,9 +40,6 @@ if has('nvim')
     
     " commented out, causing errors
     " call warpcode#packages#add('simrat39/symbols-outline.nvim', {'disable_vim': 1})
-
-    " lsp
-    " call warpcode#packages#add('williamboman/nvim-lsp-installer', {'disable_vim': 1})
 end
 
 " File Managers
@@ -53,9 +50,6 @@ call warpcode#packages#add('nvim-telescope/telescope-fzf-native.nvim', {'disable
 call warpcode#packages#add('scrooloose/nerdtree')
 call warpcode#packages#add('jistr/vim-nerdtree-tabs')
 call warpcode#packages#add('Xuyuanp/nerdtree-git-plugin')
-
-" ft-css
-" call warpcode#packages#add('hail2u/vim-css3-syntax')
 
 " lsp
 call warpcode#packages#add('neovim/nvim-lspconfig', {'disable_vim': 1})
