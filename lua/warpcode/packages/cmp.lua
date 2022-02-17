@@ -17,14 +17,16 @@ end
 
 -- Setup nvim-cmp.
 local source_mapping = {
-	buffer = "[buf]",
-	cmp_tabnine = "[tab9]",
-	luasnip = "[snip]",
-	nvim_lsp = "[LSP]",
-	nvim_lua = "[lua]",
-	path = "[path]",
+    buffer = '[buf]',
+    calc = '[calc]',
+    cmp_tabnine = '[tab9]',
+    luasnip = '[snip]',
+    nvim_lsp = '[LSP]',
+    nvim_lua = '[lua]',
+    omni = '[omni]',
+    path = '[fs]',
+    treesitter = '[ts]',
 }
-
 
 local opts = {
     experimental = {
@@ -94,6 +96,8 @@ local opts = {
     },
 
 	sources = {
+		{ name = "omni" },
+		{ name = "treesitter" },
         -- tabnine completion? yayaya
         -- { name = "cmp_tabnine" },
 		{ name = "nvim_lsp" },
@@ -104,7 +108,17 @@ local opts = {
 		{ name = "luasnip" },
 		-- For ultisnips user.
 		-- { name = 'ultisnips' },
-		{ name = "buffer", keyword_length = 5},
+        {name = 'calc'}, 
+        {name = 'emoji'},
+		-- {
+            -- name = "spell",
+            -- max_item_count = 5,
+        -- },
+		{ 
+            name = "buffer", 
+            keyword_length = 5,
+            max_item_count = 10,
+        },
 		{ name = "path" },
 	},
 }
@@ -125,7 +139,7 @@ cmp.setup.cmdline(':', {
     completion = { autocomplete = false },
     sources = cmp.config.sources({
         { name = 'path' }
-        }, {
+    }, {
         { name = 'cmdline' }
     })
 })

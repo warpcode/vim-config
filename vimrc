@@ -29,9 +29,13 @@ if has('nvim')
     call warpcode#packages#add('hrsh7th/cmp-buffer', {'disable_vim': 1})
     call warpcode#packages#add('hrsh7th/cmp-path', {'disable_vim': 1})
     call warpcode#packages#add('hrsh7th/cmp-cmdline', {'disable_vim': 1})
+    call warpcode#packages#add('hrsh7th/cmp-omni', {'disable_vim': 1})
+    call warpcode#packages#add('hrsh7th/cmp-calc', {'disable_vim': 1})
+    call warpcode#packages#add('hrsh7th/cmp-emoji', {'disable_vim': 1})
     call warpcode#packages#add('saadparwaiz1/cmp_luasnip', {'disable_vim': 1})
     call warpcode#packages#add('L3MON4D3/LuaSnip', {'disable_vim': 1})
     call warpcode#packages#add('onsails/lspkind-nvim', {'disable_vim': 1})
+    call warpcode#packages#add('ray-x/cmp-treesitter', {'disable_vim': 1})
 
     " call warpcode#packages#add('tzachar/cmp-tabnine', {'do': './install.sh', 'disable_vim': 1})
     
