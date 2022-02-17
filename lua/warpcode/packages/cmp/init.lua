@@ -105,39 +105,10 @@ local opts = {
             cmp_compare.order,
         },
     },
-	sources = cmp.config.sources({
-        { name = "cmp_tabnine" },
-		{ name = "nvim_lsp" },
-		{ name = "treesitter" },
-        -- For vsnip user.
-		-- { name = 'vsnip' },
-		-- For luasnip user.
-		{ name = "luasnip" },
-		-- For ultisnips user.
-		-- { name = 'ultisnips' },
-        {name = 'calc'}, 
-        {name = 'emoji'},
-        {name = 'gh_issues'},
-    }, {
-		{ name = "omni" },
-		{ name = "nvim_lua" },
-    }, {
-		{
-            name = "spell",
-            max_item_count = 5,
-        },
-		{ 
-            name = "buffer", 
-            keyword_length = 5,
-            max_item_count = 10,
-        },
-		{ name = "path" },
-	}),
+	sources = require('warpcode.packages.cmp.sources'),
 };
 
 cmp.setup(opts)
-require('warpcode.packages.cmp.sources.spell')
-require('warpcode.packages.cmp.sources.gh_issues')
 
 -- Use buffer source for `/`.
 cmp.setup.cmdline('/', {

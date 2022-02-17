@@ -32,3 +32,5 @@ function source:complete(request, callback)
 end
 
 cmp.register_source('spell', source.new())
+
+return { name = 'spell'}

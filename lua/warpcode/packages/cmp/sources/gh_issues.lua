@@ -1,4 +1,4 @@
-local cmp = require("cmp")
+local cmp = require "cmp"
 local Job = require "plenary.job"
 
 local source = {}
@@ -68,3 +68,5 @@ source.is_available = function()
 end
 
 cmp.register_source("gh_issues", source.new())
+
+return { name = 'gh_issues'}
