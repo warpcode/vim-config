@@ -51,6 +51,7 @@ These dependencies are for ubuntu based systems as this is what i primarily use
 ```
 build-essential
 git
+gh
 curl
 php
 nodejs
