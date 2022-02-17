@@ -12,6 +12,8 @@ require('warpcode.lsp.servers.sql')
 require('warpcode.lsp.servers.typescript')
 require('warpcode.lsp.servers.vim')
 
+-- vim.lsp.set_log_level("debug")
+
 local format_diagnostic = function (diagnostic)
     return string.format('[%s] %s', diagnostic.source, diagnostic.message)
 end
