@@ -43,12 +43,6 @@ if has('nvim')
 
     " lsp
     " call warpcode#packages#add('williamboman/nvim-lsp-installer', {'disable_vim': 1})
-else
-    " Completion
-    call warpcode#packages#add('neoclide/coc.nvim', { 'branch': 'release'})
-    call warpcode#packages#add('neoclide/coc-highlight', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
-    call warpcode#packages#add('xiyaowong/coc-sumneko-lua', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
-    call warpcode#packages#add('neoclide/coc-lists', { 'do': g:vim_node_bin . '/yarn install --frozen-lockfile'})
 end
 
 " File Managers
