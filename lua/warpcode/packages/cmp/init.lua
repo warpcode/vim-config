@@ -84,18 +84,19 @@ local opts = {
             -- vim_item.kind = require('lspkind').presets.default[vim_item.kind]
             -- vim_item.kind = ''
             local menu = source_mapping[entry.source.name] or "[" .. strings.ucfirst(entry.source.name) .. "]"
-            -- if entry.source.name == 'cmp_tabnine' then
-            --     if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-            --         menu = entry.completion_item.data.detail .. ' ' .. menu
-            --     end
-            --     vim_item.kind = ''
-            -- end
+            if entry.source.name == 'cmp_tabnine' then
+                if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+                    menu = entry.completion_item.data.detail .. ' ' .. menu
+                end
+                -- vim_item.kind = ''
+            end
             vim_item.menu = menu
             return vim_item
         end
     },
 
 	sources = cmp.config.sources({
+        { name = "cmp_tabnine" },
 		{ name = "nvim_lsp" },
 		{ name = "treesitter" },
         -- For vsnip user.
@@ -107,8 +108,6 @@ local opts = {
     }, {
 		{ name = "omni" },
 		{ name = "nvim_lua" },
-        -- tabnine completion? yayaya
-        -- { name = "cmp_tabnine" },
         {name = 'calc'}, 
         {name = 'emoji'},
     }, {
@@ -128,7 +127,6 @@ local opts = {
 cmp.setup(opts)
 cmp.register_source('spell', require('warpcode.packages.cmp.sources.spell').new())
 
---
 -- Use buffer source for `/`.
 cmp.setup.cmdline('/', {
     completion = { autocomplete = false },
@@ -148,11 +146,11 @@ cmp.setup.cmdline(':', {
     })
 })
 
--- local tabnine = require('cmp_tabnine.config')
--- tabnine:setup({
---     max_lines = 1000,
---     max_num_results = 20,
---     sort = true,
--- 	run_on_every_keystroke = true,
--- 	snippet_placeholder = '..',
--- })
+local tabnine = require('cmp_tabnine.config')
+tabnine:setup({
+    max_lines = 1000,
+    max_num_results = 2,
+    sort = true,
+    run_on_every_keystroke = true,
+    snippet_placeholder = '..',
+})
