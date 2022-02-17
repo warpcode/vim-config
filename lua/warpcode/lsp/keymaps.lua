@@ -1,4 +1,5 @@
 local M = {}
+local lbuf = vim.lsp.buf
 
 M.common = function(client, bufnr)
     local opts = {noremap = true, silent = true, buffer = bufnr}
