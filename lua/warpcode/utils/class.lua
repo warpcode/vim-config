@@ -3,6 +3,7 @@ ClassObject.__index = ClassObject
 
 --- Used as a constructor
 function ClassObject:new() end
+function ClassObject:init() end
 
 --- When creating a new class, use this method
 --- to extend this base class
@@ -50,6 +51,7 @@ end
 function ClassObject:__call(...)
     local obj = setmetatable({}, self)
     obj:new(...)
+    obj:init()
     return obj
 end
 

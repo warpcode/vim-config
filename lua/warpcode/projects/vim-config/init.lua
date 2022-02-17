@@ -12,6 +12,7 @@ function VimConfig:new(buffnr)
     self._root_detection = 'files'
     self._root_detection_type = 'strict'
     self._root_base_files = {'init.vim', 'vimrc'}
+    self._project_command_name = 'VimConfig'
 end
 
 return VimConfig

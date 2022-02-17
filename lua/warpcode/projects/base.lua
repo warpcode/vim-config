@@ -16,6 +16,7 @@ function Base:new(buffnr)
     self._root_folder_name = ''
     self._root = nil
     self._ft_aliases = {}
+    self._project_command_name = ''
     self._project_commands = {
         children = {
             get = {
@@ -37,8 +38,25 @@ function Base:new(buffnr)
     }
 
     self._buffnr = buffers.get_bufnr(buffnr)
+end
+
+function Base:init()
+    if not self:is_project() then
+        -- Don't attach if there's no matching project
+        return
+    end
+
     self:_on_attach()
 end
+
+--- Run this private method when attaching to the buffer
+function Base:_on_attach()
+    self:command_register()
+    self:on_attach()
+end
+
+--- Override this method for custom actions when attaching to the buffer 
+function Base:on_attach() end
 
 --- Simply return the name of the project
 ---@param slug string
@@ -51,16 +69,6 @@ function Base:get_project_name(slug)
     return self._project_name
 end
 
---- Return the buffer number
-function Base:get_buffnr()
-    return self._buffnr 
-end
-
---- Check if the buffer is valid
-function Base:has_valid_buffer()
-    return vim.api.nvim_buf_is_valid(self._buffnr) 
-end
-
 --- Ensure root directory has been found
 ---@param force boolean Force the class to re-find the root dir
 function Base:assert_root_directory(force)
@@ -71,10 +79,6 @@ function Base:assert_root_directory(force)
     -- Set _root to empty string as any failures from here
     -- means a root directory could not be set
     self._root = self._root or ''
-
-    if not self:has_valid_buffer() then 
-        return
-    end
 
     local file = path.get_file_buf_or_cwd(self._buffnr)
     self._root = self:find_project_root(file) or ''
@@ -119,18 +123,12 @@ end
 ---@param filetype string|table
 ---@return table
 function Base:get_filetypes(filetypes)
-    if not self:has_valid_buffer() then 
-        return {}
-    end
-
     local ft = wtables.list_force(filetypes or buffers.get_file_types(self._buffnr))
     local new_ft = vim.deepcopy(ft)
 
-    if self:is_project() then
-        for _, ft in pairs(ft) do
-            new_ft = wtables.list_extend(new_ft, self:get_additional_filetypes_aliases(ft))
-            new_ft = wtables.list_extend(new_ft, self:get_additional_filetypes_custom(ft))
-        end
+    for _, ft in pairs(ft) do
+        new_ft = wtables.list_extend(new_ft, self:get_additional_filetypes_aliases(ft))
+        new_ft = wtables.list_extend(new_ft, self:get_additional_filetypes_custom(ft))
     end
 
     return wtables.list_unique(new_ft)
@@ -164,30 +162,25 @@ function Base:get_additional_filetypes_custom(filetype)
     return {}
 end
 
---- Run this private method when attaching to the buffer
-function Base:_on_attach()
-    if not self:has_valid_buffer() then 
-        return
-    end
-
-    self:command_register()
-    self:on_attach()
-end
-
---- Override this method for custom actions when attaching to the buffer 
-function Base:on_attach() end
-
 --- Register the project command
 function Base:command_register()
-    if not self:has_valid_buffer() then 
+    local command_name = self._project_command_name or ''
+    if command_name == '' then
         return
     end
 
-    pcall(vim.api.nvim_buf_del_user_command, self._buffnr, 'Project')
-    vim.api.nvim_buf_add_user_command(self._buffnr, 'Project', function(...) return self:command_run(...) end, {
-        complete = function(...) return self:command_complete(...) end,
-        nargs = '+'
-    })
+    pcall(vim.api.nvim_buf_del_user_command, self._buffnr, command_name)
+    vim.api.nvim_buf_add_user_command(
+        self._buffnr, 
+        command_name, 
+        function(...) 
+            return self:command_run(...) 
+        end, 
+        {
+            complete = function(...) return self:command_complete(...) end,
+            nargs = '+'
+        }
+    )
 end
 
 --- Core autocompletion for project commands

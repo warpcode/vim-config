@@ -64,14 +64,8 @@ luasnip.config.setup({
     updateevents = 'TextChanged,TextChangedI',
     enable_autosnippets = true,
     ft_func = function()
-        -- Grab the default from luasnip but also check cursor pos for inline highlighting
-        local project = require 'warpcode.projects'.get()
-
-        if project then
-            return project:get_filetypes()
-        end
-
-        return require 'luasnip.extras.filetype_functions'.from_pos_or_filetype() or {}
+        local filetypes = require 'luasnip.extras.filetype_functions'.from_pos_or_filetype() or {}
+        return require 'warpcode.projects'.get_filetypes(filetypes)
     end,
     parser_nested_assembler = function(_, snippet)
         local select = function(snip, no_move)

@@ -11,6 +11,21 @@ M.merge_tables = function (a, b)
     return table1
 end
 
+M.table_to_list = function(a)
+    local new_list = {}
+
+    for _, v in pairs(a) do
+        new_list[#new_list + 1] = v
+    end
+
+    return new_list
+end
+
+M.table_unpack = function(a)
+    local to_list = M.table_to_list(a)
+    return unpack(to_list)
+end
+
 -- Force the provided var to be a list table
 M.list_force = function (a)
     if type(a) == 'table' then
@@ -36,12 +51,15 @@ M.list_diff = function (a, b)
     return ret
 end
 
-M.list_extend = function (a, b)
-    local table1 = vim.deepcopy(M.list_force(a))
-    local table2 = vim.deepcopy(M.list_force(b))
+M.list_extend = function (...)
+    local args = {...}
+    local result = {}
 
-    vim.list_extend(table1, table2)
-    return table1
+    for _, v in pairs(args) do
+        vim.list_extend(result, vim.deepcopy(M.list_force(v)))
+    end
+
+    return result
 end
 
 M.list_unique = function(a)
