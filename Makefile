@@ -17,6 +17,9 @@ install-vim: clean-vim
 	# vim -c "quitall"
 	vim
 
+unittest:
+	nvim --headless -c "PlenaryBustedDirectory tests/"
+
 test: test-build test-run
 
 test-build:
