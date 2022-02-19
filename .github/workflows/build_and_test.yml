@@ -59,4 +59,4 @@ jobs:
         run: make link-nvim
 
       - name: Run neovim without plugins installed
-        run: nvim +quitall
+        run: nvim --headless +quitall
