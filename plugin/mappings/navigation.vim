@@ -6,11 +6,11 @@ nnoremap <leader>bc :bd<CR>
 nnoremap <leader>bq :bp <BAR> bd #<cr>
 
 " File Explorer
-nnoremap <leader>t :call warpcode#navigation#file_explorer()<CR>
+nnoremap <leader>t :NERDTreeToggle<CR>
 nnoremap <leader>nw :Lexplore<CR>
 
 " File Finder
-nnoremap <leader>ff :call warpcode#navigation#find_files()<CR>
+nnoremap <leader>ff :lua require('warpcode.packages.telescope').project_files()<CR>
 " command! -nargs=1 FindFile call warpcode#search#findFiles(<q-args>)
 
 " move vertically by visual line (ie will go into a wrapped line that's
