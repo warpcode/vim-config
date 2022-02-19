@@ -17,15 +17,26 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install Neovim nightly
+        run: |
+          sudo add-apt-repository ppa:neovim-ppa/unstable\
+          && sudo apt update\
+          && sudo apt install -y neovim
+
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
+      - run: sudo npm install -g neovim
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: 8.1
           extensions: mbstring, dom
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - run: python -m pip install --user --upgrade pynvim 
 
       - name: Install Dependencies
         run: |
@@ -38,13 +49,5 @@ jobs:
             make\
             unzip\
             xclip\
-            xfonts-utils\
-            nodejs\
-            python3\
-            python3-pip
+            xfonts-utils
 
-      - name: Install Neovim nightly
-        run: |
-          sudo add-apt-repository ppa:neovim-ppa/unstable\
-          && sudo apt update\
-          && sudo apt install -y neovim
