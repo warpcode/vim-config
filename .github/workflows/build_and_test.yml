@@ -17,18 +17,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install Node
-        run: |
-          curl -sL https://deb.nodesource.com/setup_16.x | sudo bash\
-          && sudo apt install -y nodejs
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'npm'
 
-      - name: Install PHP
-        run: |
-          sudo apt update\
-          && sudo apt install -y\
-            php-8.1\
-            php-8.1-dom\
-            php-8.1-mbstring
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+          extensions: mbstring, dom
 
       - name: Install Dependencies
         run: |
