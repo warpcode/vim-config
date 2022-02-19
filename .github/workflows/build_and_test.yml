@@ -60,3 +60,9 @@ jobs:
 
       - name: Run neovim without plugins installed
         run: nvim --headless +quitall
+
+      - name: Full install
+        run: make install-nvim
+
+      - name: Run unit tests
+        run: make test-nvim
