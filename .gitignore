@@ -1,12 +1,3 @@
 *.swp
 *.un~
 .netrwhist
-autoload/plug.vim
-coc/
-node_modules/
-php_modules/
-plugged/
-sessions/
-undo/
-undo-nvim/
-tags
