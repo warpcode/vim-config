@@ -105,7 +105,7 @@ local opts = {
             cmp_compare.order,
         },
     },
-	sources = require('warpcode.packages.cmp.sources'),
+	sources = require('warpcode.plugins.cmp.sources'),
 };
 
 cmp.setup(opts)

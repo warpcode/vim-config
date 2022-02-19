@@ -1,7 +1,8 @@
 local luasnip_status, luasnip = pcall(require, 'luasnip')
 local _, util = pcall(require, 'luasnip.util.util')
+local wplugins = require 'warpcode.utils.plugins'
 
-if (not luasnip_status) then  
+if (not luasnip_status) then
     return
 end
 
@@ -11,7 +12,7 @@ local snippets_snipmate_module_paths = function()
         vim.g.vim_source .. '/modules/snippets/snippets'
     }
 	for _, plug in ipairs(plugins) do
-		local path = vim.fn['warpcode#packages#module_loaded_path'](plug)
+		local path = wplugins.get_plugin_path(plug) or ''
 		if path ~= '' and vim.fn.isdirectory(path .. '/snippets') ~= 0 then
 			table.insert(paths, path .. '/snippets')
 		end
@@ -26,7 +27,7 @@ local snippets_vscode_module_paths = function()
         vim.g.vim_source .. '/modules/snippets'
     }
 	for _, plug in ipairs(plugins) do
-		local path = vim.fn['warpcode#packages#module_loaded_path'](plug)
+		local path = wplugins.get_plugin_path(plug) or ''
 		if path ~= '' and vim.fn.isdirectory(path) ~= 0 then
 			table.insert(paths, path)
 		end

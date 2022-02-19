@@ -1,7 +1,7 @@
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 install-nvim: link-nvim
-	nvim --headless -c "+call warpcode#packages#install()" -c 'quitall'
+	nvim --headless -V2 -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
 install-vim: link-vim
 	# vim -c "quitall"
@@ -13,6 +13,7 @@ test-nvim:
 link-nvim: clean-nvim
 	test -h ~/.config/nvim/pack/warpcode/opt/ || mkdir -p ~/.config/nvim/pack/warpcode/opt
 	test -h ~/.config/nvim/pack/warpcode/opt/vim-config || ln -s "$(ROOT_DIR)" ~/.config/nvim/pack/warpcode/opt/
+	test -h ~/.config/nvim/pack/packer/start/packer.nvim || git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.config/nvim/pack/packer/start/packer.nvim
 	test -h ~/.config/nvim/init.vim || ln -s "$(ROOT_DIR)/vimrc" ~/.config/nvim/init.vim
 
 link-vim:
@@ -21,6 +22,7 @@ link-vim:
 	test -h ~/.vimrc || ln -s "$(ROOT_DIR)/vimrc" ~/.vimrc
 
 clean-nvim:
+	rm -rf ~/.cache/nvim
 	rm -rf ~/.config/nvim
 	rm -rf ~/.local/share/nvim
 
