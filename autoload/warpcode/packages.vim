@@ -165,9 +165,9 @@ function! warpcode#packages#run() abort
     call s:load_packages()
     call plug#end()
 
-    if s:run_install
-        call warpcode#packages#install()
-    end
+    " if s:run_install
+    "     call warpcode#packages#install()
+    " end
 
     augroup WARPCODE_PACKAGES
         autocmd!
