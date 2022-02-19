@@ -55,3 +55,9 @@ jobs:
             xclip\
             xfonts-utils
 
+      - name: Link vim-config but don't install plugins
+        run: make link-nvim
+
+      - name: Ensure nvim runs and closes without error
+        run: nvim "+quitall"
+
