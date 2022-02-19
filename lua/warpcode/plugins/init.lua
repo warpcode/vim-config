@@ -33,6 +33,10 @@ return require('packer').startup(function()
         config = function()
             require('warpcode.plugins.cmp')
         end,
+        run = function()
+            vim.api.nvim_exec('exe \'!cd "' .. vim.g.vim_source .. '/modules/node" && npm i\' | redraw', false)
+            vim.api.nvim_exec('exe \'!cd "' .. vim.g.vim_source .. '/modules/php" && php ' .. vim.g.vim_source .. '/bin/composer.phar install\' | redraw', false)
+        end,
         requires = {
             {'hrsh7th/cmp-buffer'},
             {'hrsh7th/cmp-calc'},
