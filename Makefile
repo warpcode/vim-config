@@ -29,3 +29,6 @@ clean-nvim:
 clean-vim:
 	rm -rf ~/.vimrc
 	rm -rf ~/.vim
+
+update-composer:
+	wget https://getcomposer.org/download/latest-stable/composer.phar -O bin/composer.phar -q
