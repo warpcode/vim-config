@@ -1,5 +1,5 @@
 " Buffers
-nnoremap <leader>bb :call warpcode#buffers#selection()<CR>
+nnoremap <leader>bb :lua require('telescope.builtin').buffers()<CR>
 nnoremap <leader>bp :bp<CR>
 nnoremap <leader>bn :bn<CR>
 nnoremap <leader>bc :bd<CR>
