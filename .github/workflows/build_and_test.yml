@@ -54,7 +54,3 @@ jobs:
             unzip\
             xclip\
             xfonts-utils
-
-      - run: make link-nvim
-      - run: nvim "+quitall"
-
