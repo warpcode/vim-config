@@ -1,11 +1,18 @@
 local treesitter_configs_status, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
+local wui = require 'warpcode.utils.ui'
 
 if (not treesitter_configs_status) then
     return
 end
 
+-- Check if we're running headless mode
+local ensure_installed = 'all'
+if wui.is_headless() then
+    ensure_installed = {}
+end
+
 local config = {
-    ensure_installed = "all",
+    ensure_installed = ensure_installed,
     ignore_install = {
         'beancount',
         'bibtex',
