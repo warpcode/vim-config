@@ -97,6 +97,40 @@ return require('packer').startup(function()
     }
     use {
         'scrooloose/nerdtree',
+        config = function()
+            vim.api.nvim_exec([[
+                let g:NERDTreeChDirMode=2
+                let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
+                let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
+                let g:NERDTreeShowBookmarks=1
+                let g:nerdtree_tabs_focus_on_files=1
+                let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
+                let g:NERDTreeWinSize = 40
+                let g:NERDTreeShowHidden=1
+                " Show ignored icon next to ignored files. This can be intensive with a lot of files
+                let g:NERDTreeGitStatusShowIgnored = 1
+                " List of icons for file statuses
+                let g:NERDTreeGitStatusIndicatorMapCustom = {
+                            \ "Modified"  : "✹",
+                            \ "Staged"    : "✚",
+                            \ "Untracked" : "✭",
+                            \ "Renamed"   : "➜",
+                            \ "Unmerged"  : "═",
+                            \ "Deleted"   : "✖",
+                            \ "Dirty"     : "✗",
+                            \ "Clean"     : "✔︎",
+                            \ 'Ignored'   : '☒',
+                            \ "Unknown"   : "?"
+                            \ }
+
+                " NERDTree - Quit vim when all other windows have been closed.
+                au BufEnter *
+                            \ if (winnr("$") == 1 && exists("b:NERDTreeType") &&
+                            \ b:NERDTreeType == "primary") |
+                            \   q |
+                            \ endif
+            ]], false)
+        end,
         requires = {
             { 'jistr/vim-nerdtree-tabs'},
             { 'Xuyuanp/nerdtree-git-plugin'},
@@ -119,23 +153,73 @@ return require('packer').startup(function()
         end,
     }
 
-     -- Status bar
-     use {
-         'vim-airline/vim-airline',
-         requires = {
-             {'vim-airline/vim-airline-themes'},
-         },
-     }
+    -- Status bar
+    use {
+        'vim-airline/vim-airline',
+        config = function()
+            vim.api.nvim_exec([[
+                " General Options
+                " let g:airline_theme = 'gruvbox'
+                let g:hybrid_custom_term_colors = 1
+                let g:airline_exclude_preview = 0
+                let g:airline_detect_modified=1
+                let g:airline_focuslost_inactive = 1
+                let g:airline_skip_empty_sections = 1
+                let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+                let g:airline_stl_path_style = 'short'
 
-     -- Themes
-     use 'chriskempson/base16-vim'
-     use 'flazz/vim-colorschemes'
-     use {
+                " Symbols
+                if !exists('g:airline_symbols')
+                    let g:airline_symbols = {}
+                endif
+
+                let g:airline_left_sep = '▶'
+                let g:airline_left_alt_sep = '»'
+                let g:airline_right_sep = '◀'
+                let g:airline_right_alt_sep = '«'
+                let g:airline_symbols.branch = '⎇'
+                let g:airline_symbols.colnr = ' ㏇:'
+                let g:airline_symbols.crypt = '🔒'
+                let g:airline_symbols.dirty='⚡'
+                let g:airline_symbols.linenr = '㏑'
+                let g:airline_symbols.maxlinenr = '☰ '
+                let g:airline_symbols.notexists = 'Ɇ'
+                let g:airline_symbols.paste = '∥'
+                let g:airline_symbols.readonly = '⭤'
+                let g:airline_symbols.spell = 'Ꞩ'
+                let g:airline_symbols.whitespace = 'Ξ'
+
+                " File type overrides
+                let g:airline_filetype_overrides = {
+                \ 'coc-explorer':  [ 'CoC Explorer', '' ],
+                \ 'defx':  ['defx', '%{b:defx.paths[0]}'],
+                \ 'fugitive': ['fugitive', '%{airline#util#wrap(airline#extensions#branch#get_head(),80)}'],
+                \ 'gundo': [ 'Gundo', '' ],
+                \ 'help':  [ 'Help', '%f' ],
+                \ 'minibufexpl': [ 'MiniBufExplorer', '' ],
+                \ 'nerdtree': [ get(g:, 'NERDTreeStatusline', 'NERD'), '' ],
+                \ 'startify': [ 'startify', '' ],
+                \ 'vim-plug': [ 'Plugins', '' ],
+                \ 'vimfiler': [ 'vimfiler', '%{vimfiler#get_status_string()}' ],
+                \ 'vimshell': ['vimshell','%{vimshell#get_status_string()}'],
+                \ 'vaffle' : [ 'Vaffle', '%{b:vaffle.dir}' ],
+                \ }
+            ]], false)
+        end,
+        requires = {
+            {'vim-airline/vim-airline-themes'},
+        },
+    }
+
+    -- Themes
+    use 'chriskempson/base16-vim'
+    use 'flazz/vim-colorschemes'
+    use {
         'gruvbox-community/gruvbox',
         config = function()
             vim.api.nvim_exec([[colorscheme gruvbox]], false)
         end,
-     }
+    }
 
     -- Treesitter
     use {
@@ -152,7 +236,18 @@ return require('packer').startup(function()
     -- UI
     use 'bronson/vim-trailing-whitespace'
     use 'lukas-reineke/indent-blankline.nvim'
-    use 'Yggdroot/indentLine'
+    use {
+        'Yggdroot/indentLine',
+        config = function()
+            vim.api.nvim_exec([[
+                let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+                let g:indentLine_enabled = 1
+                let g:indentLine_concealcursor = 'inc'
+                let g:indentLine_conceallevel = 0
+                let g:indentLine_faster = 1
+            ]], false)
+        end,
+    }
     use 'ryanoasis/vim-devicons'
 
     -- Utils
@@ -162,7 +257,18 @@ return require('packer').startup(function()
     use 'Raimondi/delimitMate'
     use 'tpope/vim-surround'
     use 'vim-utils/vim-man'
-    use 'mbbill/undotree'
+    use {
+        'mbbill/undotree',
+        config = function()
+            vim.api.nvim_exec([[
+                let g:undotree_HighlightChangedWithSign = 0
+                let g:undotree_WindowLayout             = 4
+                let g:undotree_SetFocusWhenToggle       = 1
+
+                nnoremap <Leader>u :UndotreeToggle<CR>
+            ]], false)
+        end,
+    }
     use 'sudormrfbin/cheatsheet.nvim'
 
     -- Version Control
