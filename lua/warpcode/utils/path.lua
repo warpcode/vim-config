@@ -23,7 +23,7 @@ M.find_exe_path = function (exe_name)
     if fullpath ~= nil then
         return fullpath
     end
-    
+
     -- If it's not in the above paths, search the system path
     if vim.fn.executable(exe_name) == 1 then
         return exe_name
@@ -50,7 +50,7 @@ end
 M.get_file_buf_or_cwd = function (buf)
     file = vim.api.nvim_buf_get_name(wbuf.get_bufnr())
 
-    if not file or file == '' then 
+    if not file or file == '' then
         file = vim.fn.getcwd()
     end
 
@@ -116,7 +116,7 @@ M.root_pattern_by_parent_name = function (_name, _base_path, _full_match)
 
     local base_path = M.remove_trailing_slash(_base_path or '/')
 
-    if base_path == '/' or base_path == '' then 
+    if base_path == '/' or base_path == '' then
         return nil
     end
 
