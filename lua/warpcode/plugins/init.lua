@@ -53,7 +53,6 @@ return require('packer').startup(function()
         local plugin = get_plugin(name)
 
         if not plugin or not plugin.source or plugin.source == '' then
-            -- print(vim.inspect(plugin))
             error('Could not find plugin: ' .. name)
         end
 
@@ -84,7 +83,6 @@ return require('packer').startup(function()
     for _, v in pairs(plugins_list) do
         local plugin = create_plugin_tbl(v)
 
-        print(vim.inspect(plugin))
         use(plugin)
     end
 
