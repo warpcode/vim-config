@@ -50,6 +50,9 @@ return require('packer').startup(function()
             {
                 'tzachar/cmp-tabnine',
                 run = './install.sh',
+                config = function()
+                    require('warpcode.plugins.cmp_tabnine')
+                end,
             },
             {'saadparwaiz1/cmp_luasnip'},
         }
