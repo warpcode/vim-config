@@ -1,13 +1,7 @@
-local ok, tabnine = pcall(require, 'cmp_tabnine.config')
+local M = {
+    source = 'tzachar/cmp-tabnine',
+    config = require 'warpcode.plugins.cmp_tabnine.config',
+    run = './install.sh',
+}
 
-if (not ok) then
-    return
-end
-
-tabnine:setup({
-    max_lines = 1000,
-    max_num_results = 2,
-    sort = true,
-    run_on_every_keystroke = true,
-    snippet_placeholder = '..',
-})
+return M

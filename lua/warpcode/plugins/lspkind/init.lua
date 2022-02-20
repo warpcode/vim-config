@@ -1,9 +1,6 @@
-local lspkind_status, lspkind = pcall(require, 'lspkind')
+local M = {
+    source = 'onsails/lspkind-nvim',
+    config = require 'warpcode.plugins.lspkind.config',
+}
 
-if (not lspkind_status) then  
-    return
-end
-
--- lspkind.init({
---     with_text = true,
--- })
+return M
