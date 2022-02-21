@@ -9,9 +9,9 @@ endfunction
 function! health#warpcode#check() abort
   call health#report_start('warpcode')
   call s:require(executable("curl"), 'Has curl installed')
-
-  call health#report_start('warpcode#filteypes#php')
+  call s:require(executable("rg"), 'Has ripgrep installed')
+  call s:require(executable("make"), 'Has make installed')
+  call s:require(executable("npm"), 'Has npm installed')
   call s:require(executable("php"), 'Has php installed')
-  call s:require(executable("phpcs"), 'Has PHP code sniffer (phpcs) installed')
-  call s:require(executable("phpcbf"), 'Has PHP code sniffer (phpcbf) installed')
 endfunction
+
