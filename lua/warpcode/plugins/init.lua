@@ -5,7 +5,7 @@ local plugins_list = {
     'packer',
 
     'local_node',
-    'local_php,'
+    'local_php',
     'local_snippets',
 
     -- Completion
