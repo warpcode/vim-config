@@ -1,9 +1,8 @@
 local M = {
     source = 'vim-airline/vim-airline',
-    config = require 'warpcode.plugins.airline.config',
-    requires = {
-        'airline_themes',
-    }
+    config = function()
+        require 'warpcode.plugins.airline.config'.run()
+    end
 }
 
 return M

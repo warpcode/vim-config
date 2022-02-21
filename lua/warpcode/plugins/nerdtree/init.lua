@@ -1,10 +1,8 @@
 local M = {
     source = 'scrooloose/nerdtree',
-    config = require 'warpcode.plugins.nerdtree.config',
-    requires = {
-        'nerdtree_tabs',
-        'nerdtree_git',
-    }
+    config = function()
+        require 'warpcode.plugins.nerdtree.config'.run()
+    end
 }
 
 return M

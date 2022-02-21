@@ -4,27 +4,71 @@ local plugin_loc = 'warpcode.plugins.'
 local plugins_list = {
     'packer',
 
+    'local_node',
+    'local_php,'
+    'local_snippets',
+
     -- Completion
+    -- use 'github/copilot.vim'
     'cmp',
+    'cmp-buffer',
+    'cmp-calc',
+    'cmp-cmdline',
+    'cmp-emoji',
+    'cmp-nvim-lsp',
+    'cmp-nvim-lua',
+    'cmp-omni',
+    'cmp-path',
+    'cmp-treesitter',
+    'cmp-tabnine',
+    'cmp-luasnip',
+    'luasnip',
+    'friendly-snippets',
+    'vim-snippets',
 
     -- File Managers
     'nerdtree',
+    'nerdtree-tabs',
+    'nerdtree-git',
+    'telescope',
+    'telescope-fzf',
 
     -- lsp
-    'lspconfig',
+    'lsp-config',
+    'lsp-kind',
+    'lsp-null-ls',
+    'lsp-saga',
+    'lsp-signature',
 
     -- Themes
-    'theme_base16',
-    'theme_gruvbox',
-    'theme_vim_colorschemes',
+    'theme-base16',
+    'theme-gruvbox',
+    'theme-vim-colorschemes',
 
     -- UI
     'airline',
+    'airline-themes',
     'devicons',
+    'indent-blankline',
+    'trailing-whitespace',
 
     -- Utils
+    'cheatsheet',
+    'commentary',
+    'delimitmate',
+    'man',
     'plenary',
+    'popup',
+    'surround',
     'treesitter',
+    'treesitter-playground',
+    -- 'treesitter-rainbow',
+    'undotree',
+
+    -- Version Control
+    'vcs-fugitive',
+    'vcs-gitgutter',
+    'vcs-gv',
 }
 
 vim.cmd [[packadd packer.nvim]]
@@ -56,119 +100,20 @@ return require('packer').startup(function()
             error('Could not find plugin: ' .. name)
         end
 
-        local plugin_tbl = {plugin.source}
+        local plugin_source = plugin[1] or nil
+        plugin_source = plugin_source or plugin.source
+        plugin.source = nil
+        plugin[1] = plugin_source
 
-        local map = {
-            'config',
-            'setup',
-            'run',
-        }
-
-        for _, v in pairs(map) do
-            if plugin[v] then
-                plugin_tbl[v] = plugin[v]
-            end
+        if not plugin[1] or plugin[1] == '' then
+            error('Plugin source not specified : ' .. name)
         end
 
-        if plugin.requires then
-            plugin_tbl.requires = {}
-            for _, child in pairs(plugin.requires) do
-                plugin_tbl.requires[#plugin_tbl.requires + 1] = create_plugin_tbl(child)
-            end
-        end
-
-        return plugin_tbl
+        return plugin
     end
 
     for _, v in pairs(plugins_list) do
         local plugin = create_plugin_tbl(v)
-
         use(plugin)
-    end
-
-    use(vim.g.vim_source .. '/modules/node')
-    use(vim.g.vim_source .. '/modules/php')
-
-    -- Completion
-    -- use 'github/copilot.vim'
-
-    use {
-        'L3MON4D3/LuaSnip',
-        config = function()
-            require('warpcode.plugins.luasnip')
-        end,
-        requires = {
-            {'rafamadriz/friendly-snippets'},
-            {'honza/vim-snippets'},
-            {vim.g.vim_source .. '/modules/snippets'},
-        }
-    }
-
-    -- commented out, causing errors
-    -- use {
-    --     'simrat39/symbols-outline.nvim',
-    --     config = function()
-    --         require('warpcode.plugins.symbols-outline')
-    --     end,
-    -- }
-
-    -- File Managers
-    use {
-        'nvim-telescope/telescope.nvim',
-        config = function()
-            require('warpcode.plugins.telescope')
-        end,
-        requires = {
-            {
-                'nvim-telescope/telescope-fzf-native.nvim',
-                run = 'make',
-            },
-        }
-    }
-
-    -- lsp
-    use {
-        'tami5/lspsaga.nvim',
-        config = function()
-            require('warpcode.plugins.lspsaga')
-        end,
-    }
-    use 'jose-elias-alvarez/null-ls.nvim'
-    use {
-        'ray-x/lsp_signature.nvim',
-        config = function()
-            require('warpcode.plugins.lsp_signature')
-        end,
-    }
-
-    -- UI
-    use 'bronson/vim-trailing-whitespace'
-    use 'lukas-reineke/indent-blankline.nvim'
-
-    -- Utils
-    use 'nvim-lua/popup.nvim'
-    use 'tpope/vim-commentary'
-    use 'Raimondi/delimitMate'
-    use 'tpope/vim-surround'
-    use 'vim-utils/vim-man'
-    use {
-        'mbbill/undotree',
-        config = function()
-            vim.api.nvim_exec([[
-                let g:undotree_HighlightChangedWithSign = 0
-                let g:undotree_WindowLayout             = 4
-                let g:undotree_SetFocusWhenToggle       = 1
-
-                nnoremap <Leader>u :UndotreeToggle<CR>
-            ]], false)
-        end,
-    }
-    use 'sudormrfbin/cheatsheet.nvim'
-
-    -- Version Control
-    if vim.fn.executable('git') == 1 then
-        use 'tpope/vim-fugitive'
-        use 'airblade/vim-gitgutter'
-        use 'junegunn/gv.vim'
     end
 end)
