@@ -64,7 +64,7 @@ source.get_trigger_characters = function()
 end
 
 source.is_available = function()
-  return vim.bo.filetype == "gitcommit"
+  return vim.bo.filetype == "gitcommit" and vim.fn.executable('gh') == 1
 end
 
 cmp.register_source("gh_issues", source.new())
