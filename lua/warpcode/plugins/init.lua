@@ -57,6 +57,7 @@ local plugins_list = {
     'commentary',
     'delimitmate',
     'man',
+    'notify',
     'plenary',
     'popup',
     'surround',
