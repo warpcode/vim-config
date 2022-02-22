@@ -14,12 +14,12 @@ local detect_all = function (buffnr)
     if not vim.api.nvim_buf_is_valid(buf) then
         return {}
     end
-    
+
     local list = {}
 
     for _, project in pairs(projects) do
         local p = project(buf)
-        if p:is_project() then 
+        if p:is_project() then
             list[p:get_project_name(true)] = p
         end
     end
