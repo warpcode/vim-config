@@ -39,6 +39,7 @@ local plugins_list = {
     'lsp-null-ls',
     'lsp-saga',
     'lsp-signature',
+    'symbols-outline',
 
     -- Themes
     'theme-base16',
