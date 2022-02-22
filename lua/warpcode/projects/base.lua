@@ -118,6 +118,14 @@ function Base:is_project()
     return self._root ~= ''
 end
 
+function Base:get_root()
+    if not self._root or self._root == '' then
+        return nil
+    end
+
+    return self._root
+end
+
 --- Can be used with lua snip to load in additional filetype snippets
 --- The existing filetype must be passed through
 ---@param filetype string|table
