@@ -13,12 +13,11 @@ return cmp.config.sources({
     {name = 'calc'}, 
     {name = 'emoji'},
     require('warpcode.plugins.cmp.sources.gh_issues'),
-}, {
+    require('warpcode.plugins.cmp.sources.spell'),
     { name = "omni" },
     { name = "nvim_lua" },
 }, {
-    require('warpcode.plugins.cmp.sources.spell'),
-    { 
+    {
         name = "buffer",
         keyword_length = 5,
         max_item_count = 10,
