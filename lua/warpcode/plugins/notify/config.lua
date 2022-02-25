@@ -13,7 +13,7 @@ return {
 
         vim.notify = function(msg, level, opts)
             log.info(msg, level, opts)
-            notify(msg, level, opts)
+            return notify(msg, level, opts)
         end
     end
 }
