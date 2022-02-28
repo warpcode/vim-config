@@ -1,6 +1,8 @@
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-install-nvim: link-nvim
+install-nvim: link-nvim update-nvim
+
+update-nvim:
 	nvim --headless -V2 -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
 install-vim: link-vim
