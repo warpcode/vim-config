@@ -2,7 +2,6 @@ set title
 set titleold="Terminal"
 set titlestring=%F          " Set terminal title to the name of the file
 
-set laststatus=2
 set lazyredraw
 set redrawtime=10000
 set linebreak
