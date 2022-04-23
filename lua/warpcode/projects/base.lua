@@ -178,12 +178,12 @@ function Base:command_register()
     end
 
     self:command_deregister()
-    vim.api.nvim_buf_add_user_command(
-        self._buffnr, 
-        command_name, 
-        function(...) 
-            return self:command_run(...) 
-        end, 
+    vim.api.nvim_buf_create_user_command(
+        self._buffnr,
+        command_name,
+        function(...)
+            return self:command_run(...)
+        end,
         {
             complete = function(...) return self:command_complete(...) end,
             nargs = '+'
