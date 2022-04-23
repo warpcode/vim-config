@@ -55,7 +55,7 @@ function Base:_on_attach()
     self:on_attach()
 end
 
---- Override this method for custom actions when attaching to the buffer 
+--- Override this method for custom actions when attaching to the buffer
 function Base:on_attach() end
 
 --- Simply return the name of the project
@@ -88,7 +88,7 @@ end
 ---@param file string
 function Base:find_project_root(file)
     -- If still no path, force empty string to signify failure
-    if not file or file == '' then 
+    if not file or file == '' then
         return nil
     end
 
@@ -158,8 +158,8 @@ end
 
 --- Retrieve additional filetypes from custom checks.
 --- This method should be overriden if dynamic checking is required.
---- Example of use would be detecting whether a js file is 
---- in a legacy js build, legacy legacy build or new build and add a mapping 
+--- Example of use would be detecting whether a js file is
+--- in a legacy js build, legacy legacy build or new build and add a mapping
 --- depending on which the js file belongs to.
 --- For example you could have myproject-javascriptv2, myproject-javascript-legacy
 --- and then create extra luasnips snippets to have targeted snippets without poullting
