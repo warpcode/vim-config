@@ -1,6 +1,6 @@
 " Whilst in command mode, after doing a search, an extra Carriage return turns
 " off highlighting
-nnoremap <CR> :noh<CR><CR>
+nnoremap <leader>/ :noh<CR>
 
 " Search the project for the highlighted keyword
 nnoremap <leader>ps :execute 'silent! grep! ' . shellescape(expand("<cword>"))<CR>:cw<CR>
