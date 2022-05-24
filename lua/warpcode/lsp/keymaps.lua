@@ -22,14 +22,14 @@ M.common = function(client, bufnr)
 
     -- buf_set_keymap("n", "<space>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
 
-    -- Set some keybinds conditional on server capabilities
-    if client.resolved_capabilities.document_formatting then
-        vim.keymap.set("n", "<leader>=", lbuf.formatting_seq_sync, opts)
-    elseif client.resolved_capabilities.document_range_formatting then
+    -- Formatting options
+    if client.server_capabilities.documentFormattingProvider then
+        vim.keymap.set("n", "<leader>=", lbuf.format, opts)
+    elseif client.server_capabilities.documentRangeFormattingProvider then
         vim.keymap.set("n", "<leader>=", lbuf.range_formatting, opts)
     end
 
-    if client.resolved_capabilities.document_range_formatting then
+    if client.server_capabilities.documentRangeFormattingProvider then
         vim.keymap.set("x", "<leader>=", lbuf.range_formatting, opts)
     end
 end
