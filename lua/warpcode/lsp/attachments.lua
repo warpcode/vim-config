@@ -7,7 +7,7 @@ M.common = function (client, bufnr)
     keymaps.common(client, bufnr)
 
     -- Set autocommands conditional on server_capabilities
-    if client.resolved_capabilities.document_highlight then
+    if client.server_capabilities.documentHighlightProvider then
         vim.api.nvim_exec([[
             " hi LspReferenceRead cterm=bold ctermbg=239 guibg=#504945
             " hi LspReferenceText cterm=bold ctermbg=239 guibg=#504945
