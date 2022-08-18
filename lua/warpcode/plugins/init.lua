@@ -84,7 +84,21 @@ vim.api.nvim_exec(
     false
 )
 
-return require('packer').startup(function()
+local packer_ok, packer = pcall(require, 'packer')
+
+if not packer then
+    return
+end
+
+packer.init {
+    display = {
+        open_fn = function()
+            return require"packer.util".float { border = 'rounded' }
+        end,
+    }
+}
+
+return packer.startup(function()
     local function get_plugin(name)
         local ok, plugin = pcall(require, plugin_loc .. name)
 
