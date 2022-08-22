@@ -74,15 +74,12 @@ local plugins_list = {
 }
 
 vim.cmd [[packadd packer.nvim]]
-vim.api.nvim_exec(
-    [[
-    augroup Packer
-        autocmd!
-        autocmd BufWritePost */plugins/*.lua PackerCompile
-    augroup end
-    ]],
-    false
-)
+local packer_group = vim.api.nvim_create_augroup('packer', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePost', {
+    command = 'PackerCompile',
+    pattern = '*/plugins/*.lua',
+    group = packer_group
+})
 
 local packer_ok, packer = pcall(require, 'packer')
 
