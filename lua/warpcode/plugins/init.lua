@@ -26,12 +26,16 @@ local plugins_list = {
     'friendly-snippets',
     'vim-snippets',
 
+    -- Debugger
+    'nvim-dap-vscode-php-debug',
+    'nvim-dap',
+    'nvim-dap-ui',
+    'nvim-dap-virtual-text',
+
     -- File Managers
     'nerdtree',
     'nerdtree-tabs',
     'nerdtree-git',
-    'telescope',
-    'telescope-fzf',
 
     -- lsp
     'lsp-config',
@@ -40,6 +44,11 @@ local plugins_list = {
     'lsp-saga',
     'lsp-signature',
     'symbols-outline',
+
+    -- Telescope
+    'telescope',
+    'telescope-fzf',
+    'telescope-dap',
 
     -- Themes
     'theme-base16',
