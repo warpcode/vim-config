@@ -1,4 +1,6 @@
-_G.P = function (...)
+local M = {}
+
+M.P = function (...)
     local objects = {}
     for i = 1, select('#', ...) do
         local v = select(i, ...)
@@ -9,11 +11,27 @@ _G.P = function (...)
     return ...
 end
 
-_G.RELOAD = function (...)
+M.RELOAD = function (...)
     return require 'plenary.reload'.reload_module(...)
 end
 
-_G.R = function (name)
+M.R = function (name)
     RELOAD(name)
     return require(name)
 end
+
+M.pcall_run = function (lib, func)
+    if not lib then
+        return
+    end
+
+    local status, object = pcall(require, lib)
+
+    if not status then
+        return
+    end
+
+    func(object)
+end
+
+_G.warpcode = M
