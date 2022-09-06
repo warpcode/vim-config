@@ -63,6 +63,7 @@ local plugins_list = {
     'trailing-whitespace',
 
     -- Utils
+    'abolish',
     'cheatsheet',
     'commentary',
     'delimitmate',
