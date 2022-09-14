@@ -31,7 +31,7 @@ M.pcall_run = function (lib, func)
         return
     end
 
-    func(object)
+    return func(object)
 end
 
 _G.warpcode = M
