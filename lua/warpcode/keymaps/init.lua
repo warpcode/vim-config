@@ -1,17 +1,15 @@
-
-local default = { silent = true }
+local lib_prefix = 'warpcode.keymaps.'
+local default_opt = { silent = true }
 local maps = {
-    -- Add additional undo breakpoints
-    {'i', ',', ',<c-g>u', default},
-    {'i', '.', '.<c-g>u', default},
-    {'i', '!', '!<c-g>u', default},
-    {'i', '?', '?<c-g>u', default},
-
-    -- Insert mode easy escape
-    {'i', 'jk', '<ESC>', default},
-    {'i', 'kj', '<ESC>', default},
+    require(lib_prefix .. 'history'),
+    require(lib_prefix .. 'misc'),
 }
 
-for _, v in ipairs(maps) do
-    vim.keymap.set(unpack(v))
+for _, x in ipairs(maps) do
+    for _, v in ipairs(x) do
+        local mode, lhs, rhs, opt = unpack(v)
+        opt = opt or default_opt
+
+        vim.keymap.set(mode, lhs, rhs, opt)
+    end
 end
