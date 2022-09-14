@@ -52,8 +52,6 @@ local plugins_list = {
 
     -- Themes
     'theme-base16',
-    'theme-gruvbox',
-    'theme-vim-colorschemes',
 
     -- UI
     'airline',
