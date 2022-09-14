@@ -1,0 +1,82 @@
+snippet class_module
+		<?php
+
+		class ${TM_FILENAME_BASE} extends \ModuleController
+		{
+			private \$db;
+
+			/**
+			 * Display any admin options that the Site Layout page might show
+			 *
+			 * @return array
+			 */
+			public function getAdminMainOptions() : array
+			{
+				\$options = parent::getAdminMainOptions();
+				\$options[] = [
+					'name' => 'Configure',
+					'path' => 'configure',
+					'is_module_specific' => true,
+				];
+
+				return \$options;
+			}
+
+			protected function init()
+			{
+				\$this->db = \Factory::getMartiniDbAsUtf8mb4();
+			}
+
+			/**
+			 * Generate the module index page
+			 *
+			 * @param \HttpRequest \$request
+			 * @return \HttpResponse
+			 */
+			protected function generateIndex(\HttpRequest \$request) : \HttpResponse
+			{
+				if (\$this->site->template_namespace === 'mds') {
+					\$page = \$this->getBlockPage('slabs/${TM_FILENAME_BASE/(.*)Module$/$1/}Index');
+				} else {
+					\$page = \$this->getBlockPage('${TM_FILENAME_BASE/(.*)Module$/$1/}Index');
+				}
+
+				${2:\$page->es6_package_name = '$3';}
+
+				return \$page->asHttpResponse();
+			}
+
+			/**
+			 * Generates the admin configuration page.
+			 *
+			 * @return \HttpResponse
+			 */
+			protected function generateAdminConfigure() : \HttpResponse
+			{
+				\$page = \$this->getResponsivePage('Admin${TM_FILENAME_BASE/(.*)Module$/$1/}');
+				\$page->admin_header = 'Configure';
+				\$page->admin_helper_text = "<p>Use this page to configure the Page.</p>";
+				${4:\$page->admin_specific_js_file = 'admin-$5'};
+
+				if (\HttpData::getQueryAsBool('success') === true) {
+					\$page->is_success = true;
+				}
+
+				return \$page->asHttpResponse();
+			}
+
+			/**
+			 * Handles the submission of the config data for this module.
+			 *
+			 * @param \HttpRequest
+			 * @return \HttpResponse
+			 */
+			protected function handleAdminConfigure(\HttpRequest \$request) : \HttpResponse
+			{
+				// Return to config page
+				\$path = \$request->getPathInfo();
+				\$uri = \$request->getBaseRequestUri() . \$path . '?action=configure&success=true';
+
+				return \HttpResponse::createDefaultResponse(\HttpResponse::SC_SEE_OTHER, \$uri);
+			}
+		}$0

@@ -9,7 +9,7 @@ return {
         local snippets_snipmate_module_paths = function()
             local plugins = { "vim-snippets" }
             local paths = {
-                vim.g.vim_source .. '/modules/snippets/snippets'
+                vim.g.vim_source .. '/snippets'
             }
             for _, plug in ipairs(plugins) do
                 local path = wplugins.get_plugin_path(plug) or ''
@@ -24,7 +24,7 @@ return {
         local snippets_vscode_module_paths = function()
             local plugins = { "friendly-snippets" }
             local paths = {
-                vim.g.vim_source .. '/modules/snippets'
+                vim.g.vim_source
             }
             for _, plug in ipairs(plugins) do
                 local path = wplugins.get_plugin_path(plug) or ''

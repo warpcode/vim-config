@@ -1,5 +1,5 @@
 {
-    "name": "warpcode-snippets-vscode",
+    "name": "warpcode-vim-config",
     "engines": {
         "vscode": "^1.11.0"
     },
