@@ -31,6 +31,34 @@ return {
                         \ b:NERDTreeType == "primary") |
                         \   q |
                         \ endif
+
+            "
+            " Auto find files in nerdtree on buf enter
+            "
+            " Check if NERDTree is open or active
+            function! IsNERDTreeOpen()
+                return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+            endfunction
+
+            " Call NERDTreeFind if NERDTree is active, current window contains a modifiable
+            " file, and we're not in vimdiff
+            function! SyncTree()
+                if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
+                    NERDTreeFind
+                    wincmd p
+                endif
+            endfunction
+
+            " Highlight currently open buffer in NERDTree
+            autocmd BufEnter * call SyncTree()
+
+            " With the auto find feature, ensure we don't double open nerdtree
+            function! ToggleNerdTree()
+                set eventignore=BufEnter
+                NERDTreeToggle
+                set eventignore=
+            endfunction
+            nnoremap <leader>t :call ToggleNerdTree()<CR>
         ]], false)
     end
 }

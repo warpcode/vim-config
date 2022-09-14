@@ -6,7 +6,6 @@ nnoremap <leader>bc :bd<CR>
 nnoremap <leader>bq :bp <BAR> bd #<cr>
 
 " File Explorer
-nnoremap <leader>t :NERDTreeToggle<CR>
 nnoremap <leader>nw :Lexplore<CR>
 
 " File Finder
