@@ -1,5 +1,9 @@
 return {
+    -- Map semicolon to colon to write commands without needing to hit shift
+    {'n', ';', ':'},
+    {'v', ';', ':'},
+
     -- Insert mode easy escape
-    {'i', 'jk', '<ESC>', default},
-    {'i', 'kj', '<ESC>', default},
+    {'i', 'jk', '<ESC>'},
+    {'i', 'kj', '<ESC>'},
 }
