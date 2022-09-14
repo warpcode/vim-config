@@ -20,18 +20,4 @@ M.R = function (name)
     return require(name)
 end
 
-M.pcall_run = function (lib, func)
-    if not lib then
-        return
-    end
-
-    local status, object = pcall(require, lib)
-
-    if not status then
-        return
-    end
-
-    return func(object)
-end
-
 _G.warpcode = M
