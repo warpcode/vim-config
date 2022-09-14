@@ -1,5 +1,5 @@
 local M = {
-    source = 'chriskempson/base16-vim',
+    source = 'RRethy/nvim-base16',
 }
 
 return M
