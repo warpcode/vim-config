@@ -1,5 +1,5 @@
 local lib_prefix = 'warpcode.keymaps.'
-local default_opt = { silent = true }
+local default_opt = { noremap = true, silent = true }
 local maps = {
     require(lib_prefix .. 'clipboard'),
     require(lib_prefix .. 'history'),
