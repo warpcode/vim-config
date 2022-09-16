@@ -15,6 +15,10 @@ return {
     {'n', '<leader>ff', function()
         require('warpcode.plugins.telescope.finders').project_files()
     end},
+    -- Recent files
+    -- File Finder
+    {'n', '<leader>fr', ':Telescope oldfiles cwd_only=true<CR>'},
+
     -- command! -nargs=1 FindFile call warpcode#search#findFiles(<q-args>)
 
     -- move vertically by visual line (ie will go into a wrapped line that's
