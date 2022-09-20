@@ -1,7 +1,7 @@
 return {
     -- Whilst in command mode, after doing a search, an extra Carriage return turns
     -- off highlighting
-    {'n', '<leader>/', function() vim.cmd ':noh<CR>' end},
+    {'n', '<leader>/', function() vim.cmd(':noh') end},
 
     -- Search the project for the highlighted keyword
     -- nnoremap <leader>ps :execute 'silent! grep! ' . shellescape(expand("<cword>"))<CR>:cw<CR>
