@@ -1,5 +1,3 @@
-local symbols_outline_ok, symbols_outline = pcall(require, 'symbols-outline')
-
 return {
     run = function()
         pcall(function()
