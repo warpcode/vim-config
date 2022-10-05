@@ -6,7 +6,7 @@ M.common = function(client, bufnr)
 
     -- Mappings.
     vim.keymap.set('n', '<leader>ca', lbuf.code_action, opts)
-    vim.keymap.set('v', '<leader>ca', lbuf.range_code_action, opts)
+    vim.keymap.set('v', '<leader>ca', lbuf.code_action, opts)
 
     if client.server_capabilities.declarationProvider then
         vim.keymap.set("n", "gD", lbuf.declaration, opts)
@@ -43,15 +43,8 @@ M.common = function(client, bufnr)
     --
 
     -- Formatting options
-    if client.server_capabilities.documentFormattingProvider then
-        vim.keymap.set("n", "<leader>=", lbuf.format, opts)
-    elseif client.server_capabilities.documentRangeFormattingProvider then
-        vim.keymap.set("n", "<leader>=", lbuf.range_formatting, opts)
-    end
-
-    if client.server_capabilities.documentRangeFormattingProvider then
-        vim.keymap.set("x", "<leader>=", lbuf.range_formatting, opts)
-    end
+    vim.keymap.set("n", "<leader>=", lbuf.format, opts)
+    vim.keymap.set("x", "<leader>=", lbuf.format, opts)
 
     -- buf_set_keymap("n", "<space>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
     vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
