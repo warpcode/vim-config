@@ -3,9 +3,9 @@ return {
         pcall(function()
             dap = require 'dap'
 
---             vim.fn.sign_define('DapBreakpoint', {text='🔴', texthl='', linehl='', numhl=''})
---             vim.fn.sign_define('DapBreakpointRejected', {text='❌', texthl='', linehl='', numhl=''})
---             vim.fn.sign_define('DapStopped', {text='⭐️', texthl='', linehl='', numhl=''})
+            vim.fn.sign_define('DapBreakpoint', {text='🔴', texthl='', linehl='', numhl=''})
+            vim.fn.sign_define('DapBreakpointRejected', {text='❌', texthl='', linehl='', numhl=''})
+            vim.fn.sign_define('DapStopped', {text='⭐️', texthl='', linehl='', numhl=''})
 
             vim.keymap.set('n', '<leader>db', function() require"dap".toggle_breakpoint() end)
             vim.keymap.set('n', '<leader>dB', ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
