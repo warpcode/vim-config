@@ -42,7 +42,7 @@
         "body": [
             "%section(${1:section_name})",
             "\t$2",
-            "%endsection()"
+            "%endsection(${1:section_name})"
         ],
         "description": "Martini HTML - Defines an section statement",
         "scope": "text.html"
