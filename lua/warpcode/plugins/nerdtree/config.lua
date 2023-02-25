@@ -50,7 +50,7 @@ return {
             endfunction
 
             " Highlight currently open buffer in NERDTree
-            autocmd BufEnter * call SyncTree()
+            " autocmd BufEnter * call SyncTree()
 
             " With the auto find feature, ensure we don't double open nerdtree
             function! ToggleNerdTree()
