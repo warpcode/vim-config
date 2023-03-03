@@ -10,8 +10,6 @@ else
     let g:vim_source=fnamemodify(resolve(expand('~/.vimrc')), ':h')
 endif
 
-let g:vim_node_bin = g:vim_source . '/modules/node/node_modules/.bin'
-
 " set packpath^=~/.vim§
 packadd vim-config
 

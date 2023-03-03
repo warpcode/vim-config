@@ -9,20 +9,13 @@ M.find_exe_path = function (exe_name)
     local search_paths = {}
 
     -- TODO project versions?
+    -- search_paths[#search_paths + 1] = vim.g.vim_source .. '/bin/'
 
-    -- vim config versions
-    search_paths[#search_paths + 1] = vim.g.vim_source .. '/modules/node/node_modules/.bin/'
-    search_paths[#search_paths + 1] = vim.g.vim_source .. '/modules/node/bin/'
-    search_paths[#search_paths + 1] = vim.g.vim_source .. '/modules/php/vendor/bin/'
-    search_paths[#search_paths + 1] = vim.g.vim_source .. '/modules/php/bin/'
-    search_paths[#search_paths + 1] = vim.g.vim_source .. '/bin/'
+    -- local fullpath = M.find_file_in_paths(exe_name, search_paths)
 
-
-    local fullpath = M.find_file_in_paths(exe_name, search_paths)
-
-    if fullpath ~= nil then
-        return fullpath
-    end
+    -- if fullpath ~= nil then
+    --     return fullpath
+    -- end
 
     -- If it's not in the above paths, search the system path
     if vim.fn.executable(exe_name) == 1 then
