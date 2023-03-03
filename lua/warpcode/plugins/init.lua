@@ -4,10 +4,6 @@ local plugin_loc = 'warpcode.plugins.'
 local plugins_list = {
     'packer',
 
-    'local_node',
-    'local_php',
-    'local_snippets',
-
     -- Completion
     -- use 'github/copilot.vim'
     'cmp',
