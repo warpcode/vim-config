@@ -80,22 +80,22 @@ return {
                     -- SELECT all text inside the snippet.
                     if not no_move then
                         vim.api.nvim_feedkeys(
-                        vim.api.nvim_replace_termcodes("<Esc>", true, false, true),
-                        "n",
-                        true
+                            vim.api.nvim_replace_termcodes("<Esc>", true, false, true),
+                            "n",
+                            true
                         )
                         local pos_begin, pos_end = snip.mark:pos_begin_end()
                         util.normal_move_on(pos_begin)
                         vim.api.nvim_feedkeys(
-                        vim.api.nvim_replace_termcodes("v", true, false, true),
-                        "n",
-                        true
+                            vim.api.nvim_replace_termcodes("v", true, false, true),
+                            "n",
+                            true
                         )
                         util.normal_move_before(pos_end)
                         vim.api.nvim_feedkeys(
-                        vim.api.nvim_replace_termcodes("o<C-G>", true, false, true),
-                        "n",
-                        true
+                            vim.api.nvim_replace_termcodes("o<C-G>", true, false, true),
+                            "n",
+                            true
                         )
                     end
                 end
