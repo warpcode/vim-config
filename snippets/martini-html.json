@@ -6,8 +6,7 @@
             "\t$2",
             "%endif()"
         ],
-        "description": "Martini HTML - Defines an if statement",
-        "scope": "text.html"
+        "description": "Martini HTML - Defines an if statement"
     },
     "ife": {
         "prefix": "ife",
@@ -18,8 +17,7 @@
             "\t$3",
             "%endif()"
         ],
-        "description": "Martini HTML - Defines an if/else statement",
-        "scope": "text.html"
+        "description": "Martini HTML - Defines an if/else statement"
     },
     "ifi": {
         "prefix": "ifi",
@@ -34,8 +32,7 @@
         "body": [
             "%if(${1:variable})$2%else()%3%endif()"
         ],
-        "description": "Martini HTML - Defines an inline if/else statement",
-        "scope": "text.html"
+        "description": "Martini HTML - Defines an inline if/else statement"
     },
     "section": {
         "prefix": "section",
@@ -44,31 +41,27 @@
             "\t$2",
             "%endsection(${1:section_name})"
         ],
-        "description": "Martini HTML - Defines an section statement",
-        "scope": "text.html"
+        "description": "Martini HTML - Defines an section statement"
     },
     "escape": {
         "prefix": "escape",
         "body": [
             "%escape(${1:variable})"
         ],
-        "description": "Martini HTML - Defines an escape statement",
-        "scope": "text.html"
+        "description": "Martini HTML - Defines an escape statement"
     },
     "escapejs": {
         "prefix": "escapejs",
         "body": [
             "%escapejs(${1:variable})"
         ],
-        "description": "Martini HTML - Defines an escapejs statement",
-        "scope": "text.html"
+        "description": "Martini HTML - Defines an escapejs statement"
     },
     "raw": {
         "prefix": "raw",
         "body": [
             "%raw(${1:variable})"
         ],
-        "description": "Martini HTML - Defines an raw statement",
-        "scope": "text.html"
+        "description": "Martini HTML - Defines an raw statement"
     }
 }

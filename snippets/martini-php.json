@@ -4,15 +4,13 @@
         "body": [
             "\\Factory::getMartini()${0:${VISUAL}}"
         ],
-        "description": "Martini PHP - Get martini object",
-        "scope": "text.html"
+        "description": "Martini PHP - Get martini object"
     },
     "martinidb": {
         "prefix": "martinidb",
         "body": [
             "\\Factory::getMartiniDb()${0:${VISUAL}}"
         ],
-        "description": "Martini HTML - Defines an if/else statement",
-        "scope": "text.html"
+        "description": "Martini HTML - Defines an if/else statement"
     }
 }
