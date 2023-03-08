@@ -16,7 +16,33 @@
                     "martini-php"
                 ],
                 "path": "./snippets/martini-php.json"
+            },
+            {
+                "language": [
+                    "shellscript",
+                    "shell",
+                    "sh",
+                    "zsh"
+                ],
+                "path": "./snippets/shell.json"
             }
         ]
+    },
+    "dependencies": {
+        "emmet-ls": "latest",
+        "eslint": "latest",
+        "fixjson": "latest",
+        "jsonlint": "latest",
+        "stylelint": "latest",
+        "stylelint-scss": "latest",
+        "yarn": "latest",
+        "@ansible/ansible-language-server": "latest",
+        "bash-language-server": "latest",
+        "dockerfile-language-server-nodejs": "latest",
+        "intelephense": "latest",
+        "sql-language-server": "latest",
+        "typescript-language-server": "latest",
+        "vscode-langservers-extracted": "latest",
+        "vim-language-server": "latest"
     }
 }
