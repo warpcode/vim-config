@@ -29,6 +29,7 @@
         ]
     },
     "dependencies": {
+        "neovim": "latest",
         "emmet-ls": "latest",
         "eslint": "latest",
         "fixjson": "latest",
