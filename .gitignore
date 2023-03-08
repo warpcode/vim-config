@@ -9,6 +9,7 @@ php_modules/
 # Optional npm cache directory/files
 .npm
 package-lock.json
+composer.lock
 
 # dotenv environment variable files
 .env
