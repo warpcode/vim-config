@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+source $(dirname "${0:A:h}")/scripts/shell-setup.zsh
+
+export NVIM_APPNAME="wvim"
+exec -a wvim nvim -u "${WVIM_BASEDIR}/init.lua" $@
