@@ -1,0 +1,2 @@
+#!/usr/bin/env zsh
+exec "$(dirname "${0:A:h}")/vendor/luaLS/lua-language-server/bin/lua-language-server" "$@"
