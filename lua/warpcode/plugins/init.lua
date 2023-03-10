@@ -7,7 +7,6 @@ local plugins_list = {
     -- Completion
     -- use 'github/copilot.vim'
     'cmp',
-    'luasnip',
     'snippets',
 
     -- Debugger
