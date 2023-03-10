@@ -1,5 +1,5 @@
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
-EXECUTABLES = curl tar npm php nvim
+EXECUTABLES = curl tar npm php nvim zsh
 K := $(foreach exec,$(EXECUTABLES),\
         $(if $(shell which $(exec)),some string,$(error "No $(exec) in PATH")))
 
@@ -27,7 +27,7 @@ else
     endif
 endif
 
-install: update-node-modules update-php-modules link update
+install: update-lua-lsp update-node-modules update-php-modules link update
 
 update:
 	nvim --headless -V2 -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
