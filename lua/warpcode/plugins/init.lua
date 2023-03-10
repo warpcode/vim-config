@@ -43,8 +43,6 @@ local plugins_list = {
 
     -- Telescope
     'telescope',
-    'telescope-fzf',
-    'telescope-dap',
 
     -- Themes
     'theme-base16',
