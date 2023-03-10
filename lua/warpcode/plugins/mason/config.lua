@@ -7,7 +7,7 @@ return {
                 "bashls",
                 "dockerls",
                 "emmet_ls",
-                "gopls",
+                -- "gopls",
                 "html",
                 "intelephense",
                 "jsonls",
