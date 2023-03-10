@@ -29,8 +29,6 @@ local plugins_list = {
 
     -- File Managers
     'nerdtree',
-    'nerdtree-tabs',
-    'nerdtree-git',
 
     -- lsp
     'mason',
