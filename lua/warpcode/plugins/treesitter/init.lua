@@ -3,7 +3,7 @@ local M = {
     run = ':TSUpdate',
     requires = {
         {'nvim-treesitter/playground'},
-        {'p00f/nvim-ts-rainbow'},
+        -- {'p00f/nvim-ts-rainbow'},
     },
     config = function()
         local treesitter_configs_ok, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
