@@ -19,8 +19,7 @@ local plugins_list = {
     'cmp-tabnine',
     'cmp-luasnip',
     'luasnip',
-    'friendly-snippets',
-    'vim-snippets',
+    'snippets',
 
     -- Debugger
     'nvim-dap-vscode-php-debug',
