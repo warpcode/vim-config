@@ -7,17 +7,6 @@ local plugins_list = {
     -- Completion
     -- use 'github/copilot.vim'
     'cmp',
-    'cmp-buffer',
-    'cmp-calc',
-    'cmp-cmdline',
-    'cmp-emoji',
-    'cmp-nvim-lsp',
-    'cmp-nvim-lua',
-    'cmp-omni',
-    'cmp-path',
-    'cmp-treesitter',
-    'cmp-tabnine',
-    'cmp-luasnip',
     'luasnip',
     'snippets',
 
