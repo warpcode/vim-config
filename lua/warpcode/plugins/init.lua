@@ -34,6 +34,7 @@ local plugins_list = {
     'nerdtree-git',
 
     -- lsp
+    'mason',
     'lsp-config',
     'lsp-kind',
     'lsp-null-ls',
