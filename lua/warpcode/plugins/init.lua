@@ -19,12 +19,7 @@ local plugins_list = {
     'nerdtree',
 
     -- lsp
-    'mason',
-    'lsp-config',
-    'lsp-kind',
-    'lsp-null-ls',
-    'lsp-saga',
-    'lsp-signature',
+    'lsp',
     'symbols-outline',
 
     -- Telescope
