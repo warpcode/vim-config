@@ -31,7 +31,7 @@ local plugins_list = {
     'telescope',
 
     -- Themes
-    'theme-base16',
+    'themes',
 
     -- UI
     'airline',
