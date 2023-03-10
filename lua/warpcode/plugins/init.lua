@@ -67,8 +67,6 @@ local plugins_list = {
     'popup',
     'surround',
     'treesitter',
-    'treesitter-playground',
-    -- 'treesitter-rainbow',
     'undotree',
 
     -- Version Control
