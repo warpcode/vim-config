@@ -4,8 +4,7 @@
     "require": {
         "squizlabs/php_codesniffer": "^3.6",
         "phpmd/phpmd": "^2.10",
-        "friendsofphp/php-cs-fixer": "*",
-        "phpactor/phpactor": "dev-master"
+        "friendsofphp/php-cs-fixer": "*"
     },
     "config": {
         "vendor-dir": "php_modules",
