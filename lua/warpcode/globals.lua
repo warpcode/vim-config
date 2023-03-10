@@ -16,7 +16,7 @@ M.RELOAD = function (...)
 end
 
 M.R = function (name)
-    RELOAD(name)
+    M.RELOAD(name)
     return require(name)
 end
 
