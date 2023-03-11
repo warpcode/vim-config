@@ -2,7 +2,7 @@ local M = {}
 local lbuf = vim.lsp.buf
 
 M.common = function(client, bufnr)
-    local opts = {noremap = true, silent = true, buffer = bufnr}
+    local opts = { noremap = true, silent = true, buffer = bufnr }
 
     -- Mappings.
     vim.keymap.set('n', '<leader>ca', lbuf.code_action, opts)
