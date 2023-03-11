@@ -6,6 +6,10 @@ local M = {}
 ---Map a list of keymaps
 ---@param list table A list of keymaps { {mode, lhs, rhs, opt:table} }
 M.map_list = function(list)
+    if #list == 0 then
+        return
+    end
+
     for _, v in ipairs(list) do
         M.map(v)
     end
@@ -23,8 +27,9 @@ end
 ---@param opt table
 ---@return table
 M.extend_default_opt = function(opt)
-   return vim.tbl_deep_extend("force", default_opt, opt)
+    return vim.tbl_deep_extend("force", default_opt, opt)
 end
+
 
 M.map_list(require(lib_prefix .. 'clipboard'))
 M.map_list(require(lib_prefix .. 'history'))

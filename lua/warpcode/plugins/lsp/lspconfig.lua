@@ -37,7 +37,7 @@ end
 M.custom_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    require('warpcode.lsp.keymaps').common(client, bufnr)
+    require('warpcode.keymaps.lsp').common(client, bufnr)
 
     -- Set autocommands conditional on server_capabilities
     if client.server_capabilities.documentHighlightProvider then
