@@ -13,9 +13,9 @@ end
 
 --- Check a string starts with another string
 ---@param s string
----@param str string
+---@param n string
 ---@return bool
-function string.startswith(s, n)
+M.startswith = function(s, n)
 	return s:sub(1, #n) == n
 end
 
@@ -23,12 +23,12 @@ end
 ---@param s string
 ---@param str string
 ---@return bool
-function string.endswith(s, str)
+M.endswith = function(s, str)
   return s:sub(-#str) == str
 end
 
 --- Converts the first letter to upper case
----@param string str
+---@param str string
 ---@return string
 M.ucfirst = function(str)
     return (str:gsub("^%l", string.upper))
