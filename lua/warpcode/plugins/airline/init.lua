@@ -1,5 +1,8 @@
 local M = {
     source = 'vim-airline/vim-airline',
+    requires = {
+        {'vim-airline/vim-airline-themes'},
+    },
     config = function()
         vim.api.nvim_exec([[
             " General Options

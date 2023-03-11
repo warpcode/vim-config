@@ -30,7 +30,6 @@ local plugins_list = {
 
     -- UI
     'airline',
-    'airline-themes',
     'devicons',
     'indent-blankline',
     'trailing-whitespace',
