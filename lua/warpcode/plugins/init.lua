@@ -10,10 +10,10 @@ local plugins_list = {
     'snippets',
 
     -- Debugger
-    'nvim-dap-vscode-php-debug',
-    'nvim-dap',
-    'nvim-dap-ui',
-    'nvim-dap-virtual-text',
+    -- 'nvim-dap-vscode-php-debug',
+    -- 'nvim-dap',
+    -- 'nvim-dap-ui',
+    -- 'nvim-dap-virtual-text',
 
     -- File Managers
     'nerdtree',
