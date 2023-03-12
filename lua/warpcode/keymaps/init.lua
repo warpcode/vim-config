@@ -30,8 +30,8 @@ M.extend_default_opt = function(opt)
     return vim.tbl_deep_extend("force", default_opt, opt)
 end
 
-
 M.map_list(require(lib_prefix .. 'clipboard'))
+M.map_list(require(lib_prefix .. 'diagnostics'))
 M.map_list(require(lib_prefix .. 'history'))
 M.map_list(require(lib_prefix .. 'misc'))
 M.map_list(require(lib_prefix .. 'navigation'))

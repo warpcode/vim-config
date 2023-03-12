@@ -73,11 +73,6 @@ M.common = function(client, bufnr)
         { "n",          "<space>wl",  M.default_actions['list_workspace_folders'],  opts },
         -- { "n", '<leader>lcc', M.default_actions['server_capabilities'](client), opts }
     })
-
-    -- buf_set_keymap("n", "<space>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
-    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-    vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-    -- buf_set_keymap("n", "<space>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
 end
 
 return M
