@@ -58,21 +58,19 @@ M.common = function(client, bufnr)
     local opts = maps.extend_default_opt({ buffer = bufnr })
 
     maps.map_list({
-        { 'n', '<leader>ca',  M.default_actions['code_action'],                 opts },
-        { 'v', '<leader>ca',  M.default_actions['code_action'],                 opts },
-        { "n", "gD",          M.default_actions['declaration'],                 opts },
-        { "n", "gd",          M.default_actions['definition'],                  opts },
-        { "n", "<leader>=",   M.default_actions['format'],                      opts },
-        { "x", "<leader>=",   M.default_actions['format'],                      opts },
-        { "n", "K",           M.default_actions['hover'],                       opts },
-        { "n", "gi",          M.default_actions['implementation'],              opts },
-        { "n", "gr",          M.default_actions['references'],                  opts },
-        { "n", "<leader>rn",  M.default_actions['rename'],                      opts },
-        { "n", "<C-k>",       M.default_actions['signature_help'],              opts },
-        { 'n', '<leader>D',   M.default_actions['type_definition'],             opts },
-        { "n", "<space>wa",   M.default_actions['add_workspace_folder'],        opts },
-        { "n", "<space>wr",   M.default_actions['remove_workspace_folder'],     opts },
-        { "n", "<space>wl",   M.default_actions['list_workspace_folders'],      opts },
+        { { 'n', 'v' }, '<leader>ca', M.default_actions['code_action'],             opts },
+        { "n",          "gD",         M.default_actions['declaration'],             opts },
+        { "n",          "gd",         M.default_actions['definition'],              opts },
+        { { "n", 'x' }, "<leader>=",  M.default_actions['format'],                  opts },
+        { "n",          "K",          M.default_actions['hover'],                   opts },
+        { "n",          "gi",         M.default_actions['implementation'],          opts },
+        { "n",          "gr",         M.default_actions['references'],              opts },
+        { "n",          "<leader>rn", M.default_actions['rename'],                  opts },
+        { "n",          "<C-k>",      M.default_actions['signature_help'],          opts },
+        { 'n',          '<leader>D',  M.default_actions['type_definition'],         opts },
+        { "n",          "<space>wa",  M.default_actions['add_workspace_folder'],    opts },
+        { "n",          "<space>wr",  M.default_actions['remove_workspace_folder'], opts },
+        { "n",          "<space>wl",  M.default_actions['list_workspace_folders'],  opts },
         -- { "n", '<leader>lcc', M.default_actions['server_capabilities'](client), opts }
     })
 
