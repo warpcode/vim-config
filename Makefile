@@ -27,30 +27,14 @@ else
     endif
 endif
 
-install: update-lua-lsp update-node-modules update-php-modules link update
+install: update-node-modules link update
 
 update:
 	nvim --headless -V2 -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
-update-composer-bin:
-	wget https://getcomposer.org/download/latest-stable/composer.phar -O "$(ROOT_DIR)/bin/composer" -q
-	chmod +x "$(ROOT_DIR)/bin/composer"
-
-update-lua-lsp:
-	[ -d "vendor/luaLS/lua-language-server" ] && rm -r vendor/luaLS/lua-language-server || true
-	mkdir -p vendor/luaLS/lua-language-server
-
-	set -e;\
-	BIN_VERSION=$$(curl -s https://api.github.com/repos/LuaLS/lua-language-server/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/');\
-	LINK="https://github.com/LuaLS/lua-language-server/releases/download/$$BIN_VERSION/lua-language-server-$$BIN_VERSION-$(UNAME_S_LOWER)-$(ARCH_BIN).tar.gz";\
-	curl -sL $$LINK | tar xvfz - -C vendor/luaLS/lua-language-server/;
-
 update-node-modules:
 	[ -f package-lock.json ] && npm update || true
 	[ -f package-lock.json ] && npm ci || npm i
-
-update-php-modules:
-	[ -f composer.lock ] && ./bin/composer update || ./bin/composer install
 
 test:
 	nvim --headless -c "PlenaryBustedDirectory tests/"

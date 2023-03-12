@@ -30,12 +30,6 @@
     },
     "dependencies": {
         "neovim": "latest",
-        "emmet-ls": "latest",
-        "eslint": "latest",
-        "fixjson": "latest",
-        "jsonlint": "latest",
-        "stylelint": "latest",
-        "stylelint-scss": "latest",
         "yarn": "latest"
     }
 }

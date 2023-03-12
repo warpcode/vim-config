@@ -82,15 +82,3 @@ for server, config in pairs(default_server_configs) do
     require'warpcode.plugins.lsp.lspconfig'.setup_lsp_config_server(server, config)
 end
 
-require 'null-ls'.setup({
-    debug = false,
-    sources = wtables.list_extend(wtables.table_unpack({
-        require 'warpcode.lsp.servers.null-ls.sources.css',
-        require 'warpcode.lsp.servers.null-ls.sources.json',
-        require 'warpcode.lsp.servers.null-ls.sources.php',
-        require 'warpcode.lsp.servers.null-ls.sources.typescript',
-    })),
-    on_attach = require'warpcode.plugins.lsp.lspconfig'.custom_attach,
-    -- diagnostics_format = "[#{s}] #{m} [#{c}]"
-})
-

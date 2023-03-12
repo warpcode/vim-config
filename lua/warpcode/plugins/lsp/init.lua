@@ -1,12 +1,14 @@
 local M = {
-    source = 'neovim/nvim-lspconfig',
+    source = "neovim/nvim-lspconfig",
     requires = {
-        {'onsails/lspkind-nvim'},
-        {'tami5/lspsaga.nvim'},
-        {'ray-x/lsp_signature.nvim'},
-        {'jose-elias-alvarez/null-ls.nvim'},
-        {'williamboman/mason.nvim'},
-        {'williamboman/mason-lspconfig.nvim'},
+        { "onsails/lspkind-nvim" },
+        { "tami5/lspsaga.nvim" },
+        { "ray-x/lsp_signature.nvim" },
+        { "jose-elias-alvarez/null-ls.nvim" },
+        { "williamboman/mason.nvim" },
+        { "WhoIsSethDaniel/mason-tool-installer.nvim" },
+        { "williamboman/mason-lspconfig.nvim" },
+        { "jay-babu/mason-null-ls.nvim" },
     },
     config = function()
         require("mason").setup()
@@ -27,8 +29,141 @@ local M = {
                 "vimls",
             },
         })
+        require("mason-null-ls").setup({
+            ensure_installed = {
+                -- asciidoc
+                "vale",
 
-        require'lsp_signature'.setup({
+                -- cmake
+                "cmake_format",
+                "gersemi",
+
+                -- cpp
+                "cpplint",
+                "clang_format",
+
+                -- cs
+                "clang_format",
+                "csharpier",
+
+                -- 'css',
+                "prettier",
+                "prettierd",
+
+                -- 'dockerfile',
+                "hadolint",
+                -- git
+                "commitlint",
+                "gitlint",
+
+                -- html
+                "prettier",
+                "prettierd",
+
+                -- 'javascript'
+                "eslint_d",
+                "prettier",
+                "prettierd",
+                "dprint",
+                "rome",
+                "xo",
+
+                -- 'json',
+                "cfn-lint",
+                "jsonlint",
+                "dprint",
+                "fixjson",
+                "jq",
+                "prettier",
+                "prettierd",
+
+                -- 'lua',
+                "luacheck",
+                -- "selene",
+                "stylua",
+
+                -- markdown
+                "alex",
+                "markdownlint",
+                "proselint",
+                "vale",
+                "write_good",
+                "cbfmt",
+                "dprint",
+                "prettier",
+                "prettierd",
+
+                -- 'php',
+                "phpcs",
+                "phpmd",
+                "phpstan",
+                "psalm",
+                "phpcbf",
+                "phpcsfixer",
+                "pint",
+
+                -- 'shell',
+                "shellcheck",
+                "beautysh",
+                "shellharden",
+                "shfmt",
+
+                -- 'sql',
+                "sql_formatter",
+                "sqlfluff",
+
+                -- 'vim',
+                "vint",
+
+                -- 'yaml',
+                "actionlint",
+                "cfn-lint",
+                "yamllint",
+                "prettier",
+                "prettierd",
+            },
+            automatic_installation = true,
+            automatic_setup = true, -- Recommended, but optional
+        })
+
+        local null_ls = require("null-ls")
+        null_ls.setup({
+            debug = false,
+            sources = {
+                null_ls.builtins.formatting.json_tool,
+            },
+            on_attach = require("warpcode.plugins.lsp.lspconfig").custom_attach,
+            -- diagnostics_format = "[#{s}] #{m} [#{c}]"
+        })
+
+        require("mason-null-ls").setup_handlers({
+            function(source_name, methods)
+                -- all sources with no handler get passed here
+
+                -- To keep the original functionality of `automatic_setup = true`,
+                -- please add the below.
+                require("mason-null-ls.automatic_setup")(source_name, methods)
+            end,
+            phpcbf = function(source_name, methods)
+                null_ls.register(null_ls.builtins.formatting.phpcbf.with({
+                    extra_args = {
+                        "--standard=PSR12",
+                    },
+                }))
+            end,
+            phpcs = function(source_name, methods)
+                null_ls.register(null_ls.builtins.diagnostics.phpcs.with({
+                    extra_args = {
+                        "--standard=PSR12",
+                    },
+                }))
+            end,
+            -- stylua = function(source_name, methods)
+            --     null_ls.register(null_ls.builtins.formatting.stylua)
+            -- end,
+        }) -- If `automatic_setup` is true.
+
+        require("lsp_signature").setup({
             -- bind = false,
             -- floating_window = true,
             -- floating_window_off_x = 1, -- adjust float windows x position.
@@ -47,7 +182,7 @@ local M = {
         --     with_text = true,
         -- })
         --
-        
+
         -- add your config value here
         -- default value
         -- use_saga_diagnostic_sign = true
@@ -92,7 +227,7 @@ local M = {
         -- require'lspsaga'.init_lsp_saga {
         --     use_saga_diagnostic_sign = false
         -- }
-    end
+    end,
 }
 
 return M
