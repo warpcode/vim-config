@@ -39,6 +39,10 @@ M.custom_attach = function(client, bufnr)
 
     require('warpcode.keymaps.lsp').common(client, bufnr)
 
+    if client.server_capabilities.definitionProvider then
+        vim.api.nvim_buf_set_option(bufnr, 'tagfunc', 'v:lua.vim.lsp.tagfunc')
+    end
+
     -- Set autocommands conditional on server_capabilities
     if client.server_capabilities.documentHighlightProvider then
         local group = vim.api.nvim_create_augroup('lsp_document_highlight', { clear = true })

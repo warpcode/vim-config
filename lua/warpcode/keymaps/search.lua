@@ -3,6 +3,8 @@ return {
     -- off highlighting
     {'n', '<leader>/', function() vim.cmd(':noh') end},
 
+    {'n', '<leader>fs', ':Telescope live_grep<CR>'},
+
     -- Search the project for the highlighted keyword
     -- nnoremap <leader>ps :execute 'silent! grep! ' . shellescape(expand("<cword>"))<CR>:cw<CR>
     -- vnoremap <leader>ps :<C-U>execute 'silent! grep! ' . shellescape(warpcode#string#escapeVimCommands(warpcode#util#getSelectedText()))<CR>:cw<CR>
