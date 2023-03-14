@@ -1,5 +1,5 @@
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
-EXECUTABLES = curl tar npm php nvim zsh
+EXECUTABLES = curl tar npm php nvim zsh pip3
 K := $(foreach exec,$(EXECUTABLES),\
         $(if $(shell which $(exec)),some string,$(error "No $(exec) in PATH")))
 
@@ -27,7 +27,7 @@ else
     endif
 endif
 
-install: update-node-modules link update
+install: update-python-packages update-node-modules link update
 
 update:
 	nvim --headless -V2 -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
@@ -35,6 +35,9 @@ update:
 update-node-modules:
 	[ -f package-lock.json ] && npm update || true
 	[ -f package-lock.json ] && npm ci || npm i
+
+update-python-packages:
+	pip3 install -r requirements.txt
 
 test:
 	nvim --headless -c "PlenaryBustedDirectory tests/"
