@@ -1,6 +1,6 @@
 local M = {}
 
-M.get_bufnr = function(bufnr)
+M.get_bufnr = function(buffnr)
     if type(buffnr) == 'number' and buffnr > 0 then
         return buffnr
     end
