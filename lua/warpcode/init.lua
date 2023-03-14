@@ -1,6 +1,5 @@
 require('warpcode.globals')
 require('warpcode.keymaps')
 require('warpcode.plugins')
-require('warpcode.lsp')
 require('warpcode.projects')
 require('warpcode.statusline')
