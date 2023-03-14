@@ -189,8 +189,6 @@ end
 
 ---Setup lspconfig with all the usabe servers
 M.setup_servers = function()
-    local setup_servers = M.get_usable_servers()
-
     for _, p in pairs(M.get_usable_servers()) do
         M.setup_server(p.lspconfig, p.config)
     end
