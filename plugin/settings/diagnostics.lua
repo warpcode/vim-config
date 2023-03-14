@@ -12,4 +12,3 @@ vim.diagnostic.config({
         format = format_diagnostic,
     },
 })
-
