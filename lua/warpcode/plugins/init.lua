@@ -51,6 +51,7 @@ local plugins_list = {
     'vcs-fugitive',
     'vcs-gitgutter',
     'vcs-gv',
+    'vcs-gitsigns',
 }
 
 vim.cmd [[packadd packer.nvim]]
