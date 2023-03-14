@@ -15,39 +15,21 @@
 -- "clang_format",
 -- "csharpier",
 
--- -- 'css',
--- "prettier",
--- "prettierd",
 
 -- -- git
 -- "commitlint",
 -- "gitlint",
 
--- -- html
--- "prettier",
--- "prettierd",
-
 -- -- 'javascript'
 -- "eslint_d",
--- "prettier",
--- "prettierd",
 -- "dprint",
 -- "rome",
 -- "xo",
 
 -- -- 'json',
 -- "cfn-lint",
--- "jsonlint",
 -- "dprint",
--- "fixjson",
 -- "jq",
--- "prettier",
--- "prettierd",
-
--- -- 'lua',
--- "luacheck",
--- -- "selene",
--- "stylua",
 
 -- -- markdown
 -- "alex",
@@ -57,16 +39,11 @@
 -- "write_good",
 -- "cbfmt",
 -- "dprint",
--- "prettier",
--- "prettierd",
 
 -- -- 'php',
--- "phpcs",
 -- "phpmd",
 -- "phpstan",
 -- "psalm",
--- "phpcbf",
--- "phpcsfixer",
 -- "pint",
 
 -- -- 'shell',
@@ -79,31 +56,76 @@
 -- "sql_formatter",
 -- "sqlfluff",
 
--- -- 'vim',
--- "vint",
-
 -- -- 'yaml',
 -- "actionlint",
 -- "cfn-lint",
 -- "yamllint",
--- "prettier",
--- "prettierd",
 -- },
 
 local M = {}
 local null_ls = require "null-ls"
 local servers = {
+    -- Multiple
+    {
+        package = 'prettier',
+        config = require "null-ls".builtins.formatting.prettier,
+    },
+
     -- Dockerfile
     {
         package = 'hadolint',
         config = require "null-ls".builtins.diagnostics.hadolint,
     },
 
-    -- json
+    -- Git
+    {
+        config = require "null-ls".builtins.code_actions.gitsigns,
+    },
+
+    -- Javascript
+    -- {
+    --     package = "eslint_d",
+    --     config = require "null-ls".builtins.code_actions.eslint_d,
+    -- },
+    -- {
+    --     package = "eslint_d",
+    --     config = require "null-ls".builtins.diagnostics.eslint_d,
+    -- },
+    -- {
+    --     package = "xo",
+    --     config = require "null-ls".builtins.code_actions.xo,
+    -- },
+    -- {
+    --     package = "xo",
+    --     config = require "null-ls".builtins.diagnostics.xo,
+    -- },
+
+    -- Json
+    {
+        package = 'jsonlint',
+        config = require "null-ls".builtins.diagnostics.jsonlint,
+    },
     {
         package = 'fixjson',
         config = require "null-ls".builtins.formatting.fixjson,
     },
+
+    -- Lua
+    -- Disabled, Requires luarocks
+    -- {
+    --     package = 'luacheck',
+    --     config = require "null-ls".builtins.diagnostics.luacheck,
+    -- },
+    -- Disabled, annoying until configured properly
+    -- {
+    --     package = 'selene',
+    --     config = require "null-ls".builtins.diagnostics.selene,
+    -- },
+    -- Disabled. Causing formatting errors
+    -- {
+    --     package = 'stylua',
+    --     config = require "null-ls".builtins.formatting.stylua,
+    -- },
 
     -- PHP
     {
@@ -125,6 +147,34 @@ local servers = {
             },
         })
     },
+    {
+        package = 'php-cs-fixer',
+        config = require "null-ls".builtins.formatting.phpcsfixer.with({
+            extra_args = {
+                '--rules=@PSR12',
+            }
+        }),
+    },
+
+    -- Shell
+    -- "shellcheck",
+    -- "shellharden",
+    -- "shfmt",
+    -- Disabled. requires python venv
+    -- {
+    --     -- package = 'beautysh',
+    --     config = null_ls.builtins.formatting.beautysh ,
+    -- },
+    {
+        config = null_ls.builtins.diagnostics.zsh,
+    },
+
+    -- Vim
+    -- Disabled. Requires python3
+    -- {
+    --     package = 'vint',
+    --     config = require "null-ls".builtins.diagnostics.vint,
+    -- },
 }
 
 ---Get the list of usable servers
