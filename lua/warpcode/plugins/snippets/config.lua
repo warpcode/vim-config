@@ -1,73 +1,17 @@
 local luasnip_ok, luasnip = pcall(require, 'luasnip')
 local _, util = pcall(require, 'luasnip.util.util')
-local wplugins = require 'warpcode.utils.plugins'
 
 return {
     run = function()
         if not luasnip_ok then return end
 
-        local snippets_snipmate_module_paths = function()
-            local plugins = { "vim-snippets" }
-            local paths = {
-                vim.g.vim_source .. '/snippets'
-            }
-            for _, plug in ipairs(plugins) do
-                local path = wplugins.get_plugin_path(plug) or ''
-                if path ~= '' and vim.fn.isdirectory(path .. '/snippets') ~= 0 then
-                    table.insert(paths, path .. '/snippets')
-                end
-            end
-
-            return paths
-        end
-
-        local snippets_vscode_module_paths = function()
-            local plugins = { "friendly-snippets" }
-            local paths = {
-                vim.g.vim_source
-            }
-            for _, plug in ipairs(plugins) do
-                local path = wplugins.get_plugin_path(plug) or ''
-                if path ~= '' and vim.fn.isdirectory(path) ~= 0 then
-                    table.insert(paths, path)
-                end
-            end
-
-            return paths
-        end
-
-        local snippets_snipmate_paths = snippets_snipmate_module_paths()
-        local snippets_vscode_paths = snippets_vscode_module_paths()
-
-        -- Load snipmate style snippets
-        if #snippets_snipmate_paths > 0 then
-            -- One peculiarity of honza/vim-snippets is that the file with the global snippets is _.snippets, so global snippets
-            -- are stored in `ls.snippets._`.
-            -- We need to tell luasnip that "_" contains global snippets:
-            luasnip.filetype_extend("all", { "_" })
-
-            require("luasnip.loaders.from_snipmate").load({
-                paths = snippets_snipmate_paths
-            })
-        end
-
-        -- Load vscode style snippets
-        if #snippets_vscode_paths > 0 then
-            require("luasnip.loaders.from_vscode").load({
-                paths = snippets_vscode_paths,
-                include = nil, -- Load all languages
-                exclude = {}
-            })
-        end
+        require'warpcode.plugins.snippets.luasnip'.load_snippets()
 
         luasnip.config.setup({
             history = true,
             updateevents = 'TextChanged,TextChangedI',
             enable_autosnippets = true,
-            ft_func = function()
-                local filetypes = require 'luasnip.extras.filetype_functions'.from_pos_or_filetype() or {}
-                return require 'warpcode.projects'.get_filetypes(filetypes)
-            end,
+            ft_func = require'warpcode.plugins.snippets.luasnip'.get_filetypes,
             parser_nested_assembler = function(_, snippet)
                 local select = function(snip, no_move)
                     snip.parent:enter_node(snip.indx)
