@@ -1,9 +1,9 @@
-return {
+require 'warpcode.keymaps'.map_list {
     -- Whilst in command mode, after doing a search, an extra Carriage return turns
     -- off highlighting
-    {'n', '<leader>/', function() vim.cmd(':noh') end},
+    { 'n', '<leader>/',  function() vim.cmd(':noh') end },
 
-    {'n', '<leader>fs', ':Telescope live_grep<CR>'},
+    { 'n', '<leader>fs', ':Telescope live_grep<CR>' },
 
     -- Search the project for the highlighted keyword
     -- nnoremap <leader>ps :execute 'silent! grep! ' . shellescape(expand("<cword>"))<CR>:cw<CR>

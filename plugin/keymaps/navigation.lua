@@ -1,4 +1,4 @@
-return {
+require 'warpcode.keymaps'.map_list {
     -- Buffers
     { 'n', '<leader>bb', function()
         require('telescope.builtin').buffers()

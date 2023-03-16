@@ -1,5 +1,4 @@
 require('warpcode.globals')
-require('warpcode.keymaps')
 require('warpcode.plugins').init {
     'packer',
 
