@@ -24,42 +24,12 @@ local M = {
 		local null_ls = require("null-ls")
 		null_ls.setup({
 			debug = false,
-			sources = {
-				null_ls.builtins.formatting.json_tool,
-			},
 			on_attach = require"warpcode.lsp.null_ls".custom_attach,
 			-- diagnostics_format = "[#{s}] #{m} [#{c}]"
 		})
 
         require"warpcode.lsp.lspconfig".setup_servers()
         require"warpcode.lsp.null_ls".setup_servers()
-
-		-- require("mason-null-ls").setup_handlers({
-		-- 	function(source_name, methods)
-		-- 		-- all sources with no handler get passed here
-
-		-- 		-- To keep the original functionality of `automatic_setup = true`,
-		-- 		-- please add the below.
-		-- 		require("mason-null-ls.automatic_setup")(source_name, methods)
-		-- 	end,
-		-- 	phpcbf = function(source_name, methods)
-		-- 		null_ls.register(null_ls.builtins.formatting.phpcbf.with({
-		-- 			extra_args = {
-		-- 				"--standard=PSR12",
-		-- 			},
-		-- 		}))
-		-- 	end,
-		-- 	phpcs = function(source_name, methods)
-		-- 		null_ls.register(null_ls.builtins.diagnostics.phpcs.with({
-		-- 			extra_args = {
-		-- 				"--standard=PSR12",
-		-- 			},
-		-- 		}))
-		-- 	end,
-		-- 	-- stylua = function(source_name, methods)
-		-- 	--     null_ls.register(null_ls.builtins.formatting.stylua)
-		-- 	-- end,
-		-- }) -- If `automatic_setup` is true.
 
 		require("lsp_signature").setup({
 			-- bind = false,

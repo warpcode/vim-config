@@ -106,6 +106,9 @@ local servers = {
         config = require "null-ls".builtins.diagnostics.jsonlint,
     },
     {
+        config = require "null-ls".builtins.formatting.json_tool,
+    },
+    {
         package = 'fixjson',
         config = require "null-ls".builtins.formatting.fixjson,
     },
