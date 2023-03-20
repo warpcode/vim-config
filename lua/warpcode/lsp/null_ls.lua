@@ -72,10 +72,11 @@ local servers = {
     },
 
     -- Dockerfile
-    {
-        package = 'hadolint',
-        config = require "null-ls".builtins.diagnostics.hadolint,
-    },
+    -- Disablebed as sentinel one sees it as a virus
+    -- {
+    --     package = 'hadolint',
+    --     config = require "null-ls".builtins.diagnostics.hadolint,
+    -- },
 
     -- Git
     {
