@@ -25,23 +25,8 @@ end
 ---Initialise packer and the plugins
 ---@param plugins_list table
 M.init = function(plugins_list)
-    vim.cmd [[packadd packer.nvim]]
-    local packer_group = vim.api.nvim_create_augroup('packer', { clear = true })
-    vim.api.nvim_create_autocmd('BufWritePost', {
-        command = 'PackerCompile',
-        pattern = '*/plugins/*.lua',
-        group = packer_group
-    })
 
-    require 'packer'.init {
-        display = {
-            open_fn = function()
-                return require "packer.util".float { border = 'rounded' }
-            end,
-        }
-    }
-
-    return require 'packer'.startup(function()
+    return require 'packer'.startup(function(use)
         local function get_plugin(name)
             local ok, plugin = pcall(require, plugin_loc .. name)
 
