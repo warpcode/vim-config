@@ -10,8 +10,8 @@ return cmp.config.sources({
     { name = "luasnip" },
     -- For ultisnips user.
     -- { name = 'ultisnips' },
-    {name = 'calc'}, 
-    {name = 'emoji'},
+    { name = 'calc' },
+    { name = 'emoji' },
     require('warpcode.plugins.cmp.sources.gh_issues'),
     require('warpcode.plugins.cmp.sources.spell'),
     { name = "omni" },
