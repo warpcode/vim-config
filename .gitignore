@@ -10,7 +10,6 @@ php_modules/
 .npm
 package-lock.json
 composer.lock
-.luarc.json
 
 # dotenv environment variable files
 .env
