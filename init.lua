@@ -1,23 +1,25 @@
 -- Get the folder where this init.lua lives
-local base_dir = (function()
-    local init_path = debug.getinfo(1, "S").source
-    return init_path:sub(2):match("(.*[/\\])"):sub(1, -2)
-end)()
+-- local base_dir = (function()
+--     local init_path = debug.getinfo(1, "S").source
+--     return init_path:sub(2):match("(.*[/\\])"):sub(1, -2)
+-- end)()
 
--- Add the config to the rtp
-if not vim.tbl_contains(vim.opt.rtp:get(), base_dir) then
-    vim.opt.rtp:prepend(base_dir)
-    vim.opt.rtp:append(base_dir .. '/after')
-end
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 vim.g.vim_home = vim.fn.stdpath('config')
 vim.g.vim_source = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.stdpath('config') .. '/init.lua'), ':h')
 
+-- Add the config to the rtp
+-- This for some reason double loads the config
+-- vim.cmd [[ packadd vim-config ]]
+if not vim.tbl_contains(vim.opt.rtp:get(), vim.g.vim_source) then
+    vim.opt.rtp:prepend(vim.g.vim_source)
+    vim.opt.rtp:append(vim.g.vim_source .. '/after')
+end
+
 -- Load in plugins if available
 pcall(function()
-    vim.cmd [[ packadd vim-config ]]
     vim.cmd [[ packadd packer.nvim ]]
     require 'packer'.init {
         display = {
@@ -52,7 +54,7 @@ pcall(function()
                 { 'hrsh7th/cmp-nvim-lua' },
                 { 'hrsh7th/cmp-omni' },
                 { 'hrsh7th/cmp-path' },
-                { 'tzachar/cmp-tabnine', run = './install.sh', },
+                { 'tzachar/cmp-tabnine',     run = './install.sh', },
                 { 'ray-x/cmp-treesitter' },
             }
         }
@@ -75,7 +77,7 @@ pcall(function()
         use {
             { 'tpope/vim-fugitive' },
             { 'airblade/vim-gitgutter' },
-            { 'junegunn/gv.vim' },       -- Git commit explorer/viewer
+            { 'junegunn/gv.vim' }, -- Git commit explorer/viewer
             { 'lewis6991/gitsigns.nvim' }
         }
 
@@ -140,4 +142,4 @@ pcall(function()
     end)
 end)
 
-require('warpcode')
+require('warpcode').setup()
