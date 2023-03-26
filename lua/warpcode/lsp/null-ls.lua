@@ -61,16 +61,7 @@
 -- "cfn-lint",
 -- "yamllint",
 -- },
-
-local M = {}
-local null_ls = require "null-ls"
-local servers = {
-    -- Multiple
-    {
-        package = 'prettier',
-        config = require "null-ls".builtins.formatting.prettier,
-    },
-
+--
     -- Dockerfile
     -- Disablebed as sentinel one sees it as a virus
     -- {
@@ -79,9 +70,6 @@ local servers = {
     -- },
 
     -- Git
-    {
-        config = require "null-ls".builtins.code_actions.gitsigns,
-    },
 
     -- Javascript
     -- {
@@ -101,19 +89,6 @@ local servers = {
     --     config = require "null-ls".builtins.diagnostics.xo,
     -- },
 
-    -- Json
-    {
-        package = 'jsonlint',
-        config = require "null-ls".builtins.diagnostics.jsonlint,
-    },
-    {
-        config = require "null-ls".builtins.formatting.json_tool,
-    },
-    {
-        package = 'fixjson',
-        config = require "null-ls".builtins.formatting.fixjson,
-    },
-
     -- Lua
     -- Disabled, Requires luarocks
     -- {
@@ -131,35 +106,6 @@ local servers = {
     --     config = require "null-ls".builtins.formatting.stylua,
     -- },
 
-    -- PHP
-    {
-        config = require "null-ls".builtins.diagnostics.php,
-    },
-    {
-        package = 'phpcbf',
-        config = require "null-ls".builtins.formatting.phpcbf.with({
-            extra_args = {
-                "--standard=PSR12",
-            },
-        })
-    },
-    {
-        package = 'phpcs',
-        config = require "null-ls".builtins.diagnostics.phpcs.with({
-            extra_args = {
-                "--standard=PSR12",
-            },
-        })
-    },
-    {
-        package = 'php-cs-fixer',
-        config = require "null-ls".builtins.formatting.phpcsfixer.with({
-            extra_args = {
-                '--rules=@PSR12',
-            }
-        }),
-    },
-
     -- Shell
     -- "shellcheck",
     -- "shellharden",
@@ -169,9 +115,6 @@ local servers = {
     --     -- package = 'beautysh',
     --     config = null_ls.builtins.formatting.beautysh ,
     -- },
-    {
-        config = null_ls.builtins.diagnostics.zsh,
-    },
 
     -- Vim
     -- Disabled. Requires python3
@@ -179,7 +122,16 @@ local servers = {
     --     package = 'vint',
     --     config = require "null-ls".builtins.diagnostics.vint,
     -- },
-}
+
+local M = {}
+local null_ls = require "null-ls"
+local servers = {}
+
+---Add server to load
+---@param config table
+M.add_server = function(config)
+    servers[#servers + 1] = config
+end
 
 ---Get the list of usable servers
 ---@return table

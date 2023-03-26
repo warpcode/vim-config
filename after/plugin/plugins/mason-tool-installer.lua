@@ -6,7 +6,7 @@ pcall(function()
             { 'php-debug-adapter' },
             vim.list_extend(
                 require 'warpcode.lsp.lspconfig'.get_packages(),
-                require "warpcode.lsp.null_ls".get_packages()
+                require "warpcode.lsp.null-ls".get_packages()
             )
         ),
         auto_update = false,

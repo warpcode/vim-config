@@ -5,7 +5,7 @@ pcall(function()
     local packer_group = vim.api.nvim_create_augroup('packer', { clear = true })
     vim.api.nvim_create_autocmd('BufWritePost', {
         command = 'PackerCompile',
-        pattern = '*/plugins/*.lua',
+        pattern = 'init.lua',
         group = packer_group
     })
 end)

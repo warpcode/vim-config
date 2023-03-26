@@ -1,96 +1,11 @@
 local M = {}
-local servers = {
-    {
-        package = 'bash-language-server',
-        lspconfig = 'bashls',
-    },
-    {
-        package = 'dockerfile-language-server',
-        lspconfig = 'dockerls',
-    },
-    {
-        package = 'emmet-ls',
-        lspconfig = 'emmet_ls',
-    },
-    {
-        package = 'html-lsp',
-        lspconfig = 'html',
-    },
-    {
-        package = 'intelephense',
-        lspconfig = 'intelephense',
-        config = function()
-            local conf = {
-                init_options = {}
-            }
+local servers = {}
 
-            local licenceKeyFile = vim.fn.expand('~/intelephense/licence.key')
-            local f = io.open(licenceKeyFile, "rb")
-            if f ~= nil then
-                -- Read a single line to get the key
-                conf.init_options.licenceKey = f:read "*l"
-                f:close()
-            end
-
-            return conf
-        end
-    },
-    {
-        package = 'json-lsp',
-        lspconfig = 'jsonls',
-    },
-    {
-        package = 'lua-language-server',
-        lspconfig = 'lua_ls',
-        config = {
-            settings = {
-                Lua = {
-                    runtime = {
-                        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                        version = "LuaJIT",
-                        vim.split(package.path, ";"),
-                    },
-                    diagnostics = {
-                        -- Get the language server to recognize the `vim` global
-                        globals = { "vim" },
-                    },
-                    workspace = {
-                        -- Make the server aware of Neovim runtime files
-                        library = vim.api.nvim_get_runtime_file("", true),
-                    },
-                    -- Do not send telemetry data containing a randomized but unique identifier
-                    telemetry = {
-                        enable = false,
-                    },
-                },
-            },
-        },
-        -- validate = function()
-        --     return vim.env.IS_WORK ~= 1
-        -- end
-    },
-    {
-        package = 'sqlls',
-        lspconfig = 'sqlls',
-        config = {
-            root_dir = function(fname)
-                local util = require("lspconfig.util")
-                return util.root_pattern(".sqllsrc.json")(fname) or util.find_git_ancestor(fname)
-            end,
-        }
-    },
-    {
-        package = 'typescript-language-server',
-        lspconfig = 'tsserver',
-    },
-    {
-        package = 'vim-language-server',
-        lspconfig = 'vimls',
-        validate = function()
-            return vim.env.IS_WORK ~= 1
-        end
-    },
-}
+---Add server to load
+---@param config table
+M.add_server = function(config)
+    servers[#servers + 1] = config
+end
 
 ---Get the list of usable servers
 ---@return table
@@ -133,12 +48,12 @@ end
 ---@param client table
 ---@param bufnr number
 M.custom_attach = function(client, bufnr)
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     require('warpcode.keymaps.lsp').common(client, bufnr)
 
     if client.server_capabilities.definitionProvider then
-        vim.api.nvim_buf_set_option(bufnr, 'tagfunc', 'v:lua.vim.lsp.tagfunc')
+        -- vim.api.nvim_buf_set_option(bufnr, 'tagfunc', 'v:lua.vim.lsp.tagfunc')
     end
 
     -- Set autocommands conditional on server_capabilities
