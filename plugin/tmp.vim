@@ -1,4 +1,7 @@
 " This is a playground of intersting configs to try
+"
+" Copy the output of a command to the system clipboard
+"redir @+ | echo expand('%') . ':' . line('.') | redir END
 
 " https://github.com/sudormrfbin/cheatsheet.nvim
 
