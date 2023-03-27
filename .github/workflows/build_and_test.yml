@@ -56,13 +56,13 @@ jobs:
             xfonts-utils
 
       - name: Link config without installing plugins
-        run: make link-nvim
+        run: make link
 
       - name: Run neovim without plugins installed
         run: nvim --headless +quitall
 
       - name: Full install
-        run: make install-nvim
+        run: make install
 
       - name: Run unit tests
-        run: make test-nvim
+        run: make test
