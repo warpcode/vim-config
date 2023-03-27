@@ -53,7 +53,8 @@ jobs:
             make\
             unzip\
             xclip\
-            xfonts-utils
+            xfonts-utils\
+            zsh
 
       - name: Link config without installing plugins
         run: make link
