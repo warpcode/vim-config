@@ -76,20 +76,20 @@ return {
                     elseif luasnip_ok and luasnip.expand_or_locally_jumpable() then
                         luasnip.expand_or_jump()
                     elseif has_words_before() then
-                    cmp.complete()
+                        cmp.complete()
                     else
                         fallback()
                     end
-                    end, { "i", "s" }),
+                end, { "i", "s" }),
                 ["<S-Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_prev_item()
                     elseif luasnip_ok and luasnip.jumpable(-1) then
-                    luasnip.jump(-1)
+                        luasnip.jump(-1)
                     else
                         fallback()
                     end
-                    end, { "i", "s" }),
+                end, { "i", "s" }),
             },
 
             formatting = {
@@ -108,9 +108,28 @@ return {
                 end
             },
             sorting = default_sort,
+            sources = {
+                { name = "cmp_tabnine" },
+                { name = "nvim_lsp" },
+                { name = "treesitter" },
+                -- For vsnip user.
+                -- { name = 'vsnip' },
+                -- For luasnip user.
+                { name = "luasnip" },
+                -- For ultisnips user.
+                -- { name = 'ultisnips' },
+                { name = 'calc' },
+                { name = 'emoji' },
+                -- { name = "omni" },
+                { name = "nvim_lua" },
+            }, {
+                {
+                    name = "buffer",
+                    keyword_length = 5,
+                    max_item_count = 10,
                 },
+                { name = "path" },
             },
-            sources = require('warpcode.plugins.cmp.sources'),
         };
 
         cmp.setup(opts)
