@@ -14,7 +14,7 @@ return cmp.config.sources({
     { name = 'emoji' },
     require('warpcode.plugins.cmp.sources.gh_issues'),
     require('warpcode.plugins.cmp.sources.spell'),
-    { name = "omni" },
+    -- { name = "omni" },
     { name = "nvim_lua" },
 }, {
     {
