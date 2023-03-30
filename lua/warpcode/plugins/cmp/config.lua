@@ -28,19 +28,6 @@ return {
     run = function()
         if not cmp_ok then return end
 
-        -- Setup nvim-cmp.
-        local source_mapping = {
-            buffer = '[buf]',
-            calc = '[calc]',
-            cmp_tabnine = '[tab9]',
-            luasnip = '[snip]',
-            nvim_lsp = '[LSP]',
-            nvim_lua = '[lua]',
-            omni = '[omni]',
-            path = '[fs]',
-            treesitter = '[ts]',
-        }
-
         local opts = {
             experimental = {
                 -- native_menu = true,
@@ -91,19 +78,36 @@ return {
                     end
                 end, { "i", "s" }),
             },
-
             formatting = {
                 format = function(entry, vim_item)
-                    -- vim_item.kind = require('lspkind').presets.default[vim_item.kind]
-                    -- vim_item.kind = ''
-                    local menu = source_mapping[entry.source.name] or "[" .. strings.ucfirst(entry.source.name) .. "]"
+                    local menu_symbols = {
+                        buffer = '[buf]',
+                        calc = '[calc]',
+                        cmp_tabnine = '[tab9]',
+                        luasnip = '[snip]',
+                        nvim_lsp = '[LSP]',
+                        nvim_lua = '[lua]',
+                        omni = '[omni]',
+                        path = '[fs]',
+                        treesitter = '[ts]',
+                    }
+
+                    local lspkind_ok, lspkind = pcall(require, "lspkind")
+                    if lspkind_ok then
+                        -- From lspkind
+                        return  lspkind.cmp_format({
+                            menu = (menu_symbols)
+                        })(entry, vim_item)
+                    end
+
+                    local menu = menu_symbols[entry.source.name] or "[" .. strings.ucfirst(entry.source.name) .. "]"
                     if entry.source.name == 'cmp_tabnine' then
                         if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
                             menu = entry.completion_item.data.detail .. ' ' .. menu
                         end
-                        -- vim_item.kind = ''
                     end
                     vim_item.menu = menu
+
                     return vim_item
                 end
             },
@@ -122,7 +126,8 @@ return {
                 { name = 'emoji' },
                 -- { name = "omni" },
                 { name = "nvim_lua" },
-            }, {
+            },
+            {
                 {
                     name = "buffer",
                     keyword_length = 5,
@@ -152,7 +157,7 @@ return {
             completion = { autocomplete = false },
             sources = {
                 -- { name = 'buffer' }
-            { name = 'buffer', opts = { keyword_pattern = [=[[^[:blank:]].*]=] } }
+                { name = 'buffer', opts = { keyword_pattern = [=[[^[:blank:]].*]=] } }
             }
         })
 
@@ -160,11 +165,10 @@ return {
         cmp.setup.cmdline(':', {
             completion = { autocomplete = false },
             sources = cmp.config.sources({
-            { name = 'path' }
+                { name = 'path' }
             }, {
                 { name = 'cmdline' }
-                })
+            })
         })
-
     end
 }
