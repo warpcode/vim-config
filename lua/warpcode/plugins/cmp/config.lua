@@ -8,6 +8,22 @@ local has_words_before = function()
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
+local default_sort = {
+    priority_weight = 2,
+    comparators = {
+        -- require('cmp_tabnine.compare'),
+        -- cmp_compare.offset,
+        -- cmp_compare.exact,
+        -- cmp_compare.score,
+        -- cmp_compare.recently_used,
+        -- cmp_compare.kind,
+        -- cmp_compare.sort_text,
+        -- cmp_compare.length,
+        cmp_compare.order,
+    },
+}
+
+
 return {
     run = function()
         if not cmp_ok then return end
@@ -91,24 +107,26 @@ return {
                     return vim_item
                 end
             },
-            sorting = {
-                priority_weight = 2,
-                comparators = {
-                    require('cmp_tabnine.compare'),
-                    cmp_compare.offset,
-                    cmp_compare.exact,
-                    cmp_compare.score,
-                    cmp_compare.recently_used,
-                    cmp_compare.kind,
-                    cmp_compare.sort_text,
-                    cmp_compare.length,
-                    cmp_compare.order,
+            sorting = default_sort,
                 },
             },
             sources = require('warpcode.plugins.cmp.sources'),
         };
 
         cmp.setup(opts)
+
+        -- Set configuration for specific filetype.
+        cmp.setup.filetype('gitcommit', {
+            sources = cmp.config.sources({
+                -- { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+                { name = "cmp_tabnine" },
+                require('warpcode.plugins.cmp.sources.gh_issues'),
+                require('warpcode.plugins.cmp.sources.spell'),
+            }, {
+                { name = 'buffer' },
+            }),
+            sorting = default_sort,
+        })
 
         -- Use buffer source for `/`.
         cmp.setup.cmdline('/', {
