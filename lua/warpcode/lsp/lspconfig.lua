@@ -110,7 +110,7 @@ M.setup_server = function(server, config)
     config = vim.tbl_deep_extend("force", {
         on_init = M.custom_init,
         on_attach = M.custom_attach,
-        capabilities = M.updated_capabilities,
+        capabilities = M.custom_capabilities(),
         flags = {
             debounce_text_changes = nil,
         },
