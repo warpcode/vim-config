@@ -27,6 +27,11 @@ M.git_changed_files = function(opts)
     -- Retrieve untracked and modified files
 	local command = "git ls-files --others --exclude-standard -m"
 	local handle = io.popen(command)
+
+    if not handle then
+        error ('Could not execute git command')
+    end
+
 	local result = handle:read("*a")
 	handle:close()
 
