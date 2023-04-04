@@ -17,7 +17,7 @@ require 'warpcode.keymaps'.map_list {
     end },
     -- Recent files
     -- File Finder
-    { 'n', '<leader>fr', ':Telescope oldfiles cwd_only=true<CR>' },
+    { 'n', '<leader>fr', function() require 'telescope.builtin'.oldfiles({ cwd_only = true }) end },
 
     -- command! -nargs=1 FindFile call warpcode#search#findFiles(<q-args>)
 
