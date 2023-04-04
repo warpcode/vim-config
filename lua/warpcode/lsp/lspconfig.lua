@@ -51,6 +51,7 @@ M.custom_attach = function(client, bufnr)
     -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     require('warpcode.keymaps.lsp').common(client, bufnr)
+    require 'warpcode.events'.emit('lsp.on_attach', client, bufnr)
 
     if client.server_capabilities.definitionProvider then
         -- vim.api.nvim_buf_set_option(bufnr, 'tagfunc', 'v:lua.vim.lsp.tagfunc')
@@ -82,6 +83,8 @@ M.custom_attach = function(client, bufnr)
             " hi LspReferenceWrite cterm=bold ctermbg=243 guibg=#7c6f64
         ]], false)
     end
+
+    require 'warpcode.events'.emit('lsp.after_attach', client, bufnr)
 end
 
 ---Custom capabilities checks
