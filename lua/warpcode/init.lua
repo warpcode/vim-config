@@ -1,6 +1,6 @@
 return {
     setup = function()
         require('warpcode.globals')
-        require('warpcode.projects')
+        -- require('warpcode.projects')
     end,
 }
