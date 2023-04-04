@@ -50,7 +50,6 @@ end
 M.custom_attach = function(client, bufnr)
     -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    require('warpcode.keymaps.lsp').common(client, bufnr)
     require 'warpcode.events'.emit('lsp.on_attach', client, bufnr)
 
     if client.server_capabilities.definitionProvider then
