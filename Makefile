@@ -1,4 +1,5 @@
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+CONFIG_DIR:=~/.config/nvim
 EXECUTABLES = curl tar npm php nvim zsh pip3
 K := $(foreach exec,$(EXECUTABLES),\
         $(if $(shell which $(exec)),some string,$(error "No $(exec) in PATH")))
@@ -43,13 +44,13 @@ test:
 	nvim --headless -c "PlenaryBustedDirectory tests/"
 
 link: clean
-	test -h ~/.config/nvim/pack/warpcode/opt/ || mkdir -p ~/.config/nvim/pack/warpcode/opt
-	test -h ~/.config/nvim/pack/warpcode/opt/vim-config || ln -s "$(ROOT_DIR)" ~/.config/nvim/pack/warpcode/opt/vim-config
-	test -h ~/.config/nvim/pack/packer/start/packer.nvim || git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.config/nvim/pack/packer/start/packer.nvim
-	test -h ~/.config/nvim/init.vim || ln -s "$(ROOT_DIR)/init.lua" ~/.config/nvim/init.lua
+	test -h $(CONFIG_DIR)/pack/warpcode/opt/ || mkdir -p $(CONFIG_DIR)/pack/warpcode/opt
+	test -h $(CONFIG_DIR)/pack/warpcode/opt/vim-config || ln -s "$(ROOT_DIR)" $(CONFIG_DIR)/pack/warpcode/opt/vim-config
+	test -h $(CONFIG_DIR)/pack/packer/start/packer.nvim || git clone --depth 1 https://github.com/wbthomason/packer.nvim $(CONFIG_DIR)/pack/packer/start/packer.nvim
+	test -h $(CONFIG_DIR)/init.vim || ln -s "$(ROOT_DIR)/init.lua" $(CONFIG_DIR)/init.lua
 
 clean:
 	rm -rf ~/.cache/nvim
-	rm -rf ~/.config/nvim
+	rm -rf $(CONFIG_DIR)
 	rm -rf ~/.local/share/nvim
 
