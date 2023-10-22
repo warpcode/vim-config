@@ -11,10 +11,10 @@
 -- vim.opt.listchars:append "eol:↴"
 
 pcall(function()
-    require "indent_blankline".setup {
+    require "ibl".setup {
         -- for example, context is off by default, use this to turn it on
-        show_current_context = false,
-        show_current_context_start = false,
+        -- show_current_context = false,
+        -- show_current_context_start = false,
         -- space_char_blankline = " ",
 
         -- char_highlight_list = {
