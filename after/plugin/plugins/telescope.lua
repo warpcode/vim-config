@@ -4,6 +4,7 @@ pcall(function()
     local builtins = require "telescope.builtin"
     local previewers = require "telescope.previewers"
     local sorters = require "telescope.sorters"
+    local pexec = require 'warpcode.priority-exec'
 
     telescope.setup {
         defaults = {
@@ -42,4 +43,8 @@ pcall(function()
     -- vim.keymap.set('n', '<leader>ds', ':Telescope dap frames<CR>')
     -- -- vim.keymap.set('n', '<leader>dc', ':Telescope dap commands<CR>')
     -- vim.keymap.set('n', '<leader>db', ':Telescope dap list_breakpoints<CR>')
+
+    -- diagnostics overrides
+    pexec.addCall('diagnostics.buffer', function () builtins.diagnostics({ bufnr = 0, prompt_title = "Current file" })  end, 20)
+    pexec.addCall('diagnostics.workspace', function () builtins.diagnostics({ prompt_title = "Project" })  end, 20)
 end)

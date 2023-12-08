@@ -13,26 +13,4 @@ maps.map_list {
     { "n", "]d", function() pexec.exec('diagnostics.next') end, },
     { "n", "<leader>db", function() pexec.exec('diagnostics.buffer') end, },
     { "n", "<leader>dw", function() pexec.exec('diagnostics.workspace') end, },
-    { "n", "<leader>dll", function()
-        local status = pcall(function()
-            require('telescope.builtin').diagnostics({ bufnr = 0, prompt_title = "Current file" })
-        end)
-
-        if status then
-            return
-        end
-
-        vim.diagnostic.setloclist()
-    end, },
-    { "n", "<leader>dqf", function()
-        local status = pcall(function()
-            require('telescope.builtin').diagnostics({ prompt_title = "Project" })
-        end)
-
-        if status then
-            return
-        end
-
-        vim.diagnostic.setqflist()
-    end, },
 }
