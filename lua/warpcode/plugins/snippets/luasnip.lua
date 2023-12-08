@@ -89,4 +89,9 @@ M.load_snippets = function()
     end
 end
 
+-- Load in pure lua snip snippets
+require("luasnip.loaders.from_lua").load({
+    paths = {vim.g.vim_source .. '/snippets'}
+})
+
 return M
