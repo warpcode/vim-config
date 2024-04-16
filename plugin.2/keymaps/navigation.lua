@@ -18,9 +18,4 @@ require 'warpcode.keymaps'.map_list {
     -- Recent files
     -- File Finder
     { 'n', '<leader>fr', function() require 'telescope.builtin'.oldfiles({ cwd_only = true }) end },
-
-    -- move vertically by visual line (ie will go into a wrapped line that's
-    -- visually on the next line)
-    { 'n', 'j',          'gj' },
-    { 'n', 'k',          'gk' },
 }

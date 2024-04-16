@@ -25,36 +25,30 @@ end
 
 M.git_changed_files = function(opts)
     -- Retrieve untracked and modified files
-	local command = "git ls-files --others --exclude-standard -m"
-	local handle = io.popen(command)
+    local command = "git ls-files --others --exclude-standard -m"
+    local handle = io.popen(command)
 
     if not handle then
         error ('Could not execute git command')
     end
 
-	local result = handle:read("*a")
-	handle:close()
+    local result = handle:read("*a")
+    handle:close()
 
-	local files = {}
-	for token in string.gmatch(result, "[^%s]+") do
-	   table.insert(files, token)
-	end
+    local files = {}
+    for token in string.gmatch(result, "[^%s]+") do
+       table.insert(files, token)
+    end
 
-	opts = opts or {}
+    opts = opts or {}
 
-	pickers.new(opts, {
-		prompt_title = "changed files",
-		finder = finders.new_table {
-			results = files
-		},
-		sorter = conf.generic_sorter(opts),
-	}):find()
-end
-
-M.project_files = function()
-  local opts = {} -- define here if you want to define something
-  local ok = pcall(builtins.git_files, opts)
-  if not ok then builtins.find_files(opts) end
+    pickers.new(opts, {
+	    prompt_title = "changed files",
+	    finder = finders.new_table {
+		    results = files
+	    },
+	    sorter = conf.generic_sorter(opts),
+    }):find()
 end
 
 return M

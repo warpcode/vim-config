@@ -1,5 +1,6 @@
 -- [[ Setup lazy plugin manager ]]
 local plugin_dir = 'warpcode.plugins.plugin.'
+local pexec = require 'warpcode.priority-exec'
 
 vim.g.have_nerd_font = true
 require('lazy').setup({
@@ -7,30 +8,15 @@ require('lazy').setup({
   -- Toasts for lsp and notifications
   { 'j-hui/fidget.nvim',     opts = {} },
 
-
   -- [[ Utilities ]]
+  'bronson/vim-trailing-whitespace',     -- Removes excess whitespace
+  'sudormrfbin/cheatsheet.nvim',
   'tpope/vim-abolish',
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-  'sudormrfbin/cheatsheet.nvim',
   'tpope/vim-surround',
-  'bronson/vim-trailing-whitespace',     -- Removes excess whitespace
   'vim-utils/vim-man',                   -- Load cli man pages in vim
   -- 'Raimondi/delimitMate',
-  { 'numToStr/Comment.nvim', opt = {} }, -- better than 'tpope/vim-commentary'
-  -- 'mbbill/undotree',
-  -- {
-  --   'simrat39/symbols-outline.nvim',
-  --   opt = {
-  --     -- whether to highlight the currently hovered symbol
-  --     -- disable if your cpu usage is higher than you want it
-  --     -- or you just hate the highlight
-  --     -- default: true
-  --     highlight_hovered_item = true,
-  --     -- whether to show outline guides
-  --     -- default: true
-  --     show_guides = true,
-  --   }
-  -- },
+  { 'numToStr/Comment.nvim', opts = {} }, -- better than 'tpope/vim-commentary'
   {
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
@@ -80,14 +66,14 @@ require('lazy').setup({
                     \ 'Ignored'   : '☒',
                     \ "Unknown"   : "?"
                     \ }
-        
+
         " NERDTree - Quit vim when all other windows have been closed.
         au BufEnter *
                     \ if (winnr("$") == 1 && exists("b:NERDTreeType") &&
                     \ b:NERDTreeType == "primary") |
                     \   q |
                     \ endif
-        
+
         "
         " Auto find files in nerdtree on buf enter
         "
@@ -95,7 +81,7 @@ require('lazy').setup({
         function! IsNERDTreeOpen()
             return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
         endfunction
-        
+
         " Call NERDTreeFind if NERDTree is active, current window contains a modifiable
         " file, and we're not in vimdiff
         function! SyncTree()
@@ -104,10 +90,10 @@ require('lazy').setup({
                 wincmd p
             endif
         endfunction
-        
+
         " Highlight currently open buffer in NERDTree
         " autocmd BufEnter * call SyncTree()
-        
+
         " With the auto find feature, ensure we don't double open nerdtree
         function! ToggleNerdTree()
             set eventignore=BufEnter
@@ -116,6 +102,9 @@ require('lazy').setup({
         endfunction
         nnoremap <leader>t :call ToggleNerdTree()<CR>
         ]]
+
+      pexec.addCall('fs.file_tree', function() vim.cmd 'NERDTreeToggle' end, 10)
+      pexec.addCall('fs.find_buffer', function() vim.cmd 'NERDTreeFind' end, 10)
     end,
   },
   --
@@ -191,24 +180,6 @@ require('lazy').setup({
   require(plugin_dir .. 'themes'),
   require(plugin_dir .. 'treesitter'),
   require(plugin_dir .. 'version-control'),
-
-
-  -- UI
-  -- -- Log
-  -- { 'rcarriga/nvim-notify' }, -- Override notify method
-  --
-  -- -- Status line
-  -- {
-  --   'nvim-lualine/lualine.nvim',
-  --   opts = {
-  --     options = {
-  --       icons_enabled = false,
-  --       theme = 'onedark',
-  --       component_separators = '|',
-  --       section_separators = '',
-  --     },
-  --   },
-  -- },
 
 }, {
   ui = {

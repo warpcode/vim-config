@@ -104,11 +104,25 @@ return {
         --   builtin.find_files { cwd = vim.fn.stdpath 'config' }
         -- end, { desc = '[S]earch [N]eovim files' })
         --
+        --
+        -- Buffers
+        pexec.addCall('buffers.browse', builtin.buffers, 10)
 
         -- Diagnostics
-        pexec.addCall('diagnostics.buffer',
-            function() builtin.diagnostics({ bufnr = 0, prompt_title = "Current file" }) end, 20)
+        pexec.addCall('diagnostics.buffer', function()
+            builtin.diagnostics({ bufnr = 0, prompt_title = "Current file" })
+        end, 20)
         pexec.addCall('diagnostics.workspace', function() builtin.diagnostics({ prompt_title = "Project" }) end, 20)
+
+        -- Filesystem
+        pexec.addCall('fs.find_files', function()
+            local opts = {} -- define here if you want to define something
+            local ok = pcall(builtin.git_files, opts)
+            if not ok then builtin.find_files(opts) end
+        end, 10)
+        pexec.addCall('fs.find_recent_files', function()
+            require 'telescope.builtin'.oldfiles({ cwd_only = true })
+        end, 10)
 
         -- LSP
         pexec.addCall('lsp.definition', builtin.lsp_definitions, 10)
