@@ -129,6 +129,9 @@ return {
         pexec.addCall('lsp.implementation', builtin.lsp_implementations, 10)
         pexec.addCall('lsp.references', builtin.lsp_references, 10)
         pexec.addCall('lsp.type_definition', builtin.lsp_type_definitions, 10)
+
+        -- Search
+        pexec.addCall('search.file_contents', builtin.live_grep, 10)
         --
         -- -- Fuzzy find all the symbols in your current document.
         -- --  Symbols are things like variables, functions, types, etc.

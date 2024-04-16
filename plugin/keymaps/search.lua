@@ -1,9 +1,14 @@
-require 'warpcode.keymaps'.map_list {
-    -- Whilst in command mode, after doing a search, an extra Carriage return turns
-    -- off highlighting
-    { 'n', '<leader>/',  function() vim.cmd(':noh') end },
+local pexec = require 'warpcode.priority-exec'
+local maps = require "warpcode.keymaps"
 
-    { 'n', '<leader>fs', ':Telescope live_grep<CR>' },
+-- Default actions for lsp keymaps
+pexec.addCall('search.file_contents', function() vim.api.nvim_input(':vimgrep //j ** <BAR> cw' .. string.rep('<left>', 10)) end, 0)
+
+maps.map_list {
+    -- { "n", "<leader>ds", vim.diagnostic.open_float },
+    { 'n', '<leader>/',  function() vim.cmd(':noh') end , maps.extend_default_opt({ desc = 'Search: Clear Buffer Search' }) },
+    { "n", "<leader>ss", function() pexec.exec('search.file_contents') end, maps.extend_default_opt({ desc = 'Search: Search File Contents' }) },
+}
 
     -- Search the project for the highlighted keyword
     -- nnoremap <leader>ps :execute 'silent! grep! ' . shellescape(expand("<cword>"))<CR>:cw<CR>
@@ -20,4 +25,3 @@ require 'warpcode.keymaps'.map_list {
     -- Search vim help of the current word
     -- nnoremap <leader>sh :execute 'h ' . expand("<cword>")<CR><CR>
     -- vnoremap <leader>sh :<C-U>execute 'h ' . warpcode#util#getSelectedText()<CR><CR>
-}
