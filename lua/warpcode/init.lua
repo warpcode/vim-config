@@ -1,6 +1,2 @@
-return {
-    setup = function()
-        require('warpcode.globals')
-        -- require('warpcode.projects')
-    end,
-}
+require 'warpcode.plugins.bootstrap'
+require 'warpcode.plugins.setup'
