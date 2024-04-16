@@ -19,8 +19,6 @@ require 'warpcode.keymaps'.map_list {
     -- File Finder
     { 'n', '<leader>fr', function() require 'telescope.builtin'.oldfiles({ cwd_only = true }) end },
 
-    -- command! -nargs=1 FindFile call warpcode#search#findFiles(<q-args>)
-
     -- move vertically by visual line (ie will go into a wrapped line that's
     -- visually on the next line)
     { 'n', 'j',          'gj' },

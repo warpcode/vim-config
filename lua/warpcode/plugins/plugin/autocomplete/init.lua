@@ -2,6 +2,7 @@ return {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     dependencies = {
+      'nvim-lua/plenary.nvim',
         -- Snippet Engine & its associated nvim-cmp source
         {
             'L3MON4D3/LuaSnip',
@@ -197,7 +198,7 @@ return {
                         treesitter = '[ts]',
                     }
 
-                    local lspkind_ok, lspkind = pcall(require, "lspkind")
+                    local lspkind_ok, lspkind = pcall(require, 'lspkind')
                     if lspkind_ok then
                         -- From lspkind if installed
                         return  lspkind.cmp_format({
@@ -205,7 +206,7 @@ return {
                         })(entry, vim_item)
                     end
 
-                    local menu = menu_symbols[entry.source.name] or ("[" .. entry.source.name .. "]")
+                    local menu = menu_symbols[entry.source.name] or ('[' .. entry.source.name .. ']')
                     vim_item.menu = menu
 
                     return vim_item
@@ -224,10 +225,11 @@ return {
         -- Set configuration for specific filetype.
         cmp.setup.filetype('gitcommit', {
             sources = cmp.config.sources({
-                -- { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-                require('warpcode.plugins.cmp.sources.gh_issues'),
-                require('warpcode.plugins.cmp.sources.spell'),
-            }, {
+            --     -- { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+            --     currently broken and won't load. possibly caching?
+            --     require('warpcode.plugins.plugin.autocomplete.sources.gh_issues'),
+            --     require('warpcode.plugins.plugin.autocomplete.sources.spell'),
+            -- }, {
                 { name = 'buffer' },
             }),
         })

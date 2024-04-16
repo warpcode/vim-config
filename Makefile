@@ -28,10 +28,7 @@ else
     endif
 endif
 
-install: update-python-packages update-node-modules link update
-
-update:
-	nvim --headless -V2 -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+install: update-python-packages update-node-modules link
 
 update-node-modules:
 	[ -f package-lock.json ] && npm update || true
@@ -46,7 +43,6 @@ test:
 link: clean
 	test -h $(CONFIG_DIR)/pack/warpcode/opt/ || mkdir -p $(CONFIG_DIR)/pack/warpcode/opt
 	test -h $(CONFIG_DIR)/pack/warpcode/opt/vim-config || ln -s "$(ROOT_DIR)" $(CONFIG_DIR)/pack/warpcode/opt/vim-config
-	test -h $(CONFIG_DIR)/pack/packer/start/packer.nvim || git clone --depth 1 https://github.com/wbthomason/packer.nvim $(CONFIG_DIR)/pack/packer/start/packer.nvim
 	test -h $(CONFIG_DIR)/init.vim || ln -s "$(ROOT_DIR)/init.lua" $(CONFIG_DIR)/init.lua
 
 clean:
