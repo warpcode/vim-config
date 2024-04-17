@@ -1,6 +1,9 @@
 local pexec = require 'warpcode.priority-exec'
 local maps = require "warpcode.keymaps"
 local lbuf = vim.lsp.buf
+local lsp_servers = require 'warpcode.plugins.plugin.lsp.servers'
+local lint_servers = require 'warpcode.plugins.plugin.linters.servers'
+local format_servers = require 'warpcode.plugins.plugin.formatters.servers'
 
 return {
     'neovim/nvim-lspconfig',
@@ -63,12 +66,12 @@ return {
             opt = {
                 bind = false,
                 floating_window = true,
-                floating_window_off_x = 1, -- adjust float windows x position.
+                floating_window_off_x = 1,    -- adjust float windows x position.
                 floating_window_off_y = 1000, -- adjust float windows y position.
                 hint_enable = true,
                 -- hi_parameter = "Search",
                 handler_opts = {
-                    border = "shadow"     -- double, rounded, single, shadow, none
+                    border = "shadow"             -- double, rounded, single, shadow, none
                 },
                 fix_pos = function(signatures, _) -- second argument is the client
                     return signatures.activeParameter >= 0 and #signatures.parameters > 1
@@ -95,23 +98,10 @@ return {
         pexec.addCall('lsp.list_workspace_folders', function() lbuf.list_workspace_folders() end, 0)
         pexec.addCall('lsp.remove_workspace_folder', function() lbuf.remove_workspace_folder() end, 0)
 
-        --  This function gets run when an LSP attaches to a particular buffer.
-        --    That is to say, every time a new file is opened that is associated with
-        --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
-        --    function will be executed to configure the current buffer
+        -- On LSP Attach
         vim.api.nvim_create_autocmd('LspAttach', {
             group = vim.api.nvim_create_augroup('warpcode-lsp-attach', { clear = true }),
             callback = function(event)
-                -- NOTE: Remember that Lua is a real programming language, and as such it is possible
-                -- to define small helper and utility functions so you don't have to repeat yourself.
-                --
-                -- In this case, we create a function that lets us more easily define mappings specific
-                -- for LSP related items. It sets the mode, buffer and description for us each time.
-                local map = function(keys, func, desc)
-                    vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-                end
-                local opts = maps.extend_default_opt({ buffer = event.buf })
-
                 maps.map_list({
                     { { 'n', 'v' }, '<leader>ca', function() pexec.exec('lsp.code_action', event, event.buf) end,             maps.extend_default_opt({ desc = 'LSP: Code A]actions', buffer = event.buf }) },
                     { "n",          "gD",         function() pexec.exec('lsp.declaration', event, event.buf) end,             maps.extend_default_opt({ desc = 'LSP: Go to Declaration', buffer = event.buf }) },
@@ -152,108 +142,39 @@ return {
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-        -- Enable the following language servers
-        --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-
-        --  Add any additional override configuration in the following tables. Available keys are:
-        --  - cmd (table): Override the default command used to start the server
-        --  - filetypes (table): Override the default list of associated filetypes for the server
-        --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-        --  - settings (table): Override the default settings passed when initializing the server.
-        --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
-        local servers = {
-            -- clangd = {},
-            -- gopls = {},
-            -- pyright = {},
-            -- rust_analyzer = {},
-            -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-            --
-            -- Some languages (like typescript) have entire language plugins that can be useful:
-            --    https://github.com/pmizio/typescript-tools.nvim
-            --
-            -- But for many setups, the LSP (`tsserver`) will work just fine
-            -- tsserver = {},
-            --
-
-            bashls = {},
-            dockerls = {},
-            emmet_ls = {},
-            html = {},
-            intelephense = {
-                init_opions = {
-                    licenceKey = (function()
-                        local licenceKeyFile = vim.fn.expand('~/intelephense/licence.key')
-                        local licence = nil
-                        local f = io.open(licenceKeyFile, "rb")
-                        if f ~= nil then
-                            -- Read a single line to get the key
-                            licence = f:read "*l"
-                            f:close()
-                        end
-
-                        return licence
-                    end)()
-                },
-            },
-            jsonls = {},
-            lua_ls = {
-                -- cmd = {...},
-                -- filetypes = { ...},
-                -- capabilities = {},
-                settings = {
-                    Lua = {
-                        completion = {
-                            callSnippet = 'Replace',
-                        },
-                        -- runtime = {
-                        --     -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                        --     version = "LuaJIT",
-                        --     vim.split(package.path, ";"),
-                        -- },
-                        -- diagnostics = {
-                        -- Get the language server to recognize the `vim` global
-                        -- globals = { "vim" },
-                        -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-                        -- disable = { 'missing-fields' }
-                        -- },
-                        -- workspace = {
-                        -- Make the server aware of Neovim runtime files
-                        -- library = vim.api.nvim_get_runtime_file("", true),
-                        -- },
-                        telemetry = {
-                            -- Do not send telemetry data containing a randomized but unique identifier
-                            enable = false,
-                        },
-                    },
-                },
-            },
-            sqlls = {
-                root_dir = function(fname)
-                    local util = require("lspconfig.util")
-                    return util.root_pattern(".sqllsrc.json")(fname) or util.find_git_ancestor(fname)
-                end,
-            },
-            tsserver = {},
-            vimls = {},
-        }
-
-        local ensure_installed = vim.tbl_keys(servers or {})
-        vim.list_extend(ensure_installed, {
-          'php-debug-adapter',
-        })
 
         require('mason').setup()
         require('mason-tool-installer').setup {
-            ensure_installed = ensure_installed,
+            ensure_installed = (function()
+                local ensure_installed = vim.tbl_keys(lsp_servers or {})
+
+                -- Linters
+                vim.list_extend(
+                    ensure_installed,
+                    lint_servers.get_mason_tool_names()
+                )
+
+                -- Formatters
+                vim.list_extend(
+                    ensure_installed,
+                    format_servers.get_mason_tool_names()
+                )
+
+                vim.list_extend(ensure_installed, {
+                    'php-debug-adapter',
+                })
+
+                return ensure_installed
+            end)(),
             auto_update = false,
             run_on_start = true,
-            start_delay = 3000,             -- 3 second delay
+            start_delay = 3000, -- 3 second delay
             -- debounce_hours = 5, -- at least 5 hours between attempts to install/update
         }
         require('mason-lspconfig').setup {
             handlers = {
                 function(server_name)
-                    local server = servers[server_name] or {}
+                    local server = lsp_servers[server_name] or {}
                     -- This handles overriding only values explicitly passed
                     -- by the server configuration above. Useful when disabling
                     -- certain features of an LSP (for example, turning off formatting for tsserver)
