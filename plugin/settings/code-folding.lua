@@ -1,4 +1,0 @@
--- vim.opt.foldmethod = 'expr'
--- vim.cmd [[ set foldexpr=nvim_treesitter#foldexpr() ]]
--- vim.opt.foldenabled = 1
--- vim.opt.foldlevel = 1
