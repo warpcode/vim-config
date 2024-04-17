@@ -82,42 +82,23 @@ return {
     },
 
     config = function()
-        -- Default actions for lsp keymaps
-        pexec.addCall('lsp.code_action', function() lbuf.code_action() end, 0)
-        pexec.addCall('lsp.declaration', function() lbuf.declaration() end, 0)
-        pexec.addCall('lsp.definition', function() lbuf.definition() end, 0)
-        pexec.addCall('lsp.format', function() lbuf.format() end, 0)
-        pexec.addCall('lsp.hover', function() lbuf.hover() end, 0)
-        pexec.addCall('lsp.implementation', function() lbuf.implementation() end, 0)
-        pexec.addCall('lsp.references', function() lbuf.references() end, 0)
-        pexec.addCall('lsp.rename', function() lbuf.rename() end, 0)
-        pexec.addCall('lsp.server_capabilities', function(client) print(vim.inspect(client.server_capabilities)) end, 0)
-        pexec.addCall('lsp.signature_help', function() lbuf.signature_help() end, 0)
-        pexec.addCall('lsp.type_definition', function() lbuf.type_definition() end, 0)
-        pexec.addCall('lsp.add_workspace_folder', function() lbuf.add_workspace_folder() end, 0)
-        pexec.addCall('lsp.list_workspace_folders', function() lbuf.list_workspace_folders() end, 0)
-        pexec.addCall('lsp.remove_workspace_folder', function() lbuf.remove_workspace_folder() end, 0)
-
         -- On LSP Attach
         vim.api.nvim_create_autocmd('LspAttach', {
             group = vim.api.nvim_create_augroup('warpcode-lsp-attach', { clear = true }),
             callback = function(event)
-                maps.map_list({
-                    { { 'n', 'v' }, '<leader>ca', function() pexec.exec('lsp.code_action', event, event.buf) end,             maps.extend_default_opt({ desc = 'LSP: Code A]actions', buffer = event.buf }) },
-                    { "n",          "gD",         function() pexec.exec('lsp.declaration', event, event.buf) end,             maps.extend_default_opt({ desc = 'LSP: Go to Declaration', buffer = event.buf }) },
-                    { "n",          "gd",         function() pexec.exec('lsp.definition', event, event.buf) end,              maps.extend_default_opt({ desc = 'LSP: Go to Definition', buffer = event.buf }) },
-                    { { "n", 'x' }, "<leader>=",  function() pexec.exec('lsp.format', event, event.buf) end,                  maps.extend_default_opt({ desc = 'LSP: Format', buffer = event.buf }) },
-                    { "n",          "K",          function() pexec.exec('lsp.hover', event, event.buf) end,                   maps.extend_default_opt({ desc = 'LSP: Hover Documentation', buffer = event.buf }) },
-                    { "n",          "gi",         function() pexec.exec('lsp.implementation', event, event.buf) end,          maps.extend_default_opt({ desc = 'LSP: Go to Implementation', buffer = event.buf }) },
-                    { "n",          "gr",         function() pexec.exec('lsp.references', event, event.buf) end,              maps.extend_default_opt({ desc = 'LSP: Go to References', buffer = event.buf }) },
-                    { "n",          "<leader>rn", function() pexec.exec('lsp.rename', event, event.buf) end,                  maps.extend_default_opt({ desc = 'LSP: Rename', buffer = event.buf }) },
-                    { "n",          "<C-k>",      function() pexec.exec('lsp.signature_help', event, event.buf) end,          maps.extend_default_opt({ desc = 'LSP: Signature Help', buffer = event.buf }) },
-                    { 'n',          '<leader>D',  function() pexec.exec('lsp.type_definition', event, event.buf) end,         maps.extend_default_opt({ desc = 'LSP: Type Definition', buffer = event.buf }) },
-                    { "n",          "<space>wa",  function() pexec.exec('lsp.add_workspace_folder', event, event.buf) end,    maps.extend_default_opt({ desc = 'LSP: Add Workspace Folder', buffer = event.buf }) },
-                    { "n",          "<space>wr",  function() pexec.exec('lsp.remove_workspace_folder', event, event.buf) end, maps.extend_default_opt({ desc = 'LSP: Remove Workspace Folder', buffer = event.buf }) },
-                    { "n",          "<space>wl",  function() pexec.exec('lsp.list_workspace_folders', event, event.buf) end,  maps.extend_default_opt({ desc = 'LSP: List Workspace folders', buffer = event.buf }) },
-                    -- { "n", '<leader>lcc', M.default_actions['server_capabilities'](client), opts }
-                })
+                pexec.addCall('lsp.code_action', function() lbuf.code_action() end, 0, event.buf, event, event.id)
+                pexec.addCall('lsp.declaration', function() lbuf.declaration() end, 0, event.buf, event, event.id)
+                pexec.addCall('lsp.definition', function() lbuf.definition() end, 0, event.buf, event, event.id)
+                pexec.addCall('lsp.format', function() lbuf.format() end, 0, event.buf, event, event.id)
+                pexec.addCall('lsp.hover', function() lbuf.hover() end, 0, event.buf, event, event.id)
+                pexec.addCall('lsp.implementation', function() lbuf.implementation() end, 0, event.buf, event, event.id)
+                pexec.addCall('lsp.references', function() lbuf.references() end, 0, event.buf, event, event.id)
+                pexec.addCall('lsp.rename', function() lbuf.rename() end, 0, event.buf, event, event.id)
+                pexec.addCall('lsp.signature_help', function() lbuf.signature_help() end, 0, event.buf, event, event.id)
+                pexec.addCall('lsp.type_definition', function() lbuf.type_definition() end, 0, event.buf, event, event.id)
+                pexec.addCall('lsp.add_workspace_folder', function() lbuf.add_workspace_folder() end, 0, event.buf, event, event.id)
+                pexec.addCall('lsp.list_workspace_folders', function() lbuf.list_workspace_folders() end, 0, event .buf, event, event.id)
+                pexec.addCall('lsp.remove_workspace_folder', function() lbuf.remove_workspace_folder() end, 0, event.buf, event, event.id)
 
                 -- When you move your cursor, the highlights will be cleared (the second autocommand).
                 local client = vim.lsp.get_client_by_id(event.data.client_id)
@@ -160,6 +141,7 @@ return {
                     format_servers.get_mason_tool_names()
                 )
 
+                -- DAP
                 vim.list_extend(ensure_installed, {
                     'php-debug-adapter',
                 })

@@ -12,7 +12,7 @@ require('lazy').setup({
   'bronson/vim-trailing-whitespace',     -- Removes excess whitespace
   'sudormrfbin/cheatsheet.nvim',
   'tpope/vim-abolish',
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  -- 'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'tpope/vim-surround',
   'vim-utils/vim-man',                   -- Load cli man pages in vim
   -- 'Raimondi/delimitMate',
