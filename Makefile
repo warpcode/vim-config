@@ -41,9 +41,7 @@ test:
 	nvim --headless -c "PlenaryBustedDirectory tests/"
 
 link: clean
-	test -h $(CONFIG_DIR)/pack/warpcode/opt/ || mkdir -p $(CONFIG_DIR)/pack/warpcode/opt
-	test -h $(CONFIG_DIR)/pack/warpcode/opt/vim-config || ln -s "$(ROOT_DIR)" $(CONFIG_DIR)/pack/warpcode/opt/vim-config
-	test -h $(CONFIG_DIR)/init.vim || ln -s "$(ROOT_DIR)/init.lua" $(CONFIG_DIR)/init.lua
+	test -h $(CONFIG_DIR) || ln -s "$(ROOT_DIR)" $(CONFIG_DIR)
 
 clean:
 	rm -rf ~/.cache/nvim

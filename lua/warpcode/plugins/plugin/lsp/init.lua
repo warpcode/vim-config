@@ -63,7 +63,7 @@ return {
         },
         {
             "ray-x/lsp_signature.nvim",
-            opt = {
+            opts = {
                 bind = false,
                 floating_window = true,
                 floating_window_off_x = 1,    -- adjust float windows x position.

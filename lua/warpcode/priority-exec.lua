@@ -34,7 +34,7 @@ function M.addCall(name, func, priority, buffer, payload, uniqid)
 
     -- remove anything on the same buffer with the same uniqid
     for index, call in pairs(callList[name]) do
-        if call.uniqid and call.uniqid == uniqid and buffer == call.buffer then
+        if call.uniqid and call.uniqid == uniqid and call.buffer and buffer == call.buffer then
             callList[name][index] = nil
         end
     end
