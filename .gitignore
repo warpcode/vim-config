@@ -7,6 +7,8 @@ lazy-lock.json
 # Dependency directories
 node_modules/
 php_modules/
+backup/
+swap/
 undo/
 
 # Optional npm cache directory/files
