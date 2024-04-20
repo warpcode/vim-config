@@ -1,5 +1,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.g.vim_home = vim.fn.stdpath('config')
+vim.g.vim_source = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.stdpath('config') .. '/init.lua'), ':h')
 vim.g.have_nerd_font = true -- Set to true if you have a Nerd Font installed
 
 -- Backups
