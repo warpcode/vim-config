@@ -46,11 +46,19 @@ end
 function M.getCalls(name)
     -- As we add new calls, ensure invalid ones are removed
     M.filterInvalidBuffers()
-    table.sort(callList[name] or {}, function(a, b)
+
+    if not callList[name] then
+        callList[name] = {}
+    end
+
+  if #callList[name] > 1 then
+    table.sort(callList[name], function(a, b)
         return (a.priority or 0) > (b.priority or 0)
     end)
+  end
 
-    return callList[name] or {}
+
+    return callList[name]
 end
 
 -- Static method to retrieve a sorted list of calls filtered by a buffer id
