@@ -1,2 +1,2 @@
-require 'warpcode.plugins.bootstrap'
-require 'warpcode.plugins.setup'
+require 'warpcode.settings'
+require 'warpcode.plugins'

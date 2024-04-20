@@ -1,8 +1,7 @@
 -- [[ Setup lazy plugin manager ]]
 local plugin_dir = 'warpcode.plugins.plugin.'
-local pexec = require 'warpcode.priority-exec'
+local pexec = require 'warpcode.utils.priority-exec'
 
-vim.g.have_nerd_font = true
 require('lazy').setup({
 
   -- Toasts for lsp and notifications

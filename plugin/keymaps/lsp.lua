@@ -1,5 +1,5 @@
-local pexec = require 'warpcode.priority-exec'
-local maps = require "warpcode.keymaps"
+local pexec = require 'warpcode.utils.priority-exec'
+local maps = require "warpcode.utils.keymaps"
 
 maps.map_list({
     { { 'n', 'v' }, '<leader>ca', function() pexec.exec('lsp.code_action') end,             maps.extend_default_opt({ desc = 'LSP: Code Actions'}) },

@@ -1,5 +1,5 @@
-local pexec = require 'warpcode.priority-exec'
-local maps = require "warpcode.keymaps"
+local pexec = require 'warpcode.utils.priority-exec'
+local maps = require "warpcode.utils.keymaps"
 
 -- Default actions for lsp keymaps
 pexec.addCall('search.file_contents', function() vim.api.nvim_input(':vimgrep //j ** <BAR> cw' .. string.rep('<left>', 10)) end, 0)

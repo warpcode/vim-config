@@ -47,7 +47,7 @@ function M.getCalls(name)
     -- As we add new calls, ensure invalid ones are removed
     M.filterInvalidBuffers()
     table.sort(callList[name] or {}, function(a, b)
-        return a.priority > b.priority
+        return (a.priority or 0) > (b.priority or 0)
     end)
 
     return callList[name] or {}

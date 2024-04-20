@@ -1,5 +1,5 @@
-local pexec = require 'warpcode.priority-exec'
-local maps = require "warpcode.keymaps"
+local pexec = require 'warpcode.utils.priority-exec'
+local maps = require "warpcode.utils.keymaps"
 
 -- Default actions for lsp keymaps
 pexec.addCall('diagnostics.next', function() vim.diagnostic.goto_next() end, 0)
