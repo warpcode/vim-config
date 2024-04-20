@@ -75,7 +75,10 @@ return {
           border = 'shadow', -- double, rounded, single, shadow, none
         },
         fix_pos = function(signatures, _) -- second argument is the client
-          return signatures.activeParameter >= 0 and #signatures.parameters > 1
+          local activeParameter = signatures.activeParameter or 0
+          local signatureParameters = signatures.parameters or {}
+
+          return activeParameter  >= 0 and #signatureParameters > 1
         end,
       },
     },
