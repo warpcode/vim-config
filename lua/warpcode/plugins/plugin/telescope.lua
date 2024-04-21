@@ -20,44 +20,28 @@ return {
   },
   config = function()
     local telescope = require('telescope')
-    -- local actions = require 'telescope.actions'
+    local actions = require('telescope.actions')
     local builtin = require('telescope.builtin')
     -- local previewers = require "telescope.previewers"
     -- local sorters = require "telescope.sorters"
     -- local pexec = require 'warpcode.priority-exec'
+    -- local conf = require('telescope.config').values
+    -- local finders = require('telescope.finders')
+    -- local pickers = require('telescope.pickers')
 
     telescope.setup({
-      -- defaults = {
-      --   file_sorter = sorters.get_fzf_sorter,
-      --   prompt_prefix = " >",
-      --   color_devicons = true,
-      --   file_previewer = previewers.vim_buffer_cat.new,
-      --   grep_previewer = previewers.vim_buffer_vimgrep.new,
-      --   qflist_previewer = previewers.vim_buffer_qflist.new,
-      --   mappings = {
-      --     i = {
-      --       ["<C-h>"] = "which_key",
-      --       ["<ESC>"] = actions.close
-      --     }
-      --   }
-      -- },
-      -- pickers = {
-      --   buffers = {
-      --     ignore_current_buffer = true,
-      --     sort_lastused = true,
-      --   },
-      -- },
+      defaults = {
+        mappings = {
+          i = {
+            ['<C-h>'] = 'which_key',
+            ['<ESC>'] = actions.close,
+          },
+        },
+      },
       extensions = {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
         },
-        -- fzf = {
-        --   fuzzy = true,                              -- false will only do exact matching
-        --   override_generic_sorter = true,            -- override the generic sorter
-        --   override_file_sorter = true,               -- override the file sorter
-        --   case_mode = "smart_case",                  -- or "ignore_case" or "respect_case"
-        --   -- the default case_mode is "smart_case"
-        -- }
       },
     })
 
@@ -125,7 +109,7 @@ return {
     pexec.addCall('fs.find_files', function()
       local ok = pcall(builtin.git_files, {
         show_untracked = true,
-        recurse_submodules = true,
+        -- recurse_submodules = true,
       })
 
       if ok then
