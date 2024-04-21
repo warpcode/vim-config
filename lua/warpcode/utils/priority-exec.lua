@@ -56,7 +56,9 @@ function M.getCalls(name)
 
   if #callList[name] > 1 then
     table.sort(callList[name], function(a, b)
-      return (a.priority or 0) > (b.priority or 0)
+      local aPriority = a.priority or 0
+      local bPriority = b.priority or 0
+      return aPriority > bPriority
     end)
   end
 
