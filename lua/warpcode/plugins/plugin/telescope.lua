@@ -118,14 +118,20 @@ return {
 
     -- Filesystem
     pexec.addCall('fs.find_files', function()
-      local opts = {} -- define here if you want to define something
-      local ok = pcall(builtin.git_files, opts)
-      if not ok then
-        builtin.find_files(opts)
+      local ok = pcall(builtin.git_files, {
+        show_untracked = true,
+        recurse_submodules = true,
+      })
+
+      if ok then
+        return
       end
+
+      builtin.find_files(opts)
     end, 10)
+
     pexec.addCall('fs.find_recent_files', function()
-      require('telescope.builtin').oldfiles({ cwd_only = true })
+      builtin.oldfiles({ cwd_only = true })
     end, 10)
 
     -- LSP
