@@ -106,7 +106,12 @@ return {
     --
     --
     -- Buffers
-    pexec.addCall('buffers.browse', builtin.buffers, 10)
+    pexec.addCall('buffers.browse', function()
+      builtin.buffers({
+        sort_mru = true,
+        ignore_current_buffer = true,
+      })
+    end, 10)
 
     -- Diagnostics
     pexec.addCall('diagnostics.buffer', function()
