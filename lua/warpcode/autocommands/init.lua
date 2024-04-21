@@ -33,8 +33,6 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter' }, {
       return
     end
 
-    print('leave')
-
     vim.opt.number = true
     vim.opt.relativenumber = false
   end,
