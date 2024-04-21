@@ -23,10 +23,6 @@
 " " type in word/characters that i want to replace all instances
 " nnoremap S :%s///g<Left><Left><Left>
 
-" " Use this instead of touching Esc key
-" inoremap jk <Esc>
-" inoremap kj <Esc>
-
 " " edit command
 " cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
 " map <leader>ew :e %%
