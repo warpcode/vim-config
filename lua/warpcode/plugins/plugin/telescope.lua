@@ -132,7 +132,9 @@ return {
         return
       end
 
-      builtin.find_files(opts)
+      builtin.find_files({
+        hidden = true,
+      })
     end, 10)
 
     pexec.addCall('fs.find_recent_files', function()
