@@ -9,12 +9,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
-local group = vim.api.nvim_create_augroup('warpcode-lint', { clear = true })
+local group = vim.api.nvim_create_augroup('warpcode-line-numbers', { clear = true })
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave' }, {
   desc = 'When entering a buffer, set line numbers to relative',
   group = group,
   callback = function()
-    if not vim.api.nvim_buf_get_option(vim.api.nvim_get_buf(), 'modifiable') then
+    if not vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), 'modifiable') then
       vim.opt.number = false
       return
     end
@@ -28,10 +28,12 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter' }, {
   desc = 'When leaving a buffer, set line numbers to absolute',
   group = group,
   callback = function()
-    if not vim.api.nvim_buf_get_option(vim.api.nvim_get_buf(), 'modifiable') then
+    if not vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), 'modifiable') then
       vim.opt.number = false
       return
     end
+
+    print('leave')
 
     vim.opt.number = true
     vim.opt.relativenumber = false

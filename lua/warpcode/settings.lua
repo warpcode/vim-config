@@ -76,7 +76,7 @@ vim.opt.guicursor = 'n-v-i-c:block-Cursor' --  Set cursor to fat cursor
 -- Make line numbers default
 vim.opt.number = true
 -- You can also add relative line numbers, for help with jumping.
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 
 vim.opt.cursorline = true -- Show which line your cursor is on
 -- vim.opt.lazyredraw = false
