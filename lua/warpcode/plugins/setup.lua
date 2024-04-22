@@ -1,19 +1,19 @@
 -- [[ Setup lazy plugin manager ]]
 local plugin_dir = 'warpcode.plugins.plugin.'
-local pexec = require 'warpcode.utils.priority-exec'
+local pexec = require('warpcode.utils.priority-exec')
 
 require('lazy').setup({
 
   -- Toasts for lsp and notifications
-  { 'j-hui/fidget.nvim',     opts = {} },
+  { 'j-hui/fidget.nvim', opts = {} },
 
   -- [[ Utilities ]]
-  'bronson/vim-trailing-whitespace',     -- Removes excess whitespace
+  'bronson/vim-trailing-whitespace', -- Removes excess whitespace
   'sudormrfbin/cheatsheet.nvim',
   'tpope/vim-abolish',
   -- 'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'tpope/vim-surround',
-  'vim-utils/vim-man',                   -- Load cli man pages in vim
+  'vim-utils/vim-man', -- Load cli man pages in vim
   -- 'Raimondi/delimitMate',
   { 'numToStr/Comment.nvim', opts = {} }, -- better than 'tpope/vim-commentary'
   {
@@ -34,78 +34,6 @@ require('lazy').setup({
   },
 
   -- -- File Browser
-  {
-    'scrooloose/nerdtree',
-    dependencies = {
-      { 'Xuyuanp/nerdtree-git-plugin' },
-      { 'jistr/vim-nerdtree-tabs' },
-    },
-    config = function()
-      vim.cmd [[
-        let g:NERDTreeChDirMode=2
-        let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
-        let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
-        let g:NERDTreeShowBookmarks=1
-        let g:nerdtree_tabs_focus_on_files=1
-        let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-        let g:NERDTreeWinSize = 40
-        let g:NERDTreeShowHidden=1
-        " Show ignored icon next to ignored files. This can be intensive with a lot of files
-        let g:NERDTreeGitStatusShowIgnored = 1
-        " List of icons for file statuses
-        let g:NERDTreeGitStatusIndicatorMapCustom = {
-                    \ "Modified"  : "✹",
-                    \ "Staged"    : "✚",
-                    \ "Untracked" : "✭",
-                    \ "Renamed"   : "➜",
-                    \ "Unmerged"  : "═",
-                    \ "Deleted"   : "✖",
-                    \ "Dirty"     : "✗",
-                    \ "Clean"     : "✔︎",
-                    \ 'Ignored'   : '☒',
-                    \ "Unknown"   : "?"
-                    \ }
-
-        " NERDTree - Quit vim when all other windows have been closed.
-        au BufEnter *
-                    \ if (winnr("$") == 1 && exists("b:NERDTreeType") &&
-                    \ b:NERDTreeType == "primary") |
-                    \   q |
-                    \ endif
-
-        "
-        " Auto find files in nerdtree on buf enter
-        "
-        " Check if NERDTree is open or active
-        function! IsNERDTreeOpen()
-            return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-        endfunction
-
-        " Call NERDTreeFind if NERDTree is active, current window contains a modifiable
-        " file, and we're not in vimdiff
-        function! SyncTree()
-            if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
-                NERDTreeFind
-                wincmd p
-            endif
-        endfunction
-
-        " Highlight currently open buffer in NERDTree
-        " autocmd BufEnter * call SyncTree()
-
-        " With the auto find feature, ensure we don't double open nerdtree
-        function! ToggleNerdTree()
-            set eventignore=BufEnter
-            NERDTreeToggle
-            set eventignore=
-        endfunction
-        nnoremap <leader>t :call ToggleNerdTree()<CR>
-        ]]
-
-      pexec.addCall('fs.file_tree', function() vim.cmd 'NERDTreeToggle' end, 10)
-      pexec.addCall('fs.find_buffer', function() vim.cmd 'NERDTreeFind' end, 10)
-    end,
-  },
   --
   --
   { -- Collection of various small independent plugins/modules
@@ -114,18 +42,19 @@ require('lazy').setup({
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
-      statusline.setup { use_icons = vim.g.have_nerd_font }
+      local statusline = require('mini.statusline')
+      statusline.setup({ use_icons = vim.g.have_nerd_font })
       vim.api.nvim_command([[ highlight WinSeperator guibg=none ]])
       vim.opt.laststatus = 3
 
-      -- -- You can configure sections in the statusline by overriding their
-      -- -- default behavior. For example, here we set the section for
-      -- -- cursor location to LINE:COLUMN
-      -- ---@diagnostic disable-next-line: duplicate-set-field
-      -- statusline.section_location = function()
-      --   return '%2l:%-2v'
-      -- end
+      -- You can configure sections in the statusline by overriding their
+      -- default behavior. For example, here we set the section for
+      -- cursor location to LINE:COLUMN
+      ---@diagnostic disable-next-line: duplicate-set-field
+      statusline.section_location = function()
+        -- return '%2l:%-2v'
+        return 'ln:%l/%L co:%2v/%-2{virtcol("$") - 1}'
+      end
 
       require('mini.indentscope').setup()
       -- ... and there is more!
@@ -137,18 +66,18 @@ require('lazy').setup({
       'lukas-reineke/indent-blankline.nvim', -- Add indentation guides even on blank lines
       config = function()
         vim.opt.termguicolors = true
-        vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
-        vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
-        vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
-        vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
-        vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
-        vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
+        vim.cmd([[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]])
+        vim.cmd([[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]])
+        vim.cmd([[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]])
+        vim.cmd([[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]])
+        vim.cmd([[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]])
+        vim.cmd([[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]])
 
         vim.opt.list = true
-        vim.opt.listchars:append "space:⋅"
-        vim.opt.listchars:append "eol:↴"
+        vim.opt.listchars:append('space:⋅')
+        vim.opt.listchars:append('eol:↴')
 
-        require "ibl".setup {
+        require('ibl').setup({
           -- for example, context is off by default, use this to turn it on
           -- show_current_context = false,
           -- show_current_context_start = false,
@@ -162,7 +91,7 @@ require('lazy').setup({
           --     "IndentBlanklineIndent5",
           --     "IndentBlanklineIndent6",
           -- },
-        }
+        })
       end,
     },
   },
@@ -171,6 +100,7 @@ require('lazy').setup({
 
   -- [ Grouped plugins ]
   require(plugin_dir .. 'autocomplete'),
+  require(plugin_dir .. 'file-browser'),
   require(plugin_dir .. 'fonts'),
   require(plugin_dir .. 'formatters'),
   require(plugin_dir .. 'linters'),
@@ -179,7 +109,6 @@ require('lazy').setup({
   require(plugin_dir .. 'themes'),
   require(plugin_dir .. 'treesitter'),
   require(plugin_dir .. 'version-control'),
-
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
