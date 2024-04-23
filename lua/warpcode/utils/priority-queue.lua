@@ -28,7 +28,7 @@ function PQueue:getItems(buffer)
   self:filterInvalidBuffers()
   local filteredItems = {}
 
-  for _, item in pairs(self.queue) do
+  for _, item in ipairs(self.queue) do
     if not item.buffer or item.buffer == buffer then
       table.insert(filteredItems, item)
     end
