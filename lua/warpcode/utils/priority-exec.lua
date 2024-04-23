@@ -6,21 +6,28 @@ local callList = {}
 
 -- Static method to execute a list of functions with priorities and early exit
 function M.exec(name, ...)
-  local calls = M.getCallsForBuffer(name, vim.api.nvim_get_current_buf())
-  if not calls then
-    vim.notify('No Matching callbacks for: ' .. name, vim.log.levels.WARN)
-    return nil
+  -- Execute the calls in order of priority
+  -- We only run the first one anyways
+  local call = M.getCall(name)
+  if type(call.func) == 'function' then
+    return call.func(call, ...)
+  else
+    return call.func
   end
+end
+
+-- Static method to execute a list of functions with priorities and early exit
+function M.getCall(name)
+  local calls = M.getCallsForBuffer(name, vim.api.nvim_get_current_buf())
 
   -- Execute the calls in order of priority
   -- We only run the first one anyways
   for _, call in ipairs(calls) do
-    if type(call.func) == 'function' then
-      return call.func(call, ...)
-    else
-      return call.func
-    end
+    return call
   end
+
+    vim.notify('No Matching callbacks for: ' .. name, vim.log.levels.WARN)
+    return nil
 end
 
 -- Static method to add a function call to the call list
