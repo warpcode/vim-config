@@ -1,4 +1,4 @@
-local pexec = require('warpcode.utils.priority-exec')
+local p = require('warpcode.utils.keymap-actions')
 local opt = { noremap = true, silent = true }
 local m = vim.keymap.set
 local e = function (...)
@@ -7,16 +7,16 @@ end
 
 
 -- [[ Buffers ]]
-pexec.addCall('buffers.browse', function() vim.api.nvim_input ':buffers<CR>' end)
-pexec.addCall('buffers.next', function() vim.api.nvim_input ':bn<CR>' end)
-pexec.addCall('buffers.previous', function() vim.api.nvim_input ':bp<CR>' end)
-pexec.addCall('buffers.close', function() vim.api.nvim_input ':bp <BAR> bd #<cr>' end)
+p.addCall('buffers.browse', function() vim.api.nvim_input ':buffers<CR>' end)
+p.addCall('buffers.next', function() vim.api.nvim_input ':bn<CR>' end)
+p.addCall('buffers.previous', function() vim.api.nvim_input ':bp<CR>' end)
+p.addCall('buffers.close', function() vim.api.nvim_input ':bp <BAR> bd #<cr>' end)
 
 -- { "n", "<leader>ds", vim.diagnostic.open_float },
-m('n', '[b',         function() pexec.exec('buffers.previous') end, e(opt, { desc = 'Buffers: Previous Buffer' }))
-m('n', ']b',         function() pexec.exec('buffers.next') end,     e(opt, { desc = 'Buffers: Next Buffer' }))
-m('n', '<leader>bb', function() pexec.exec('buffers.browse') end,   e(opt, { desc = 'Buffers: Browse Buffers' }))
-m('n', "<leader>bq", function() pexec.exec('buffers.close') end,    e(opt, { desc = 'Buffers: Close Buffer' }) )
+m('n', '[b',         p.getAction('buffers.previous'), e(opt, { desc = 'Buffers: Previous Buffer' }))
+m('n', ']b',         p.getAction('buffers.next'),     e(opt, { desc = 'Buffers: Next Buffer' }))
+m('n', '<leader>bb', p.getAction('buffers.browse'),   e(opt, { desc = 'Buffers: Browse Buffers' }))
+m('n', "<leader>bq", p.getAction('buffers.close'),    e(opt, { desc = 'Buffers: Close Buffer' }) )
 
 -- [[ Clipboard ]]
 m('v',          '<leader>p', '"_dP',        e(opt, { desc = 'Clipboard: Paste (no copy)' }))
@@ -26,13 +26,13 @@ m('n',          'Y',         'yg_',         e(opt, { desc = 'Clipboard: Copy to 
 m('n',          'gV',        '`[v`]',       e(opt, { desc = 'Clipboard: Copy last paste'}))
 
 -- [[ Debug ]]
-pexec.addCall('debug.breakpoint_toggle', function() end)
-pexec.addCall('debug.breakpoint_conditional', function() end)
-pexec.addCall('debug.continue', function() end)
-pexec.addCall('debug.terminate', function() end)
-pexec.addCall('debug.step_over', function() end)
-pexec.addCall('debug.step_into', function() end)
-pexec.addCall('debug.step_out', function() end)
+p.addCall('debug.breakpoint_toggle', function() end)
+p.addCall('debug.breakpoint_conditional', function() end)
+p.addCall('debug.continue', function() end)
+p.addCall('debug.terminate', function() end)
+p.addCall('debug.step_over', function() end)
+p.addCall('debug.step_into', function() end)
+p.addCall('debug.step_out', function() end)
 
 --     vim.keymap.set('n', '<leader>dk', ':lua require"dap".up()<CR>zz')
 --     vim.keymap.set('n', '<leader>dj', ':lua require"dap".down()<CR>zz')
@@ -45,36 +45,36 @@ pexec.addCall('debug.step_out', function() end)
 --     vim.keymap.set('n', '<leader>d?', function() widgets.centered_float(widgets.scopes) end)
 --     vim.keymap.set('n', '<leader>dr', ':lua require"dap".repl.toggle({}, "vsplit")<CR><C-w>l')
 
-m("n", "<leader>dt", function() pexec.exec('debug.breakpoint_toggle') end,      e(opt, { desc = 'Debug: Breaktpoint Toggle' }))
-m("n", "<leader>dT", function() pexec.exec('debug.breakpoint_conditional') end, e(opt, { desc = 'Debug: Breakpoint Conditional' }))
-m("n", "<leader>dc", function() pexec.exec('debug.continue') end,               e(opt, { desc = 'Debug: Continue' }))
-m("n", "<leader>dC", function() pexec.exec('debug.terminate') end,              e(opt, { desc = 'Debug: Terminate' }))
-m("n", "<leader>do", function() pexec.exec('debug.step_over') end,              e(opt, { desc = 'Debug: Step Over' }))
-m("n", "<leader>di", function() pexec.exec('debug.step_into') end,              e(opt, { desc = 'Debug: Step Into' }))
-m("n", "<leader>dI", function() pexec.exec('debug.step_out') end,               e(opt, { desc = 'Debug: Step Out' }))
+m("n", "<leader>dt", p.getAction('debug.breakpoint_toggle'),      e(opt, { desc = 'Debug: Breaktpoint Toggle' }))
+m("n", "<leader>dT", p.getAction('debug.breakpoint_conditional'), e(opt, { desc = 'Debug: Breakpoint Conditional' }))
+m("n", "<leader>dc", p.getAction('debug.continue'),               e(opt, { desc = 'Debug: Continue' }))
+m("n", "<leader>dC", p.getAction('debug.terminate'),              e(opt, { desc = 'Debug: Terminate' }))
+m("n", "<leader>do", p.getAction('debug.step_over'),              e(opt, { desc = 'Debug: Step Over' }))
+m("n", "<leader>di", p.getAction('debug.step_into'),              e(opt, { desc = 'Debug: Step Into' }))
+m("n", "<leader>dI", p.getAction('debug.step_out'),               e(opt, { desc = 'Debug: Step Out' }))
 
 -- [[ Diagnostics ]]
-pexec.addCall('diagnostics.next', function() vim.diagnostic.goto_next() end)
-pexec.addCall('diagnostics.prev', function() vim.diagnostic.goto_prev() end)
-pexec.addCall('diagnostics.buffer', function() vim.diagnostic.setloclist() end)
-pexec.addCall('diagnostics.workspace', function() vim.diagnostic.setqflist() end)
+p.addCall('diagnostics.next', function() vim.diagnostic.goto_next() end)
+p.addCall('diagnostics.prev', function() vim.diagnostic.goto_prev() end)
+p.addCall('diagnostics.buffer', function() vim.diagnostic.setloclist() end)
+p.addCall('diagnostics.workspace', function() vim.diagnostic.setqflist() end)
 
 -- { "n", "<leader>ds", vim.diagnostic.open_float },
-m("n", "[d",         function() pexec.exec('diagnostics.prev') end,      e(opt, { desc = 'Diagnostics: Previous' }))
-m("n", "]d",         function() pexec.exec('diagnostics.next') end,      e(opt, { desc = 'Diagnostics: Next' }))
-m("n", "<leader>db", function() pexec.exec('diagnostics.buffer') end,    e(opt, { desc = 'Diagnostics: Show Buffer' }))
-m("n", "<leader>dw", function() pexec.exec('diagnostics.workspace') end, e(opt, { desc = 'Diagnostics: Show Workspace' }))
+m("n", "[d",         p.getAction('diagnostics.prev'),      e(opt, { desc = 'Diagnostics: Previous' }))
+m("n", "]d",         p.getAction('diagnostics.next'),      e(opt, { desc = 'Diagnostics: Next' }))
+m("n", "<leader>db", p.getAction('diagnostics.buffer'),    e(opt, { desc = 'Diagnostics: Show Buffer' }))
+m("n", "<leader>dw", p.getAction('diagnostics.workspace'), e(opt, { desc = 'Diagnostics: Show Workspace' }))
 
 -- [[ Filesystem ]]
-pexec.addCall('fs.file_tree', function() vim.cmd 'Lexplore' end)
-pexec.addCall('fs.find_buffer', function() vim.api.nvim_input ':let @/=expand("%:t") <Bar> execute \'Lexplore\' expand("%:h") <Bar> normal n<CR>' end)
-pexec.addCall('fs.find_files', function() vim.api.nvim_input ':find ' end)
-pexec.addCall('fs.find_recent_files', function() vim.api.nvim_input ":oldfiles<CR>" end)
+p.addCall('fs.file_tree', function() vim.cmd 'Lexplore' end)
+p.addCall('fs.find_buffer', function() vim.api.nvim_input ':let @/=expand("%:t") <Bar> execute \'Lexplore\' expand("%:h") <Bar> normal n<CR>' end)
+p.addCall('fs.find_files', function() vim.api.nvim_input ':find ' end)
+p.addCall('fs.find_recent_files', function() vim.api.nvim_input ":oldfiles<CR>" end)
 
-m("n", "<leader>ft", function() pexec.exec('fs.file_tree') end,         e(opt, { desc = 'FS: File Tree' }))
-m("n", "<leader>fb", function() pexec.exec('fs.find_buffer') end,       e(opt, { desc = 'FS: Find Buffer in File Tree' }))
-m("n", "<leader>ff", function() pexec.exec('fs.find_files') end,        e(opt, { desc = 'FS: Find Files' }))
-m("n", "<leader>fr", function() pexec.exec('fs.find_recent_files') end, e(opt, { desc = 'FS: Find Recent Files' }))
+m("n", "<leader>ft", p.getAction('fs.file_tree'),         e(opt, { desc = 'FS: File Tree' }))
+m("n", "<leader>fb", p.getAction('fs.find_buffer'),       e(opt, { desc = 'FS: Find Buffer in File Tree' }))
+m("n", "<leader>ff", p.getAction('fs.find_files'),        e(opt, { desc = 'FS: Find Files' }))
+m("n", "<leader>fr", p.getAction('fs.find_recent_files'), e(opt, { desc = 'FS: Find Recent Files' }))
 
 -- [[ History ]]
 -- Add additional undo breakpoints
@@ -84,19 +84,19 @@ m('i', '!', '!<c-g>u', opt)
 m('i', '?', '?<c-g>u', opt)
 
 -- [[ LSP ]]
-m({ 'n', 'v' }, '<leader>ca', function() pexec.exec('lsp.code_action') end,             e(opt, { desc = 'LSP: Code Actions'}))
-m("n",          "gD",         function() pexec.exec('lsp.declaration') end,             e(opt, { desc = 'LSP: Go to Declaration'}))
-m("n",          "gd",         function() pexec.exec('lsp.definition') end,              e(opt, { desc = 'LSP: Go to Definition'}))
-m({ "n", 'x' }, "<leader>=",  function() pexec.exec('lsp.format') end,                  e(opt, { desc = 'LSP: Format'}))
-m("n",          "K",          function() pexec.exec('lsp.hover') end,                   e(opt, { desc = 'LSP: Hover Documentation'}))
-m("n",          "gi",         function() pexec.exec('lsp.implementation') end,          e(opt, { desc = 'LSP: Go to Implementation'}))
-m("n",          "gr",         function() pexec.exec('lsp.references') end,              e(opt, { desc = 'LSP: Go to References'}))
-m("n",          "<leader>rn", function() pexec.exec('lsp.rename') end,                  e(opt, { desc = 'LSP: Rename'}))
-m("n",          "<C-k>",      function() pexec.exec('lsp.signature_help') end,          e(opt, { desc = 'LSP: Signature Help'}))
-m('n',          '<leader>D',  function() pexec.exec('lsp.type_definition') end,         e(opt, { desc = 'LSP: Type Definition'}))
-m("n",          "<space>wa",  function() pexec.exec('lsp.add_workspace_folder') end,    e(opt, { desc = 'LSP: Add Workspace Folder'}))
-m("n",          "<space>wr",  function() pexec.exec('lsp.remove_workspace_folder') end, e(opt, { desc = 'LSP: Remove Workspace Folder'}))
-m("n",          "<space>wl",  function() pexec.exec('lsp.list_workspace_folders') end,  e(opt, { desc = 'LSP: List Workspace folders'}))
+m({ 'n', 'v' }, '<leader>ca', p.getAction('lsp.code_action'),             e(opt, { desc = 'LSP: Code Actions'}))
+m("n",          "gD",         p.getAction('lsp.declaration'),             e(opt, { desc = 'LSP: Go to Declaration'}))
+m("n",          "gd",         p.getAction('lsp.definition'),              e(opt, { desc = 'LSP: Go to Definition'}))
+m({ "n", 'x' }, "<leader>=",  p.getAction('lsp.format'),                  e(opt, { desc = 'LSP: Format'}))
+m("n",          "K",          p.getAction('lsp.hover'),                   e(opt, { desc = 'LSP: Hover Documentation'}))
+m("n",          "gi",         p.getAction('lsp.implementation'),          e(opt, { desc = 'LSP: Go to Implementation'}))
+m("n",          "gr",         p.getAction('lsp.references'),              e(opt, { desc = 'LSP: Go to References'}))
+m("n",          "<leader>rn", p.getAction('lsp.rename'),                  e(opt, { desc = 'LSP: Rename'}))
+m("n",          "<C-k>",      p.getAction('lsp.signature_help'),          e(opt, { desc = 'LSP: Signature Help'}))
+m('n',          '<leader>D',  p.getAction('lsp.type_definition'),         e(opt, { desc = 'LSP: Type Definition'}))
+m("n",          "<space>wa",  p.getAction('lsp.add_workspace_folder'),    e(opt, { desc = 'LSP: Add Workspace Folder'}))
+m("n",          "<space>wr",  p.getAction('lsp.remove_workspace_folder'), e(opt, { desc = 'LSP: Remove Workspace Folder'}))
+m("n",          "<space>wl",  p.getAction('lsp.list_workspace_folders'),  e(opt, { desc = 'LSP: List Workspace folders'}))
 
 
 -- [[ Misc ]]
@@ -148,7 +148,7 @@ m('', '<A-h>', '<C-w>h', opt)
 m('', '<A-w>', '<C-w>w', opt)
 
 -- [[ Search ]]
-pexec.addCall('search.file_contents', function() vim.api.nvim_input(':vimgrep //j ** <BAR> cw' .. string.rep('<left>', 10)) end)
+p.addCall('search.file_contents', function() vim.api.nvim_input(':vimgrep //j ** <BAR> cw' .. string.rep('<left>', 10)) end)
 
-m('n', '<leader>/',  function() vim.cmd(':noh') end ,                   e(opt, { desc = 'Search: Clear Buffer Search' }))
-m("n", "<leader>ss", function() pexec.exec('search.file_contents') end, e(opt, { desc = 'Search: Search File Contents' }))
+m('n', '<leader>/',  function() vim.cmd(':noh') end ,     e(opt, { desc = 'Search: Clear Buffer Search' }))
+m("n", "<leader>ss", p.getAction('search.file_contents'), e(opt, { desc = 'Search: Search File Contents' }))

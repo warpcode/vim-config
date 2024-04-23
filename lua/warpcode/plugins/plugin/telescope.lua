@@ -1,4 +1,4 @@
-local pexec = require('warpcode.utils.priority-exec')
+local p = require('warpcode.utils.keymap-actions')
 
 return {
   'nvim-telescope/telescope.nvim',
@@ -24,7 +24,6 @@ return {
     local builtin = require('telescope.builtin')
     -- local previewers = require "telescope.previewers"
     -- local sorters = require "telescope.sorters"
-    -- local pexec = require 'warpcode.priority-exec'
     -- local conf = require('telescope.config').values
     -- local finders = require('telescope.finders')
     -- local pickers = require('telescope.pickers')
@@ -90,7 +89,7 @@ return {
     --
     --
     -- Buffers
-    pexec.addCall('buffers.browse', function()
+    p.addCall('buffers.browse', function()
       builtin.buffers({
         sort_mru = true,
         ignore_current_buffer = true,
@@ -98,15 +97,15 @@ return {
     end, 10)
 
     -- Diagnostics
-    pexec.addCall('diagnostics.buffer', function()
+    p.addCall('diagnostics.buffer', function()
       builtin.diagnostics({ bufnr = 0, prompt_title = 'Current file' })
     end, 20)
-    pexec.addCall('diagnostics.workspace', function()
+    p.addCall('diagnostics.workspace', function()
       builtin.diagnostics({ prompt_title = 'Project' })
     end, 20)
 
     -- Filesystem
-    pexec.addCall('fs.find_files', function()
+    p.addCall('fs.find_files', function()
       local ok = pcall(builtin.git_files, {
         show_untracked = true,
         -- recurse_submodules = true,
@@ -121,18 +120,18 @@ return {
       })
     end, 10)
 
-    pexec.addCall('fs.find_recent_files', function()
+    p.addCall('fs.find_recent_files', function()
       builtin.oldfiles({ cwd_only = true })
     end, 10)
 
     -- LSP
-    pexec.addCall('lsp.definition', builtin.lsp_definitions, 10)
-    pexec.addCall('lsp.implementation', builtin.lsp_implementations, 10)
-    pexec.addCall('lsp.references', builtin.lsp_references, 10)
-    pexec.addCall('lsp.type_definition', builtin.lsp_type_definitions, 10)
+    p.addCall('lsp.definition', builtin.lsp_definitions, 10)
+    p.addCall('lsp.implementation', builtin.lsp_implementations, 10)
+    p.addCall('lsp.references', builtin.lsp_references, 10)
+    p.addCall('lsp.type_definition', builtin.lsp_type_definitions, 10)
 
     -- Search
-    pexec.addCall('search.file_contents', builtin.live_grep, 10)
+    p.addCall('search.file_contents', builtin.live_grep, 10)
     --
     -- -- Fuzzy find all the symbols in your current document.
     -- --  Symbols are things like variables, functions, types, etc.

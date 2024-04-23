@@ -1,4 +1,4 @@
-local pexec = require('warpcode.utils.priority-exec')
+local p = require('warpcode.utils.keymap-actions')
 
 return {
   'scrooloose/nerdtree',
@@ -68,10 +68,10 @@ return {
         nnoremap <leader>t :call ToggleNerdTree()<CR>
         ]])
 
-    pexec.addCall('fs.file_tree', function()
+    p.addCall('fs.file_tree', function()
       vim.cmd('NERDTreeToggle')
     end, 10)
-    pexec.addCall('fs.find_buffer', function()
+    p.addCall('fs.find_buffer', function()
       vim.cmd('NERDTreeFind')
     end, 10)
   end,

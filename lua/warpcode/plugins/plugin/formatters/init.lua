@@ -1,4 +1,4 @@
-local pexec = require('warpcode.utils.priority-exec')
+local p = require('warpcode.utils.keymap-actions')
 local servers = require('warpcode.plugins.plugin.formatters.servers')
 
 return {
@@ -31,7 +31,7 @@ return {
       formatters = servers.formatters_override,
     })
 
-    pexec.addCall('lsp.format', function()
+    p.addCall('lsp.format', function()
       require('conform').format({
         async = true,
         lsp_fallback = true,

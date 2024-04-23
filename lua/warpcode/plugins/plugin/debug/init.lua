@@ -1,4 +1,4 @@
-local pexec = require('warpcode.utils.priority-exec')
+local p = require('warpcode.utils.keymap-actions')
 -- debug.lua
 --
 -- Shows how to use the DAP plugin to debug your code.
@@ -58,15 +58,15 @@ return {
       --
       -- -- Basic debugging keymaps, feel free to change to your liking!
 
-      pexec.addCall('debug.breakpoint_toggle', dap.toggle_breakpoint, 10)
-      pexec.addCall('debug.breakpoint_conditional', function()
+      p.addCall('debug.breakpoint_toggle', dap.toggle_breakpoint, 10)
+      p.addCall('debug.breakpoint_conditional', function()
         dap.set_breakpoint(vim.fn.input('Breakpoint condition: '))
       end, 10)
-      pexec.addCall('debug.continue', dap.continue, 10)
-      pexec.addCall('debug.terminate', dap.terminate, 10)
-      pexec.addCall('debug.step_over', dap.step_over, 10)
-      pexec.addCall('debug.step_into', dap.step_into, 10)
-      pexec.addCall('debug.step_out', dap.step_out, 10)
+      p.addCall('debug.continue', dap.continue, 10)
+      p.addCall('debug.terminate', dap.terminate, 10)
+      p.addCall('debug.step_over', dap.step_over, 10)
+      p.addCall('debug.step_into', dap.step_into, 10)
+      p.addCall('debug.step_out', dap.step_out, 10)
 
       dap.configurations.php = {
         {

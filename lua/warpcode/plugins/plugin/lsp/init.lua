@@ -1,4 +1,4 @@
-local pexec = require('warpcode.utils.priority-exec')
+local p = require('warpcode.utils.keymap-actions')
 local lbuf = vim.lsp.buf
 local lsp_servers = require('warpcode.plugins.plugin.lsp.servers')
 local lint_servers = require('warpcode.plugins.plugin.linters.servers')
@@ -51,7 +51,7 @@ return {
 
         -- LSP overrides
         -- pexec.addCall('lsp.code_action', function() vim.cmd [[ Lspsaga code_action ]] end, 10)
-        pexec.addCall('lsp.rename', function()
+        p.addCall('lsp.rename', function()
           vim.cmd([[ Lspsaga rename ]])
         end, 10)
 
@@ -78,7 +78,7 @@ return {
           local activeParameter = signatures.activeParameter or 0
           local signatureParameters = signatures.parameters or {}
 
-          return activeParameter  >= 0 and #signatureParameters > 1
+          return activeParameter >= 0 and #signatureParameters > 1
         end,
       },
     },
@@ -90,43 +90,43 @@ return {
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('warpcode-lsp-attach', { clear = true }),
       callback = function(event)
-        pexec.addCall('lsp.code_action', function()
+        p.addCall('lsp.code_action', function()
           lbuf.code_action()
         end, 0, event.buf, event, event.id)
-        pexec.addCall('lsp.declaration', function()
+        p.addCall('lsp.declaration', function()
           lbuf.declaration()
         end, 0, event.buf, event, event.id)
-        pexec.addCall('lsp.definition', function()
+        p.addCall('lsp.definition', function()
           lbuf.definition()
         end, 0, event.buf, event, event.id)
-        pexec.addCall('lsp.format', function()
+        p.addCall('lsp.format', function()
           lbuf.format()
         end, 0, event.buf, event, event.id)
-        pexec.addCall('lsp.hover', function()
+        p.addCall('lsp.hover', function()
           lbuf.hover()
         end, 0, event.buf, event, event.id)
-        pexec.addCall('lsp.implementation', function()
+        p.addCall('lsp.implementation', function()
           lbuf.implementation()
         end, 0, event.buf, event, event.id)
-        pexec.addCall('lsp.references', function()
+        p.addCall('lsp.references', function()
           lbuf.references()
         end, 0, event.buf, event, event.id)
-        pexec.addCall('lsp.rename', function()
+        p.addCall('lsp.rename', function()
           lbuf.rename()
         end, 0, event.buf, event, event.id)
-        pexec.addCall('lsp.signature_help', function()
+        p.addCall('lsp.signature_help', function()
           lbuf.signature_help()
         end, 0, event.buf, event, event.id)
-        pexec.addCall('lsp.type_definition', function()
+        p.addCall('lsp.type_definition', function()
           lbuf.type_definition()
         end, 0, event.buf, event, event.id)
-        pexec.addCall('lsp.add_workspace_folder', function()
+        p.addCall('lsp.add_workspace_folder', function()
           lbuf.add_workspace_folder()
         end, 0, event.buf, event, event.id)
-        pexec.addCall('lsp.list_workspace_folders', function()
+        p.addCall('lsp.list_workspace_folders', function()
           lbuf.list_workspace_folders()
         end, 0, event.buf, event, event.id)
-        pexec.addCall('lsp.remove_workspace_folder', function()
+        p.addCall('lsp.remove_workspace_folder', function()
           lbuf.remove_workspace_folder()
         end, 0, event.buf, event, event.id)
 

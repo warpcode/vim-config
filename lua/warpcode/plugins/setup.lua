@@ -1,6 +1,5 @@
 -- [[ Setup lazy plugin manager ]]
 local plugin_dir = 'warpcode.plugins.plugin.'
-local pexec = require('warpcode.utils.priority-exec')
 
 require('lazy').setup({
 
