@@ -7,10 +7,10 @@ end
 
 
 -- [[ Buffers ]]
-pexec.addCall('buffers.browse', function() vim.api.nvim_input ':buffers<CR>' end, 0)
-pexec.addCall('buffers.next', function() vim.api.nvim_input ':bn<CR>' end, 0)
-pexec.addCall('buffers.previous', function() vim.api.nvim_input ':bp<CR>' end, 0)
-pexec.addCall('buffers.close', function() vim.api.nvim_input ':bp <BAR> bd #<cr>' end, 0)
+pexec.addCall('buffers.browse', function() vim.api.nvim_input ':buffers<CR>' end)
+pexec.addCall('buffers.next', function() vim.api.nvim_input ':bn<CR>' end)
+pexec.addCall('buffers.previous', function() vim.api.nvim_input ':bp<CR>' end)
+pexec.addCall('buffers.close', function() vim.api.nvim_input ':bp <BAR> bd #<cr>' end)
 
 -- { "n", "<leader>ds", vim.diagnostic.open_float },
 m('n', '[b',         function() pexec.exec('buffers.previous') end, e(opt, { desc = 'Buffers: Previous Buffer' }))
@@ -54,10 +54,10 @@ m("n", "<leader>di", function() pexec.exec('debug.step_into') end,              
 m("n", "<leader>dI", function() pexec.exec('debug.step_out') end,               e(opt, { desc = 'Debug: Step Out' }))
 
 -- [[ Diagnostics ]]
-pexec.addCall('diagnostics.next', function() vim.diagnostic.goto_next() end, 0)
-pexec.addCall('diagnostics.prev', function() vim.diagnostic.goto_prev() end, 0)
-pexec.addCall('diagnostics.buffer', function() vim.diagnostic.setloclist() end, 0)
-pexec.addCall('diagnostics.workspace', function() vim.diagnostic.setqflist() end, 0)
+pexec.addCall('diagnostics.next', function() vim.diagnostic.goto_next() end)
+pexec.addCall('diagnostics.prev', function() vim.diagnostic.goto_prev() end)
+pexec.addCall('diagnostics.buffer', function() vim.diagnostic.setloclist() end)
+pexec.addCall('diagnostics.workspace', function() vim.diagnostic.setqflist() end)
 
 -- { "n", "<leader>ds", vim.diagnostic.open_float },
 m("n", "[d",         function() pexec.exec('diagnostics.prev') end,      e(opt, { desc = 'Diagnostics: Previous' }))
@@ -66,10 +66,10 @@ m("n", "<leader>db", function() pexec.exec('diagnostics.buffer') end,    e(opt, 
 m("n", "<leader>dw", function() pexec.exec('diagnostics.workspace') end, e(opt, { desc = 'Diagnostics: Show Workspace' }))
 
 -- [[ Filesystem ]]
-pexec.addCall('fs.file_tree', function() vim.cmd 'Lexplore' end, 0)
-pexec.addCall('fs.find_buffer', function() vim.api.nvim_input ':let @/=expand("%:t") <Bar> execute \'Lexplore\' expand("%:h") <Bar> normal n<CR>' end, 0)
-pexec.addCall('fs.find_files', function() vim.api.nvim_input ':find ' end, 0)
-pexec.addCall('fs.find_recent_files', function() vim.api.nvim_input ":oldfiles<CR>" end, 0)
+pexec.addCall('fs.file_tree', function() vim.cmd 'Lexplore' end)
+pexec.addCall('fs.find_buffer', function() vim.api.nvim_input ':let @/=expand("%:t") <Bar> execute \'Lexplore\' expand("%:h") <Bar> normal n<CR>' end)
+pexec.addCall('fs.find_files', function() vim.api.nvim_input ':find ' end)
+pexec.addCall('fs.find_recent_files', function() vim.api.nvim_input ":oldfiles<CR>" end)
 
 m("n", "<leader>ft", function() pexec.exec('fs.file_tree') end,         e(opt, { desc = 'FS: File Tree' }))
 m("n", "<leader>fb", function() pexec.exec('fs.find_buffer') end,       e(opt, { desc = 'FS: Find Buffer in File Tree' }))
@@ -148,7 +148,7 @@ m('', '<A-h>', '<C-w>h', opt)
 m('', '<A-w>', '<C-w>w', opt)
 
 -- [[ Search ]]
-pexec.addCall('search.file_contents', function() vim.api.nvim_input(':vimgrep //j ** <BAR> cw' .. string.rep('<left>', 10)) end, 0)
+pexec.addCall('search.file_contents', function() vim.api.nvim_input(':vimgrep //j ** <BAR> cw' .. string.rep('<left>', 10)) end)
 
 m('n', '<leader>/',  function() vim.cmd(':noh') end ,                   e(opt, { desc = 'Search: Clear Buffer Search' }))
 m("n", "<leader>ss", function() pexec.exec('search.file_contents') end, e(opt, { desc = 'Search: Search File Contents' }))
