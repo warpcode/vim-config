@@ -1,5 +1,4 @@
 local pexec = require('warpcode.utils.priority-exec')
-local maps = require('warpcode.utils.keymaps')
 local lbuf = vim.lsp.buf
 local lsp_servers = require('warpcode.plugins.plugin.lsp.servers')
 local lint_servers = require('warpcode.plugins.plugin.linters.servers')
