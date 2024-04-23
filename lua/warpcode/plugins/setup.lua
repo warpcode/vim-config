@@ -100,6 +100,7 @@ require('lazy').setup({
 
   -- [ Grouped plugins ]
   require(plugin_dir .. 'autocomplete'),
+  require(plugin_dir .. 'debug'),
   require(plugin_dir .. 'file-browser'),
   require(plugin_dir .. 'fonts'),
   require(plugin_dir .. 'formatters'),

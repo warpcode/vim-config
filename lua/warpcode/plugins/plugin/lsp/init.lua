@@ -7,6 +7,7 @@ local format_servers = require('warpcode.plugins.plugin.formatters.servers')
 
 return {
   'neovim/nvim-lspconfig',
+  priority = 50,
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
     'williamboman/mason.nvim',
@@ -163,11 +164,6 @@ return {
 
         -- Formatters
         vim.list_extend(ensure_installed, format_servers.get_mason_tool_names())
-
-        -- DAP
-        vim.list_extend(ensure_installed, {
-          'php-debug-adapter',
-        })
 
         return ensure_installed
       end)(),
