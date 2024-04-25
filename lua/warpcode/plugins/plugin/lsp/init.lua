@@ -65,21 +65,21 @@ return {
     {
       'ray-x/lsp_signature.nvim',
       opts = {
-        bind = false,
+        -- bind = false,
         floating_window = true,
-        floating_window_off_x = 1, -- adjust float windows x position.
-        floating_window_off_y = 1000, -- adjust float windows y position.
+        -- floating_window_off_x = 1, -- adjust float windows x position.
+        -- floating_window_off_y = 1000, -- adjust float windows y position.
         hint_enable = true,
         -- hi_parameter = "Search",
-        handler_opts = {
-          border = 'shadow', -- double, rounded, single, shadow, none
-        },
-        fix_pos = function(signatures, _) -- second argument is the client
-          local activeParameter = signatures.activeParameter or 0
-          local signatureParameters = signatures.parameters or {}
-
-          return activeParameter >= 0 and #signatureParameters > 1
-        end,
+        -- handler_opts = {
+        --   border = 'shadow', -- double, rounded, single, shadow, none
+        -- },
+        -- fix_pos = function(signatures, _) -- second argument is the client
+        --   local activeParameter = signatures.activeParameter or 0
+        --   local signatureParameters = signatures.parameters or {}
+        --
+        --   return activeParameter >= 0 and #signatureParameters > 1
+        -- end,
       },
     },
     -- { "jose-elias-alvarez/null-ls.nvim" },
