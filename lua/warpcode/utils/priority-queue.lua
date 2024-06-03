@@ -55,7 +55,9 @@ function PQueue:sortList()
 
   -- sort the entries
   table.sort(self.queue, function(a, b)
-    return a.priority > b.priority
+    local apriority = a and a.priority or 0
+    local bpriority = b and b.priority or 0
+    return apriority > bpriority
   end)
 end
 
