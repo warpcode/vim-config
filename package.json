@@ -7,6 +7,12 @@
         "snippets": [
             {
                 "language": [
+                    "all"
+                ],
+                "path": "./snippets/all/file.json"
+            },
+            {
+                "language": [
                     "martini-html"
                 ],
                 "path": "./snippets/martini-html.json"

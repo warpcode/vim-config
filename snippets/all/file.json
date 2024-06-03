@@ -1,0 +1,12 @@
+{
+  "filename": {
+    "prefix": "filename",
+    "body": ["${TM_FILENAME}"],
+    "description": "Print the current file name"
+  },
+  "filepath": {
+    "prefix": "filepath",
+    "body": ["${RELATIVE_FILEPATH}"],
+    "description": "Print the relative file path to the working directory"
+  }
+}
