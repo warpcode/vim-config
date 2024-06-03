@@ -3,6 +3,7 @@ lazy-lock.json
 *.swp
 *.un~
 .netrwhist
+.php-cs-fixer.cache
 
 # Dependency directories
 node_modules/
