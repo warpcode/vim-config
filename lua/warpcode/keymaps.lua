@@ -19,11 +19,13 @@ m('n', '<leader>bb', p.getAction('buffers.browse'),   e(opt, { desc = 'Buffers: 
 m('n', "<leader>bq", p.getAction('buffers.close'),    e(opt, { desc = 'Buffers: Close Buffer' }) )
 
 -- [[ Clipboard ]]
-m('v',          '<leader>p', '"_dP',        e(opt, { desc = 'Clipboard: Paste (no copy)' }))
-m({ 'n', 'v' }, '<leader>d', '"_d',         e(opt, { desc = 'Clipboard: Delete (no copy)' }))
-m('n',          '<leader>Y', 'gg"+yG<C-o>', e(opt, { desc = 'Clipboard: Copy buffer contents' }))
-m('n',          'Y',         'yg_',         e(opt, { desc = 'Clipboard: Copy to endof line'}))
-m('n',          'gV',        '`[v`]',       e(opt, { desc = 'Clipboard: Copy last paste'}))
+m('v',          '<leader>p',  '"_dP',                                  e(opt, { desc = 'Clipboard: Paste (no copy)' }))
+m({ 'n', 'v' }, '<leader>d',  '"_d',                                   e(opt, { desc = 'Clipboard: Delete (no copy)' }))
+m('n',          '<leader>Y',  'gg"+yG<C-o>',                           e(opt, { desc = 'Clipboard: Copy buffer contents' }))
+m('n',          'Y',          'yg_',                                   e(opt, { desc = 'Clipboard: Copy to endof line'}))
+m('n',          'gV',         '`[v`]',                                 e(opt, { desc = 'Clipboard: Copy last paste'}))
+m('n',          '<leader>yp', ':let @+=expand("%")<CR>',               e(opt, { desc = 'Clipboard: Copy the relative filepath to the clipboard'}))
+m('n',          '<leader>yr', ':let @+=expand("%").":".line(".")<CR>', e(opt, { desc = 'Clipboard: Copy the current file path and line number reference'}))
 
 -- [[ Debug ]]
 p.addCall('debug.breakpoint_toggle', function() end)
