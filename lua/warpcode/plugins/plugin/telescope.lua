@@ -125,10 +125,15 @@ return {
     end, 10)
 
     -- LSP
-    p.addCall('lsp.definition', builtin.lsp_definitions, 10)
-    p.addCall('lsp.implementation', builtin.lsp_implementations, 10)
-    p.addCall('lsp.references', builtin.lsp_references, 10)
-    p.addCall('lsp.type_definition', builtin.lsp_type_definitions, 10)
+    vim.api.nvim_create_autocmd('LspAttach', {
+      group = vim.api.nvim_create_augroup('warpcode-lsp-attach-telescope', { clear = true }),
+      callback = function(event)
+        p.addCall('lsp.definition', builtin.lsp_definitions, 10, event.buf, event, event.id)
+        p.addCall('lsp.implementation', builtin.lsp_implementations, 10, event.buf, event, event.id)
+        p.addCall('lsp.references', builtin.lsp_references, 10, event.buf, event, event.id)
+        p.addCall('lsp.type_definition', builtin.lsp_type_definitions, 10, event.buf, event, event.id)
+      end,
+    })
 
     -- Search
     p.addCall('search.file_contents', builtin.live_grep, 10)
