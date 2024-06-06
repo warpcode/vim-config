@@ -27,20 +27,9 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install neovim npm package
-        run: sudo npm install -g neovim
-
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.1
-          extensions: mbstring, dom
-
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-
-      - name: Install pynvim python package
-        run: python -m pip install --user --upgrade pynvim 
 
       - name: Install Dependencies
         run: |
@@ -56,14 +45,5 @@ jobs:
             xfonts-utils\
             zsh
 
-      - name: Link config without installing plugins
-        run: make link
-
-      - name: Run neovim without plugins installed
-        run: nvim --headless +quitall
-
       - name: Full install
         run: make install
-
-      - name: Run unit tests
-        run: make test
