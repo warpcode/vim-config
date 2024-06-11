@@ -3,7 +3,6 @@ return {
     'tpope/vim-fugitive',
     dependencies = {
         'tpope/vim-rhubarb',
-        -- 'airblade/vim-gitgutter',
         -- 'junegunn/gv.vim',   -- Git commit explorer/viewer
         {
             -- Adds git related signs to the gutter, as well as utilities for managing changes
