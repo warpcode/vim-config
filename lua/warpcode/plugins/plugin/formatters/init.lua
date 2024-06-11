@@ -31,6 +31,7 @@ return {
       formatters = servers.formatters_override,
     })
 
+    -- Don't add to LSP Attach event as this runs formatters outside of lsp
     p.addCall('lsp.format', function()
       require('conform').format({
         async = true,
