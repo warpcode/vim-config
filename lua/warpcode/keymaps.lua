@@ -20,7 +20,7 @@ m('n', "<leader>bq", p.getAction('buffers.close'),    e(opt, { desc = 'Buffers: 
 
 -- [[ Clipboard ]]
 m('v',          '<leader>p',  '"_dP',                                  e(opt, { desc = 'Clipboard: Paste (no copy)' }))
-m({ 'n', 'v' }, '<leader>d',  '"_d',                                   e(opt, { desc = 'Clipboard: Delete (no copy)' }))
+m({ 'n', 'v' }, '<leader>dd', '"_d',                                   e(opt, { desc = 'Clipboard: Delete (no copy)' }))
 m('n',          '<leader>Y',  'gg"+yG<C-o>',                           e(opt, { desc = 'Clipboard: Copy buffer contents' }))
 m('n',          'Y',          'yg_',                                   e(opt, { desc = 'Clipboard: Copy to endof line'}))
 m('n',          'gV',         '`[v`]',                                 e(opt, { desc = 'Clipboard: Copy last paste'}))
