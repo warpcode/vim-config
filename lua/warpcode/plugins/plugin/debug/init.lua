@@ -6,26 +6,21 @@ return {
     -- Default is 50 and this should load after the autocomplete plugins because of mason
     priority = 10,
     dependencies = {
-      -- Creates a beautiful debugger UI
       {
+        -- Creates a beautiful debugger UI
         'rcarriga/nvim-dap-ui',
         dependencies = {
           'nvim-neotest/nvim-nio',
         },
       },
-
-      -- Installs the debug adapters for you
       'jay-babu/mason-nvim-dap.nvim',
-
-      -- Add your own debuggers here
-      -- 'leoluz/nvim-dap-go',
-
       'theHamsta/nvim-dap-virtual-text',
     },
     config = function()
       local dap = require('dap')
       local dapui = require('dapui')
       --
+      ---@diagnostic disable-next-line: missing-fields
       require('mason-nvim-dap').setup({
         -- Makes a best effort to setup the various debuggers with
         -- reasonable debug configurations
@@ -38,17 +33,12 @@ return {
             require('mason-nvim-dap').default_setup(config)
           end,
         },
-
-        -- You'll need to check that you have the required things installed
-        -- online, please don't ask me how to install them :)
         ensure_installed = {
           'php',
         },
       })
 
-      --
-      -- -- Basic debugging keymaps, feel free to change to your liking!
-
+      -- Keymaps
       p.addCall('debug.breakpoint_toggle', dap.toggle_breakpoint, 10)
       p.addCall('debug.breakpoint_conditional', function()
         dap.set_breakpoint(vim.fn.input('Breakpoint condition: '))
@@ -115,6 +105,7 @@ return {
 
       -- Dap UI setup
       -- For more information, see |:help nvim-dap-ui|
+      ---@diagnostic disable-next-line: missing-fields
       dapui.setup({
         layouts = {
           {
@@ -147,6 +138,7 @@ return {
           },
         },
         icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+        ---@diagnostic disable-next-line: missing-fields
         controls = {
           icons = {
             pause = '⏸',
