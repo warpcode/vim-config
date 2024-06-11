@@ -1,78 +1,41 @@
 local p = require('warpcode.utils.keymap-actions')
 
 return {
-  'scrooloose/nerdtree',
-  dependencies = {
-    { 'Xuyuanp/nerdtree-git-plugin' },
-    { 'jistr/vim-nerdtree-tabs' },
+  {
+    'nvim-tree/nvim-tree.lua',
+    config = function()
+      -- disable netrw at the very start of your init.lua
+      vim.g.loaded_netrw = 1
+      vim.g.loaded_netrwPlugin = 1
+
+      -- optionally enable 24-bit colour
+      vim.opt.termguicolors = true
+
+      -- empty setup using defaults
+      require('nvim-tree').setup()
+
+      p.addCall('fs.file_tree', function()
+        vim.cmd('NvimTreeToggle')
+      end, 10)
+      p.addCall('fs.find_buffer', function()
+        vim.cmd('NvimTreeFindFile')
+      end, 10)
+
+      -- OR setup with some options
+      -- require('nvim-tree').setup({
+      --   sort = {
+      --     sorter = 'case_sensitive',
+      --   },
+      --   view = {
+      --     width = 30,
+      --   },
+      --   renderer = {
+      --     group_empty = true,
+      --   },
+      --   filters = {
+      --     dotfiles = true,
+      --   },
+      -- })
+    end,
   },
-  config = function()
-    vim.cmd([[
-        let g:NERDTreeChDirMode=2
-        let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
-        let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
-        let g:NERDTreeShowBookmarks=1
-        let g:nerdtree_tabs_focus_on_files=1
-        let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-        let g:NERDTreeWinSize = 40
-        let g:NERDTreeShowHidden=1
-        " Show ignored icon next to ignored files. This can be intensive with a lot of files
-        let g:NERDTreeGitStatusShowIgnored = 1
-        " List of icons for file statuses
-        let g:NERDTreeGitStatusIndicatorMapCustom = {
-                    \ "Modified"  : "✹",
-                    \ "Staged"    : "✚",
-                    \ "Untracked" : "✭",
-                    \ "Renamed"   : "➜",
-                    \ "Unmerged"  : "═",
-                    \ "Deleted"   : "✖",
-                    \ "Dirty"     : "✗",
-                    \ "Clean"     : "✔︎",
-                    \ 'Ignored'   : '☒',
-                    \ "Unknown"   : "?"
-                    \ }
-
-        " NERDTree - Quit vim when all other windows have been closed.
-        au BufEnter *
-                    \ if (winnr("$") == 1 && exists("b:NERDTreeType") &&
-                    \ b:NERDTreeType == "primary") |
-                    \   q |
-                    \ endif
-
-        "
-        " Auto find files in nerdtree on buf enter
-        "
-        " Check if NERDTree is open or active
-        function! IsNERDTreeOpen()
-            return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-        endfunction
-
-        " Call NERDTreeFind if NERDTree is active, current window contains a modifiable
-        " file, and we're not in vimdiff
-        function! SyncTree()
-            if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
-                NERDTreeFind
-                wincmd p
-            endif
-        endfunction
-
-        " Highlight currently open buffer in NERDTree
-        " autocmd BufEnter * call SyncTree()
-
-        " With the auto find feature, ensure we don't double open nerdtree
-        function! ToggleNerdTree()
-            set eventignore=BufEnter
-            NERDTreeToggle
-            set eventignore=
-        endfunction
-        nnoremap <leader>t :call ToggleNerdTree()<CR>
-        ]])
-
-    p.addCall('fs.file_tree', function()
-      vim.cmd('NERDTreeToggle')
-    end, 10)
-    p.addCall('fs.find_buffer', function()
-      vim.cmd('NERDTreeFind')
-    end, 10)
-  end,
 }
