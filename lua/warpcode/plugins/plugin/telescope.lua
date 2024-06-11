@@ -17,6 +17,18 @@ return {
     'nvim-telescope/telescope-ui-select.nvim',
     'nvim-telescope/telescope-symbols.nvim',
     -- { 'nvim-telescope/telescope-dap.nvim' },
+    {
+      'aznhe21/actions-preview.nvim',
+      config = function()
+        -- LSP
+        vim.api.nvim_create_autocmd('LspAttach', {
+          group = vim.api.nvim_create_augroup('warpcode-lsp-attach-actions-preview', { clear = true }),
+          callback = function(event)
+            p.addCall('lsp.code_action', require('actions-preview').code_actions, 20, event.buf, event, event.id)
+          end,
+        })
+      end,
+    },
   },
   config = function()
     local telescope = require('telescope')
@@ -105,9 +117,9 @@ return {
           return true
         end,
       }, {
-          sort_mru = true,
-          ignore_current_buffer = true,
-        })
+        sort_mru = true,
+        ignore_current_buffer = true,
+      })
     end, 10)
 
     -- Diagnostics
