@@ -50,10 +50,13 @@ return {
         require('lspsaga').setup({})
 
         -- LSP overrides
-        -- pexec.addCall('lsp.code_action', function() vim.cmd [[ Lspsaga code_action ]] end, 10)
-        p.addCall('lsp.rename', function()
-          vim.cmd([[ Lspsaga rename ]])
-        end, 10)
+        vim.api.nvim_create_autocmd('LspAttach', {
+          group = vim.api.nvim_create_augroup('warpcode-lsp-attach-lsp-saga', { clear = true }),
+          callback = function(event)
+            p.addCall('lsp.code_action', function() vim.cmd [[ Lspsaga code_action ]] end, 15, event.buf, event, event.id)
+            p.addCall('lsp.rename', function() vim.cmd [[ Lspsaga rename ]] end, 15, event.buf, event, event.id)
+          end,
+        })
 
         -- diagnostics overrides
         -- pexec.addCall('diagnostics.next', function() require("lspsaga.diagnostic"):goto_next() end, 10)
