@@ -157,6 +157,7 @@ m('n', '<leader>/',  function() vim.cmd(':noh') end ,     e(opt, { desc = 'Searc
 m("n", "<leader>ss", p.getAction('search.file_contents'), e(opt, { desc = 'Search: Search File Contents' }))
 
 -- [[ Version Control ]]
+m('n', '<leader>vl', p.getAction('vcs.show_status'),       e(opt, { desc = 'Version Control: Show Status' }))
 m('n', '[C',         p.getAction('vcs.hunk_first'),        e(opt, { desc = 'Version Control: Hunk: First' }))
 m('n', '[c',         p.getAction('vcs.hunk_previous'),     e(opt, { desc = 'Version Control: Hunk: Previous' }))
 m('n', ']c',         p.getAction('vcs.hunk_next'),         e(opt, { desc = 'Version Control: Hunk: Next' }))

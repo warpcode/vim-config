@@ -3,6 +3,27 @@ local p = require('warpcode.utils.keymap-actions')
 return {
   -- [[ Git ]]
   'tpope/vim-fugitive',
+  config = function()
+    local km_priority = 10
+    p.addCall('vcs.show_status', function()
+      if vim.fn.buflisted(vim.fn.bufname('fugitive:///*/.git//$')) ~= 0 then
+        vim.cmd([[ execute ":bdelete" bufname('fugitive:///*/.git//$') ]])
+      else
+        if vim.fn.FugitiveHead() ~= '' then
+          vim.cmd([[
+            Git
+            " wincmd H  " Open Git window in vertical split
+            " setlocal winfixwidth
+            " vertical resize 31
+            " setlocal winfixwidth
+            " setlocal nonumber
+            " setlocal norelativenumber
+          ]])
+        end
+      end
+    end,
+    km_priority)
+  end,
   dependencies = {
     'tpope/vim-rhubarb',
     -- 'junegunn/gv.vim',   -- Git commit explorer/viewer
@@ -10,7 +31,6 @@ return {
       -- Adds git related signs to the gutter, as well as utilities for managing changes
       -- This is like running require('gitsigns').setup({ ... })
       'lewis6991/gitsigns.nvim',
-
       opts = {
         signs = {
           add          = { text = '+' },
