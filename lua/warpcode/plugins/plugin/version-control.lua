@@ -1,46 +1,55 @@
+local p = require('warpcode.utils.keymap-actions')
+
 return {
-    -- [[ Git ]]
-    'tpope/vim-fugitive',
-    dependencies = {
-        'tpope/vim-rhubarb',
-        -- 'junegunn/gv.vim',   -- Git commit explorer/viewer
-        {
-            -- Adds git related signs to the gutter, as well as utilities for managing changes
-            -- This is like running require('gitsigns').setup({ ... })
-            'lewis6991/gitsigns.nvim',
-            opts = {
-                signs = {
-                    add = { text = '+' },
-                    change = { text = '~' },
-                    delete = { text = '_' },
-                    topdelete = { text = '‾' },
-                    changedelete = { text = '~' },
-                },
-                --     on_attach = function(bufnr)
-                --       vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
-                --
-                --       -- don't override the built-in and fugitive keymaps
-                --       local gs = package.loaded.gitsigns
-                --       vim.keymap.set({ 'n', 'v' }, ']c', function()
-                --         if vim.wo.diff then
-                --           return ']c'
-                --         end
-                --         vim.schedule(function()
-                --           gs.next_hunk()
-                --         end)
-                --         return '<Ignore>'
-                --       end, { expr = true, buffer = bufnr, desc = 'Jump to next hunk' })
-                --       vim.keymap.set({ 'n', 'v' }, '[c', function()
-                --         if vim.wo.diff then
-                --           return '[c'
-                --         end
-                --         vim.schedule(function()
-                --           gs.prev_hunk()
-                --         end)
-                --         return '<Ignore>'
-                --       end, { expr = true, buffer = bufnr, desc = 'Jump to previous hunk' })
-                --     end,
-            },
+  -- [[ Git ]]
+  'tpope/vim-fugitive',
+  dependencies = {
+    'tpope/vim-rhubarb',
+    -- 'junegunn/gv.vim',   -- Git commit explorer/viewer
+    {
+      -- Adds git related signs to the gutter, as well as utilities for managing changes
+      -- This is like running require('gitsigns').setup({ ... })
+      'lewis6991/gitsigns.nvim',
+
+      opts = {
+        signs = {
+          add          = { text = '+' },
+          change       = { text = '┃' },
+          delete       = { text = '_' },
+          topdelete    = { text = '‾' },
+          changedelete = { text = '~' },
+          untracked    = { text = '┆' },
         },
+        on_attach = function(bufnr)
+          local gs = package.loaded.gitsigns
+          local km_priority = 10
+
+          -- We must wrap every call in functions else they throw errors
+          p.addCall('vcs.hunk_first',    function() gs.nav_hunk("first") end,    km_priority, bufnr)
+          p.addCall('vcs.hunk_previous', function() gs.nav_hunk("prev") end,     km_priority, bufnr)
+          p.addCall('vcs.hunk_next',     function() gs.nav_hunk("next") end,     km_priority, bufnr)
+          p.addCall('vcs.hunk_last',     function() gs.nav_hunk("last") end,     km_priority, bufnr)
+
+          p.addCall('vcs.hunk_stage',       function() gs.stage_hunk() end,                                       km_priority, bufnr)
+          p.addCall('vcs.hunk_stage_lines', function() gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end, km_priority, bufnr)
+          p.addCall('vcs.hunk_stage_undo',  function() gs.undo_stage_hunk() end,                                  km_priority, bufnr)
+
+          p.addCall('vcs.buffer_stage', function() gs.stage_buffer() end, km_priority, bufnr)
+          p.addCall('vcs.buffer_reset', function() gs.reset_buffer() end, km_priority, bufnr)
+
+          p.addCall('vcs.hunk_reset',       function() gs.reset_hunk() end,                                    km_priority, bufnr)
+          p.addCall('vcs.hunk_reset_lines', function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end, km_priority, bufnr)
+
+          p.addCall('vcs.hunk_preview',      function() gs.preview_hunk() end,              km_priority, bufnr)
+          p.addCall('vcs.hunk_blame',        function() gs.blame_line{full=true} end,       km_priority, bufnr)
+          p.addCall('vcs.toggle_blame_line', function() gs.toggle_current_line_blame() end, km_priority, bufnr)
+          p.addCall('vcs.diff',              function() gs.diffthis() end,                  km_priority, bufnr)
+          p.addCall('vcs.diff_head',         function() gs.diffthis('~') end,               km_priority, bufnr)
+          p.addCall('vcs.show_deleted',      function() gs.toggle_deleted() end,            km_priority, bufnr)
+
+          -- map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+        end,
+      },
     },
+  },
 }

@@ -47,7 +47,11 @@ return {
     {
       'glepnir/lspsaga.nvim',
       config = function()
-        require('lspsaga').setup({})
+        require('lspsaga').setup({
+          code_action = {
+            extend_gitsigns = pcall(require, 'gitsigns')
+          },
+        })
 
         -- LSP overrides
         vim.api.nvim_create_autocmd('LspAttach', {

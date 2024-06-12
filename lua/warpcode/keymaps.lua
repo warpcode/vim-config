@@ -120,6 +120,7 @@ vim.cmd([[
   cnoreabbrev Qall qall
 ]])
 
+
   -- Preseve visual mode when indenting
 m('v', '<', '<gv', opt)
 m('v', '>', '>gv', opt)
@@ -154,3 +155,22 @@ p.addCall('search.file_contents', function() vim.api.nvim_input(':vimgrep //j **
 
 m('n', '<leader>/',  function() vim.cmd(':noh') end ,     e(opt, { desc = 'Search: Clear Buffer Search' }))
 m("n", "<leader>ss", p.getAction('search.file_contents'), e(opt, { desc = 'Search: Search File Contents' }))
+
+-- [[ Version Control ]]
+m('n', '[C',         p.getAction('vcs.hunk_first'),        e(opt, { desc = 'Version Control: Hunk: First' }))
+m('n', '[c',         p.getAction('vcs.hunk_previous'),     e(opt, { desc = 'Version Control: Hunk: Previous' }))
+m('n', ']c',         p.getAction('vcs.hunk_next'),         e(opt, { desc = 'Version Control: Hunk: Next' }))
+m('n', ']C',         p.getAction('vcs.hunk_last'),         e(opt, { desc = 'Version Control: Hunk: Last' }))
+m('n', '<leader>vs', p.getAction('vcs.hunk_stage'),        e(opt, { desc = 'Version Control: Hunk: Stage' }))
+m('v', '<leader>vs', p.getAction('vcs.hunk_stage_lines'),  e(opt, { desc = 'Version Control: Hunk: Stage' }))
+m('n', '<leader>vr', p.getAction('vcs.hunk_reset'),        e(opt, { desc = 'Version Control: Hunk: Reset' }))
+m('v', '<leader>vr', p.getAction('vcs.hunk_reset_lines'),  e(opt, { desc = 'Version Control: Hunk: Reset Lines' }))
+m('n', '<leader>vu', p.getAction('vcs.hunk_stage_undo'),   e(opt, { desc = 'Version Control: Hunk: Stage Undo' }))
+m('n', '<leader>vp', p.getAction('vcs.hunk_preview'),      e(opt, { desc = 'Version Control: Hunk: Preview' }))
+m('n', '<leader>vb', p.getAction('vcs.hunk_blame'),        e(opt, { desc = 'Version Control: Hunk: Blame' }))
+m('n', '<leader>vS', p.getAction('vcs.buffer_stage'),      e(opt, { desc = 'Version Control: Buffer: Stage' }))
+m('n', '<leader>vR', p.getAction('vcs.buffer_reset'),      e(opt, { desc = 'Version Control: Buffer: Reset' }))
+m('n', '<leader>vb', p.getAction('vcs.toggle_blame_line'), e(opt, { desc = 'Version Control: Blame: Toggle' }))
+m('n', '<leader>vd', p.getAction('vcs.diff'),              e(opt, { desc = 'Version Control: Diff: Working Tree' }))
+m('n', '<leader>vD', p.getAction('vcs.diff_head'),         e(opt, { desc = 'Version Control: Diff: HEAD (last commit)' }))
+m('n', '<leader>vt', p.getAction('vcs.show_deleted'),      e(opt, { desc = 'Version Control: Toggle Show Deleted' }))
