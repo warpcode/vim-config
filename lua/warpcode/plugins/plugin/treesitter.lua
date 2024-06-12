@@ -3,6 +3,8 @@ return {
     dependencies = {
         'nvim-treesitter/playground',
         { 'p00f/nvim-ts-rainbow' },
+    'nvim-treesitter/nvim-treesitter-context',
+    'p00f/nvim-ts-rainbow',
     },
     build = ':TSUpdate',
     opts = {
