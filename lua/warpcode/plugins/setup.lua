@@ -4,7 +4,14 @@ local plugin_dir = 'warpcode.plugins.plugin.'
 require('lazy').setup({
 
   -- Toasts for lsp and notifications
-  { 'j-hui/fidget.nvim', opts = {} },
+  {
+    'j-hui/fidget.nvim',
+    opts = {
+      notification = {
+        override_vim_notify = true,  -- Automatically override vim.notify() with Fidget
+      }
+    },
+  },
 
   -- [[ Utilities ]]
   'bronson/vim-trailing-whitespace', -- Removes excess whitespace
