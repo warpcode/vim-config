@@ -1,82 +1,226 @@
 return {
-    'nvim-treesitter/nvim-treesitter',
-    dependencies = {
-        'nvim-treesitter/playground',
-        { 'p00f/nvim-ts-rainbow' },
+  'nvim-treesitter/nvim-treesitter',
+  dependencies = {
+    'nvim-treesitter/playground',
+    'nvim-treesitter/nvim-treesitter-textobjects',
     'nvim-treesitter/nvim-treesitter-context',
     'p00f/nvim-ts-rainbow',
+  },
+  build = ':TSUpdate',
+  opts = {
+    ensure_installed = {
+      'awk',
+      'bash',
+      'c',
+      'c_sharp',
+      'cpp',
+      'css',
+      'csv',
+      'dockerfile',
+      'html',
+      'javascript',
+      'jsdoc',
+      'json',
+      'json5',
+      'jsonc',
+      'lua',
+      'luadoc',
+      'make',
+      'markdown',
+      'php',
+      'phpdoc',
+      'python',
+      'regex',
+      'scss',
+      'sql',
+      'svelte',
+      'terraform',
+      'tmux',
+      'toml',
+      'tsx',
+      'typescript',
+      'vim',
+      'vimdoc',
+      'vue',
+      'xml',
+      'yaml',
     },
-    build = ':TSUpdate',
-    opts = {
-        ensure_installed = {
-            'awk',
-            'bash',
-            'c',
-            'c_sharp',
-            'cpp',
-            'css',
-            'csv',
-            'dockerfile',
-            'html',
-            'javascript',
-            'jsdoc',
-            'json',
-            'json5',
-            'jsonc',
-            'lua',
-            'luadoc',
-            'make',
-            'markdown',
-            'php',
-            'phpdoc',
-            'python',
-            'regex',
-            'scss',
-            'sql',
-            'svelte',
-            'terraform',
-            'tmux',
-            'toml',
-            'tsx',
-            'typescript',
-            'vim',
-            'vimdoc',
-            'vue',
-            'xml',
-            'yaml',
-        },
-        auto_install = true,
-        highlight = {
-            enable = true,
-            -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-            --  If you are experiencing weird indenting issues, add the language to
-            --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-            additional_vim_regex_highlighting = { 'ruby' },
-        },
-        indent = {
-            enable = true,
-            disable = { 'ruby' }
-        },
-        -- rainbow = {
-        --     enable = true,
-        --     -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-        --     extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-        --     max_file_lines = nil, -- Do not enable for files with more than n lines, int
-        --     -- colors = {}, -- table of hex strings
-        --     -- termcolors = {} -- table of colour name strings
-        -- }
+    auto_install = true,
+    highlight = {
+      enable = true,
+      -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
+      --  If you are experiencing weird indenting issues, add the language to
+      --  the list of additional_vim_regex_highlighting and disabled languages for indent.
+      additional_vim_regex_highlighting = { 'ruby' },
     },
-    config = function(_, opts)
-        -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-
-        ---@diagnostic disable-next-line: missing-fields
-        require('nvim-treesitter.configs').setup(opts)
-
-        -- There are additional nvim-treesitter modules that you can use to interact
-        -- with nvim-treesitter. You should go explore a few and see what interests you:
-        --
-        --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-        --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-        --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-    end,
+    indent = {
+      enable = true,
+      disable = { 'ruby' },
+    },
+    -- rainbow = {
+    --     enable = true,
+    --     -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+    --     extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+    --     max_file_lines = nil, -- Do not enable for files with more than n lines, int
+    --     -- colors = {}, -- table of hex strings
+    --     -- termcolors = {} -- table of colour name strings
+    -- },
+    textobjects = {
+      select = {
+        enable = true,
+        -- Automatically jump forward to textobj, similar to targets.vim
+        lookahead = true,
+        keymaps = {
+          -- ['am'] = '@function.outer',
+          -- ['im'] = '@function.inner',
+          -- ['al'] = '@class.outer',
+          -- ['il'] = { query = '@class.inner', desc = 'Select inner part of a class region' },
+          -- ['ab'] = '@block.outer',
+          -- ['ib'] = '@block.inner',
+          -- ['ad'] = '@conditional.outer',
+          -- ['id'] = '@conditional.inner',
+          -- ['ao'] = '@loop.outer',
+          -- ['io'] = '@loop.inner',
+          -- ['aa'] = '@parameter.outer',
+          -- ['ia'] = '@parameter.inner',
+          -- ['af'] = '@call.outer',
+          -- ['if'] = '@call.inner',
+          -- ['ac'] = '@comment.outer',
+          -- ['ar'] = '@frame.outer',
+          -- ['ir'] = '@frame.inner',
+          -- ['at'] = '@attribute.outer',
+          -- ['it'] = '@attribute.inner',
+          -- ['ae'] = '@scopename.inner',
+          -- ['ie'] = '@scopename.inner',
+          -- ['as'] = '@statement.outer',
+          -- ['is'] = '@statement.outer',
+        },
+        selection_modes = {
+          ['@function.outer'] = 'V', -- linewise
+        },
+        include_surrounding_whitespace = false,
+      },
+      swap = {
+        enable = true,
+        swap_next = {
+          -- [')m'] = '@function.outer',
+          -- [')c'] = '@comment.outer',
+          -- [')a'] = '@parameter.inner',
+          -- [')b'] = '@block.outer',
+          -- [')C'] = '@class.outer',
+        },
+        swap_previous = {
+          -- ['(m'] = '@function.outer',
+          -- ['(c'] = '@comment.outer',
+          -- ['(a'] = '@parameter.inner',
+          -- ['(b'] = '@block.outer',
+          -- ['(C'] = '@class.outer',
+        },
+      },
+      move = {
+        enable = true,
+        set_jumps = true, -- whether to set jumps in the jumplist
+        goto_next_start = {
+          -- [']m'] = '@function.outer',
+          -- [']f'] = '@call.outer',
+          -- [']d'] = '@conditional.outer',
+          -- [']o'] = '@loop.outer',
+          -- [']s'] = '@statement.outer',
+          -- [']a'] = '@parameter.outer',
+          -- [']c'] = '@comment.outer',
+          -- [']b'] = '@block.outer',
+          -- [']l'] = { query = '@class.outer', desc = 'next class start' },
+          -- [']r'] = '@frame.outer',
+          -- [']t'] = '@attribute.outer',
+          -- [']e'] = '@scopename.outer',
+          -- [']]m'] = '@function.inner',
+          -- [']]f'] = '@call.inner',
+          -- [']]d'] = '@conditional.inner',
+          -- [']]o'] = '@loop.inner',
+          -- [']]a'] = '@parameter.inner',
+          -- [']]b'] = '@block.inner',
+          -- [']]l'] = { query = '@class.inner', desc = 'next class start' },
+          -- [']]r'] = '@frame.inner',
+          -- [']]t'] = '@attribute.inner',
+          -- [']]e'] = '@scopename.inner',
+        },
+        goto_next_end = {
+          -- [']M'] = '@function.outer',
+          -- [']F'] = '@call.outer',
+          -- [']D'] = '@conditional.outer',
+          -- [']O'] = '@loop.outer',
+          -- [']S'] = '@statement.outer',
+          -- [']A'] = '@parameter.outer',
+          -- [']C'] = '@comment.outer',
+          -- [']B'] = '@block.outer',
+          -- [']L'] = '@class.outer',
+          -- [']R'] = '@frame.outer',
+          -- [']T'] = '@attribute.outer',
+          -- [']E'] = '@scopename.outer',
+          -- [']]M'] = '@function.inner',
+          -- [']]F'] = '@call.inner',
+          -- [']]D'] = '@conditional.inner',
+          -- [']]O'] = '@loop.inner',
+          -- [']]A'] = '@parameter.inner',
+          -- [']]B'] = '@block.inner',
+          -- [']]L'] = '@class.inner',
+          -- [']]R'] = '@frame.inner',
+          -- [']]T'] = '@attribute.inner',
+          -- [']]E'] = '@scopename.inner',
+        },
+        goto_previous_start = {
+          -- ['[m'] = '@function.outer',
+          -- ['[f'] = '@call.outer',
+          -- ['[d'] = '@conditional.outer',
+          -- ['[o'] = '@loop.outer',
+          -- ['[s'] = '@statement.outer',
+          -- ['[a'] = '@parameter.outer',
+          -- ['[c'] = '@comment.outer',
+          -- ['[b'] = '@block.outer',
+          -- ['[l'] = '@class.outer',
+          -- ['[r'] = '@frame.outer',
+          -- ['[t'] = '@attribute.outer',
+          -- ['[e'] = '@scopename.outer',
+          -- ['[[m'] = '@function.inner',
+          -- ['[[f'] = '@call.inner',
+          -- ['[[d'] = '@conditional.inner',
+          -- ['[[o'] = '@loop.inner',
+          -- ['[[a'] = '@parameter.inner',
+          -- ['[[b'] = '@block.inner',
+          -- ['[[l'] = '@class.inner',
+          -- ['[[r'] = '@frame.inner',
+          -- ['[[t'] = '@attribute.inner',
+          -- ['[[e'] = '@scopename.inner',
+        },
+        goto_previous_end = {
+          -- ['[M'] = '@function.outer',
+          -- ['[F'] = '@call.outer',
+          -- ['[D'] = '@conditional.outer',
+          -- ['[O'] = '@loop.outer',
+          -- ['[S'] = '@statement.outer',
+          -- ['[A'] = '@parameter.outer',
+          -- ['[C'] = '@comment.outer',
+          -- ['[B'] = '@block.outer',
+          -- ['[L'] = '@class.outer',
+          -- ['[R'] = '@frame.outer',
+          -- ['[T'] = '@attribute.outer',
+          -- ['[E'] = '@scopename.outer',
+          -- ['[[M'] = '@function.inner',
+          -- ['[[F'] = '@call.inner',
+          -- ['[[D'] = '@conditional.inner',
+          -- ['[[O'] = '@loop.inner',
+          -- ['[[A'] = '@parameter.inner',
+          -- ['[[B'] = '@block.inner',
+          -- ['[[L'] = '@class.inner',
+          -- ['[[R'] = '@frame.inner',
+          -- ['[[T'] = '@attribute.inner',
+          -- ['[[E'] = '@scopename.inner',
+        },
+      },
+    },
+  },
+  config = function(_, opts)
+    ---@diagnostic disable-next-line: missing-fields
+    require('nvim-treesitter.configs').setup(opts)
+  end,
 }
