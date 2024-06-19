@@ -17,7 +17,7 @@ return {
     emmet_ls = {},
     html = {},
     intelephense = {
-        init_opions = {
+        init_options = {
             licenceKey = (function()
                 local licenceKeyFile = vim.fn.expand('~/intelephense/licence.key')
                 local licence = nil
