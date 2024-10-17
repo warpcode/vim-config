@@ -25,6 +25,12 @@
             },
             {
                 "language": [
+                    "php"
+                ],
+                "path": "./snippets/php.json"
+            },
+            {
+                "language": [
                     "shellscript",
                     "shell",
                     "sh",

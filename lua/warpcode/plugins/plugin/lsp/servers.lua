@@ -8,9 +8,6 @@ return {
     -- Some languages (like typescript) have entire language plugins that can be useful:
     --    https://github.com/pmizio/typescript-tools.nvim
     --
-    -- But for many setups, the LSP (`tsserver`) will work just fine
-    -- tsserver = {},
-    --
 
     bashls = {},
     dockerls = {},
@@ -70,6 +67,6 @@ return {
             return util.root_pattern(".sqllsrc.json")(fname) or util.find_git_ancestor(fname)
         end,
     },
-    tsserver = {},
+    ts_ls = {},
     vimls = {},
 }
