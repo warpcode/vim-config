@@ -10,7 +10,7 @@ end
 p.addCall('buffers.browse', function() vim.api.nvim_input ':buffers<CR>' end)
 p.addCall('buffers.next', function() vim.api.nvim_input ':bn<CR>' end)
 p.addCall('buffers.previous', function() vim.api.nvim_input ':bp<CR>' end)
-p.addCall('buffers.close', function() vim.api.nvim_input ':bp <BAR> bd #<cr>' end)
+p.addCall('buffers.close', function() vim.api.nvim_input ':bp <bar> if buflisted(bufnr("#")) == 0 | enew | endif <bar> bd! #<cr>' end)
 
 -- { "n", "<leader>ds", vim.diagnostic.open_float },
 m('n', '[b',         p.getAction('buffers.previous'), e(opt, { desc = 'Buffers: Previous Buffer' }))
