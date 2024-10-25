@@ -234,6 +234,14 @@ return {
             }),
         })
 
+        -- Set configuration for specific filetype.
+        cmp.setup.filetype({'sql', 'mysql', 'plsql'}, {
+          sources = {
+            { name = 'vim-dadbod-completion' },
+            { name = 'buffer' },
+          }
+        })
+
         -- Use buffer source for `/`.
         -- Not working currently
         -- cmp.setup.cmdline('/', {
