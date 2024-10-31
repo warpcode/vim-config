@@ -27,7 +27,7 @@ M.formatters_override = {
         prepend_args = { "--standard=PSR12" },
     },
     php_cs_fixer = {
-        prepend_args = { "--rules=@PSR12" },
+        append_args = { '--allow-risky=yes' },
     },
 }
 

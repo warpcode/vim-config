@@ -14,9 +14,9 @@ return {
     -- Don't add to LSP Attach event as this runs formatters outside of lsp
     p.addCall('lsp.format', function()
       require('conform').format({
-        async = true,
+        async = false,
         lsp_fallback = true,
-        ignore_errors = true,
+        -- ignore_errors = true,
       })
     end, 50)
   end,
