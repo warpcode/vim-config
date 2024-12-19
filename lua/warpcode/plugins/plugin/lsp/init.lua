@@ -12,6 +12,7 @@ return {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
+    'nvimtools/none-ls.nvim',
 
     -- `neodev` configures Lua LSP for your Neovim config development
     { 'folke/neodev.nvim', opts = {} },
