@@ -5,6 +5,19 @@ local e = function (...)
   return vim.tbl_deep_extend('force', ...)
 end
 
+-- [[ AI ]]
+-- p.addCall('ai.previous', function() end)
+-- p.addCall('ai.next', function() end)
+-- p.addCall('ai.suggest', function() end)
+-- p.addCall('ai.accept', function() end)
+-- p.addCall('ai.accept_line', function() end)
+-- p.addCall('ai.chat', function() end)
+m('i', '<C-s>[',      p.getAction('ai.previous'),    e(opt, { desc = 'AI: Previous Suggestion' }))
+m('i', '<C-s>]',      p.getAction('ai.next'),        e(opt, { desc = 'AI: Next Suggestion' }))
+m('i', "<C-s>s",      p.getAction('ai.suggest'),     e(opt, { desc = 'AI: Request Suggestions' }) )
+m('i', "<C-s>a",      p.getAction('ai.accept'),      e(opt, { desc = 'AI: Accept Suggestion' }) )
+m('i', "<C-s>l",      p.getAction('ai.accept_line'), e(opt, { desc = 'AI: Accept Line of Suggestion' }) )
+m('n', '<leader>ai>', p.getAction('ai.chat'),        e(opt, { desc = 'AI: Open Chat' }))
 
 -- [[ Buffers ]]
 p.addCall('buffers.browse', function() vim.api.nvim_input ':buffers<CR>' end)
