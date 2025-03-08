@@ -1,3 +1,5 @@
+local p = require('warpcode.utils.keymap-actions')
+
 return {
   {
     'CopilotC-Nvim/CopilotChat.nvim',
@@ -12,17 +14,18 @@ return {
         event = 'InsertEnter',
         lazy = false,
         autoStart = true,
-        cond = function()
-          return os.getenv('IS_WORK') == '1'
-        end,
         config = function()
+          -- Work has a paid sub, but my personal account doesn't
+          -- Only enable auto suggestions for the paid account
+          vim.g.copilot_enabled = os.getenv('IS_WORK') == '1'
+
           if os.getenv('IS_WORK') == '1' then
             vim.g.copilot_node_command = '~/.nvm/versions/node/v18.20.4/bin/node'
           else
             vim.g.copilot_node_command = 'node'
           end
 
-          vim.g.copilot_workspace_folders = {"~/src"}
+          vim.g.copilot_workspace_folders = { '~/src' }
 
           --Remove default mappings
           -- vim.g.copilot_no_tab_map = true
@@ -32,6 +35,29 @@ return {
           --   replace_keycodes = false
           -- })
 
+          -- when is work, add /src to the workspace folders
+          p.addCall('ai.previous', function()
+            vim.fn['copilot#Previous']()
+          end)
+          p.addCall('ai.next', function()
+            vim.fn['copilot#Next']()
+          end)
+          p.addCall('ai.suggest', function()
+            vim.fn['copilot#Suggest']()
+          end)
+          p.addCall('ai.suggest_dismiss', function()
+            vim.fn['copilot#Dismiss']()
+          end)
+          p.addCall('ai.accept', function()
+            vim.fn['copilot#Accept']()
+          end)
+          p.addCall('ai.accept_line', function()
+            vim.fn['copilot#AcceptLine']()
+          end)
+          -- p.addCall('ai.chat', function() vim.cmd [[execute "insert \<Plug>(copilot-previous)"]] end)
+
+          -- vim.cmd [[execute "insert \<Plug>delimitMateCR"]]
+          vim.keymap.set('i', '<leader>sa', '<Plug>(copilot-suggest)')
           vim.keymap.set('i', '[[', '<Plug>(copilot-previous)')
           vim.keymap.set('i', ']]', '<Plug>(copilot-next)')
           vim.keymap.set('i', '<C-h>', '<Plug>(copilot-dismiss)')
@@ -43,7 +69,7 @@ return {
             group = group,
             callback = function()
               local util = require('lspconfig.util')
-              vim.b.workspace_folder = util.find_git_ancestor(vim.fn.getcwd())
+              vim.b.workspace_folder = vim.fs.dirname(vim.fs.find('.git', { path = vim.fn.getcwd(), upward = true })[1])
             end,
           })
         end,
@@ -56,24 +82,24 @@ return {
       answer_header = '## Copilot ',
       error_header = '## Error ',
       context = 'buffers',
-      prompts = {
-        -- Code related prompts
-        Explain = 'Please explain how the following code works.',
-        Review = 'Please review the following code and provide suggestions for improvement.',
-        Tests = 'Please explain how the selected code works, then generate unit tests for it.',
-        Refactor = 'Please refactor the following code to improve its clarity and readability.',
-        FixCode = 'Please fix the following code to make it work as intended.',
-        FixError = 'Please explain the error in the following text and provide a solution.',
-        BetterNamings = 'Please provide better names for the following variables and functions.',
-        Documentation = 'Please provide documentation for the following code.',
-        SwaggerApiDocs = 'Please provide documentation for the following API using Swagger.',
-        SwaggerJsDocs = 'Please write JSDoc for the following API using Swagger.',
-        -- Text related prompts
-        Summarize = 'Please summarize the following text.',
-        Spelling = 'Please correct any grammar and spelling errors in the following text.',
-        Wording = 'Please improve the grammar and wording of the following text.',
-        Concise = 'Please rewrite the following text to make it more concise.',
-      },
+      -- prompts = {
+      --   -- Code related prompts
+      --   Explain = 'Please explain how the following code works.',
+      --   Review = 'Please review the following code and provide suggestions for improvement.',
+      --   Tests = 'Please explain how the selected code works, then generate unit tests for it.',
+      --   Refactor = 'Please refactor the following code to improve its clarity and readability.',
+      --   FixCode = 'Please fix the following code to make it work as intended.',
+      --   FixError = 'Please explain the error in the following text and provide a solution.',
+      --   BetterNamings = 'Please provide better names for the following variables and functions.',
+      --   Documentation = 'Please provide documentation for the following code.',
+      --   SwaggerApiDocs = 'Please provide documentation for the following API using Swagger.',
+      --   SwaggerJsDocs = 'Please write JSDoc for the following API using Swagger.',
+      --   -- Text related prompts
+      --   Summarize = 'Please summarize the following text.',
+      --   Spelling = 'Please correct any grammar and spelling errors in the following text.',
+      --   Wording = 'Please improve the grammar and wording of the following text.',
+      --   Concise = 'Please rewrite the following text to make it more concise.',
+      -- },
       auto_follow_cursor = false, -- Don't follow the cursor after getting response
       show_help = false, -- Show help in virtual text, set to true if that's 1st time using Copilot Chat
       mappings = {
@@ -128,21 +154,21 @@ return {
       local chat = require('CopilotChat')
       local select = require('CopilotChat.select')
       -- Use unnamed register for the selection
-      opts.selection = select.unnamed
-
-      -- Override the git prompts message
-      opts.prompts.Commit = {
-        prompt = 'Write commit message for the change with commitizen convention',
-        selection = select.gitdiff,
-      }
-      opts.prompts.CommitStaged = {
-        prompt = 'Write commit message for the change with commitizen convention',
-        selection = function(source)
-          return select.gitdiff(source, true)
-        end,
-      }
-
-      opts.system_prompt = require('CopilotChat.prompts').COPILOT_INSTRUCTIONS
+      -- opts.selection = select.unnamed
+      --
+      -- -- Override the git prompts message
+      -- opts.prompts.Commit = {
+      --   prompt = 'Write commit message for the change with commitizen convention',
+      --   selection = select.gitdiff,
+      -- }
+      -- opts.prompts.CommitStaged = {
+      --   prompt = 'Write commit message for the change with commitizen convention',
+      --   selection = function(source)
+      --     return select.gitdiff(source, true)
+      --   end,
+      -- }
+      --
+      -- opts.system_prompt = require('CopilotChat.config.prompts').COPILOT_INSTRUCTIONS
 
       chat.setup(opts)
       -- Setup the CMP integration
@@ -179,7 +205,7 @@ return {
           vim.opt_local.number = true
 
           -- Get current filetype and set it to markdown if the current filetype is copilot-chat
-          local ft = vim.bo.filetype
+          -- local ft = vim.bo.filetype
           -- if ft == 'copilot-chat' then
           --   vim.bo.filetype = 'markdown'
           -- end
@@ -316,8 +342,9 @@ return {
       {
         '<leader>ah',
         function()
-          local actions = require('CopilotChat.actions')
-          require('CopilotChat.integrations.telescope').pick(actions.help_actions())
+          require('CopilotChat').select_prompt()
+          -- local actions = require('CopilotChat.actions')
+          -- require('CopilotChat.integrations.telescope').pick(actions.help_actions())
         end,
         desc = 'CopilotChat - Help actions',
       },
@@ -325,8 +352,9 @@ return {
       {
         '<leader>ap',
         function()
-          local actions = require('CopilotChat.actions')
-          require('CopilotChat.integrations.telescope').pick(actions.prompt_actions())
+          require('CopilotChat').select_prompt()
+          -- local actions = require('CopilotChat.actions')
+          -- require('CopilotChat.integrations.telescope').pick(actions.prompt_actions())
         end,
         desc = 'CopilotChat - Prompt actions',
       },
