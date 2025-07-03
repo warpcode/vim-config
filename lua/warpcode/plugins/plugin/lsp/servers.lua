@@ -61,6 +61,7 @@ return {
             },
         },
     },
+    pylsp = {},
     sqlls = {
         root_dir = function(fname)
             local util = require("lspconfig.util")
