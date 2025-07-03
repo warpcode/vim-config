@@ -10,6 +10,7 @@ M.servers = {
     lua = { 'stylua' },
     markdown = { 'prettier' },
     php = { 'phpcbf', 'php_cs_fixer' },
+    python = { 'black', 'isort' },
     scss = { 'prettier' },
     typescript = { 'prettier' },
     vue = { 'prettier' },

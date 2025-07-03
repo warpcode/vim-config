@@ -37,6 +37,7 @@ M.servers = {
     json = { 'jsonlint' },
     markdown = { 'markdownlint' },
     php = { 'php', 'phpcs' },
+    python = { 'flake8' },
     zsh = { 'zsh' },
 }
 
