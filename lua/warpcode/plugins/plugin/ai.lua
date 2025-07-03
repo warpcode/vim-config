@@ -20,7 +20,7 @@ return {
           vim.g.copilot_enabled = os.getenv('IS_WORK') == '1'
 
           if os.getenv('IS_WORK') == '1' then
-            vim.g.copilot_node_command = '~/.nvm/versions/node/v18.20.4/bin/node'
+            vim.g.copilot_node_command = '~/.nvm/versions/node/v22.17.0/bin/node'
           else
             vim.g.copilot_node_command = 'node'
           end
