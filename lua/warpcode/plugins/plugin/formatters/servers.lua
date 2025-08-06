@@ -9,7 +9,7 @@ M.servers = {
     jsx = { 'prettier' },
     lua = { 'stylua' },
     markdown = { 'prettier' },
-    php = { 'phpcbf', 'php_cs_fixer' },
+    php = { 'php_cs_fixer' },
     python = { 'black', 'isort' },
     scss = { 'prettier' },
     typescript = { 'prettier' },
@@ -23,14 +23,7 @@ M.mason_mapping = {
     php_cs_fixer = 'php-cs-fixer',
 }
 
-M.formatters_override = {
-    phpcbf = {
-        prepend_args = { "--standard=PSR12" },
-    },
-    php_cs_fixer = {
-        append_args = { '--allow-risky=yes' },
-    },
-}
+M.formatters_override = { }
 
 M.get_mason_tool_names = function()
     local tools = {}
