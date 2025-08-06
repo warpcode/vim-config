@@ -139,8 +139,8 @@ return {
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-    vim.lsp.config("*", {
-      capabilities = vim.lsp.protocol.make_client_capabilities()
+    vim.lsp.config('*', {
+      capabilities = vim.lsp.protocol.make_client_capabilities(),
     })
 
     for server_name, server_setup in pairs(lsp_servers) do

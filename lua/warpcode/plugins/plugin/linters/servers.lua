@@ -34,41 +34,41 @@
 local M = {}
 
 M.servers = {
-    json = { 'jsonlint' },
-    markdown = { 'markdownlint' },
-    php = { 'php', 'phpcs' },
-    python = { 'flake8' },
-    zsh = { 'zsh' },
+  json = { 'jsonlint' },
+  markdown = { 'markdownlint' },
+  php = { 'php', 'phpcs' },
+  python = { 'flake8' },
+  zsh = { 'zsh' },
 }
 
 M.mason_ignore = {
-    'php',
-    'zsh',
+  'php',
+  'zsh',
 }
 
 M.args_override = {
-    phpcs = {
-        '-q',
-        '--standard=PSR12',
-        '--report=json',
-        '-'
-    }
+  phpcs = {
+    '-q',
+    '--standard=PSR12',
+    '--report=json',
+    '-',
+  },
 }
 
 M.get_mason_tool_names = function()
-    local tools = {}
+  local tools = {}
 
-    for _, x in pairs(M.servers) do
-        local ft_tools = vim.deepcopy(x)
+  for _, x in pairs(M.servers) do
+    local ft_tools = vim.deepcopy(x)
 
-        for _, value in pairs(ft_tools) do
-            if not vim.tbl_contains(M.mason_ignore, value) then
-                tools[#tools+1] = value
-            end
-        end
+    for _, value in pairs(ft_tools) do
+      if not vim.tbl_contains(M.mason_ignore, value) then
+        tools[#tools + 1] = value
+      end
     end
+  end
 
-    return tools
+  return tools
 end
 
 return M
