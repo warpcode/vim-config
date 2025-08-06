@@ -59,9 +59,9 @@ M.get_mason_tool_names = function()
     local tools = {}
 
     for _, x in pairs(M.servers) do
-        local ft_tools = vim.deepcopy(vim.deepcopy(x))
+        local ft_tools = vim.deepcopy(x)
 
-        for key, value in pairs(ft_tools) do
+        for _, value in pairs(ft_tools) do
             if not vim.tbl_contains(M.mason_ignore, value) then
                 tools[#tools+1] = value
             end
