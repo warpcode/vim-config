@@ -26,7 +26,7 @@ return {
                 end
 
                 return licence
-            end)()
+            end)(),
         },
     },
     jsonls = {},

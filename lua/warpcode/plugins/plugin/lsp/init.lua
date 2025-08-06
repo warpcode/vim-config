@@ -50,7 +50,7 @@ return {
       config = function()
         require('lspsaga').setup({
           code_action = {
-            extend_gitsigns = pcall(require, 'gitsigns')
+            extend_gitsigns = pcall(require, 'gitsigns'),
           },
         })
 
@@ -58,8 +58,12 @@ return {
         vim.api.nvim_create_autocmd('LspAttach', {
           group = vim.api.nvim_create_augroup('warpcode-lsp-attach-lsp-saga', { clear = true }),
           callback = function(event)
-            p.addCall('lsp.code_action', function() vim.cmd [[ Lspsaga code_action ]] end, 15, event.buf, event, event.id)
-            p.addCall('lsp.rename', function() vim.cmd [[ Lspsaga rename ]] end, 15, event.buf, event, event.id)
+            p.addCall('lsp.code_action', function()
+              vim.cmd([[ Lspsaga code_action ]])
+            end, 15, event.buf, event, event.id)
+            p.addCall('lsp.rename', function()
+              vim.cmd([[ Lspsaga rename ]])
+            end, 15, event.buf, event, event.id)
           end,
         })
 
@@ -135,6 +139,18 @@ return {
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
+    vim.lsp.config("*", {
+      capabilities = vim.lsp.protocol.make_client_capabilities()
+    })
+
+    for server_name, server_setup in pairs(lsp_servers) do
+      server_setup.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server_setup.capabilities or {})
+      vim.lsp.config(server_name, server_setup)
+
+      -- Enabled automatically in mason-lspconfig
+      -- vim.lsp.enable(server_name)
+    end
+
     require('mason').setup()
     require('mason-tool-installer').setup({
       ensure_installed = (function()
@@ -153,17 +169,6 @@ return {
       start_delay = 3000, -- 3 second delay
       -- debounce_hours = 5, -- at least 5 hours between attempts to install/update
     })
-    require('mason-lspconfig').setup({
-      handlers = {
-        function(server_name)
-          local server = lsp_servers[server_name] or {}
-          -- This handles overriding only values explicitly passed
-          -- by the server configuration above. Useful when disabling
-          -- certain features of an LSP (for example, turning off formatting for tsserver)
-          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
-        end,
-      },
-    })
+    require('mason-lspconfig').setup({})
   end,
 }
