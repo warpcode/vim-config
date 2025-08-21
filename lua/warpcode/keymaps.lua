@@ -114,6 +114,22 @@ m('n',          '<space>wr',  p.getAction('lsp.remove_workspace_folder'), e(opt,
 m('n',          '<space>wl',  p.getAction('lsp.list_workspace_folders'),  e(opt, { desc = 'LSP: List Workspace folders'}))
 
 
+-- [[ Quickfix / Loclist ]]
+m('n', ']q', function() vim.cmd('cnext') end, e(opt, { desc = 'Quickfix: Next' }))
+m('n', '[q', function() vim.cmd('cprev') end, e(opt, { desc = 'Quickfix: Previous' }))
+m('n', ']Q', function() vim.cmd('clast') end, e(opt, { desc = 'Quickfix: Last' }))
+m('n', '[Q', function() vim.cmd('cfirst') end, e(opt, { desc = 'Quickfix: First' }))
+m('n', '<leader>qo', function() vim.cmd('copen') end, e(opt, { desc = 'Quickfix: Open' }))
+m('n', '<leader>qc', function() vim.cmd('cclose') end, e(opt, { desc = 'Quickfix: Close' }))
+
+m('n', ']l', function() vim.cmd('lnext') end, e(opt, { desc = 'Loclist: Next' }))
+m('n', '[l', function() vim.cmd('lprev') end, e(opt, { desc = 'Loclist: Previous' }))
+m('n', ']L', function() vim.cmd('llast') end, e(opt, { desc = 'Loclist: Last' }))
+m('n', '[L', function() vim.cmd('lfirst') end, e(opt, { desc = 'Loclist: First' }))
+m('n', '<leader>lo', function() vim.cmd('lopen') end, e(opt, { desc = 'Loclist: Open' }))
+m('n', '<leader>lc', function() vim.cmd('lclose') end, e(opt, { desc = 'Loclist: Close' }))
+
+
 -- [[ Misc ]]
 -- Map semicolon to colon to write commands without needing to hit shift
 m({'n', 'v'}, ';', ':', opt)
