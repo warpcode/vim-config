@@ -121,6 +121,20 @@ m('n', ']Q', function() vim.cmd('clast') end, e(opt, { desc = 'Quickfix: Last' }
 m('n', '[Q', function() vim.cmd('cfirst') end, e(opt, { desc = 'Quickfix: First' }))
 m('n', '<leader>qo', function() vim.cmd('copen') end, e(opt, { desc = 'Quickfix: Open' }))
 m('n', '<leader>qc', function() vim.cmd('cclose') end, e(opt, { desc = 'Quickfix: Close' }))
+m('n', '<leader>qt', function()
+  local loclist_open = false
+  for _, win in ipairs(vim.fn.getwininfo()) do
+    if win.loclist == 1 then
+      loclist_open = true
+      break
+    end
+  end
+  if loclist_open then
+    vim.cmd('lclose')
+  else
+    vim.cmd('lopen')
+  end
+end, e(opt, { desc = 'Quickfix: Toggle' }))
 
 m('n', ']l', function() vim.cmd('lnext') end, e(opt, { desc = 'Loclist: Next' }))
 m('n', '[l', function() vim.cmd('lprev') end, e(opt, { desc = 'Loclist: Previous' }))
@@ -128,6 +142,20 @@ m('n', ']L', function() vim.cmd('llast') end, e(opt, { desc = 'Loclist: Last' })
 m('n', '[L', function() vim.cmd('lfirst') end, e(opt, { desc = 'Loclist: First' }))
 m('n', '<leader>lo', function() vim.cmd('lopen') end, e(opt, { desc = 'Loclist: Open' }))
 m('n', '<leader>lc', function() vim.cmd('lclose') end, e(opt, { desc = 'Loclist: Close' }))
+m('n', '<leader>lt', function()
+  local loclist_open = false
+  for _, win in ipairs(vim.fn.getwininfo()) do
+    if win.loclist == 1 then
+      loclist_open = true
+      break
+    end
+  end
+  if loclist_open then
+    vim.cmd('lclose')
+  else
+    vim.cmd('lopen')
+  end
+end, e(opt, { desc = 'Loclist: Toggle' }))
 
 
 -- [[ Misc ]]
