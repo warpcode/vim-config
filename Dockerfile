@@ -104,4 +104,7 @@ COPY --chown=${USER_NAME}:${USER_GID} . /home/${USER_NAME}/.config/nvim/
 # Run Neovim once to install all plugins
 RUN nvim --headless -c "Lazy sync" -c "qa!"
 
+# Ensure Tree-sitter modules are compiled
+RUN nvim --headless -c "TSInstallSync all" -c "qa!"
+
 CMD ["nvim"]
