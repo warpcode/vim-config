@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     make \
     python3 \
     python3-pip \
+    python3-venv \
     nodejs \
     npm \
     zsh \
@@ -29,6 +30,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     jq \
     ripgrep \
     sudo \
+    build-essential \
+    cmake \
+    pkg-config \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Install GitHub CLI (gh) from its official repository
@@ -80,7 +85,12 @@ RUN groupadd --gid "${USER_GID}" "${USER_NAME}" \
     && chmod 0440 /etc/sudoers.d/"${USER_NAME}"
 
 # Set the working directory and switch to the new user
-WORKDIR /home/${USER_NAME}
+WORKDIR /workdir
 USER ${USER_NAME}
+
+# Copy Neovim config files to the user's home directory
+# The entire build context is copied, excluding items in .dockerignore
+RUN mkdir -p /home/${USER_NAME}/.config/nvim
+COPY --chown=${USER_NAME}:${USER_GID} . /home/${USER_NAME}/.config/nvim/
 
 CMD ["nvim"]
