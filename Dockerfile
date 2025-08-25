@@ -4,8 +4,11 @@ FROM debian:bookworm-slim
 # Optional version selector
 ARG NEOVIM_VERSION
 
+# Set frontend to noninteractive for apt commands
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install required packages
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     curl \
     make \
