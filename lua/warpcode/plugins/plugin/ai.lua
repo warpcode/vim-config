@@ -19,13 +19,11 @@ return {
           -- Only enable auto suggestions for the paid account
           vim.g.copilot_enabled = os.getenv('IS_WORK') == '1'
 
-          if os.getenv('IS_WORK') == '1' then
-            vim.g.copilot_node_command = '~/.nvm/versions/node/v22.17.0/bin/node'
-          else
-            vim.g.copilot_node_command = 'node'
-          end
+          -- Use 'node' from the system's PATH, assuming it's correctly set up
+          -- via nvm or a system package manager.
+          vim.g.copilot_node_command = 'node'
 
-          vim.g.copilot_workspace_folders = { '~/src' }
+          vim.g.copilot_workspace_folders = { '~/src', '/workdir' }
 
           --Remove default mappings
           -- vim.g.copilot_no_tab_map = true
