@@ -107,4 +107,7 @@ RUN nvim --headless -c "Lazy sync" -c "qa!"
 # Ensure Tree-sitter modules are compiled
 RUN nvim --headless -c "TSInstallSync all" -c "qa!"
 
+# Run Mason to ensure all CLI tools are installed and wait for completion
+RUN nvim --headless -c "MasonToolsInstallSync" -c "qa!"
+
 CMD ["nvim"]
