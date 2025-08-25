@@ -16,6 +16,56 @@ make install-nvim
 
 This command will remove any old config
 
+## Docker Container
+
+You can also build and run this Neovim configuration within a Docker container. This provides a consistent environment regardless of your host operating system.
+
+### Building the Docker Image
+
+To build the Docker image, navigate to the directory containing the `Dockerfile` and run:
+
+```bash
+docker build -t warpcode-nvim .
+```
+
+#### Custom User ID and Group ID
+
+For better integration with your host system (e.g., for file permissions when mounting volumes), you can build the image with your host user's UID and GID. This ensures that files created by Neovim inside the container have the correct ownership on your host.
+
+To find your current user's UID and GID on Linux/macOS, use:
+```bash
+id -u  # for UID
+id -g  # for GID
+```
+
+Then, build the image using the `--build-arg` flag:
+
+```bash
+docker build \
+  --build-arg USER_UID=$(id -u) \
+  --build-arg USER_GID=$(id -g) \
+  -t warpcode-nvim .
+```
+
+You can also specify a custom username if desired (default is `dev`):
+```bash
+docker build \
+  --build-arg USER_UID=$(id -u) \
+  --build-arg USER_GID=$(id -g) \
+  --build-arg USER_NAME=myuser \
+  -t warpcode-nvim .
+```
+
+### Running the Docker Container
+
+Once built, you can run the container. To use Neovim with your current working directory, you'll typically mount it as a volume:
+
+```bash
+docker run -it --rm -v "$(pwd):/home/dev/workspace" warpcode-nvim nvim /home/dev/workspace
+```
+
+Replace `/home/dev/workspace` with the appropriate path if you changed the `USER_NAME` build argument.
+
 ## Dependencies
 
 ### Core Dependencies (All Platforms)
