@@ -101,4 +101,7 @@ USER ${USER_NAME}
 RUN mkdir -p /home/${USER_NAME}/.config/nvim
 COPY --chown=${USER_NAME}:${USER_GID} . /home/${USER_NAME}/.config/nvim/
 
+# Run Neovim once to install all plugins
+RUN nvim --headless -c "Lazy sync" -c "qa!"
+
 CMD ["nvim"]
