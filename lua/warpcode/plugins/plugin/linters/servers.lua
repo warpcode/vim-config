@@ -42,8 +42,8 @@ M.servers = {
 }
 
 M.mason_ignore = {
-  'php',
-  'zsh',
+  php = true,
+  zsh = true,
 }
 
 M.args_override = {
@@ -62,7 +62,7 @@ M.get_mason_tool_names = function()
     local ft_tools = vim.deepcopy(x)
 
     for _, value in pairs(ft_tools) do
-      if not vim.tbl_contains(M.mason_ignore, value) then
+      if not M.mason_ignore[value] then
         tools[#tools + 1] = value
       end
     end

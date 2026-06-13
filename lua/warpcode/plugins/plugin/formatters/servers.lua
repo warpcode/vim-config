@@ -9,7 +9,7 @@ M.servers = {
   python = { 'black', 'isort' },
 }
 
-M.mason_ignore = {}
+M.mason_ignore = {} -- Set of tools to ignore: { ['tool_name'] = true }
 
 M.mason_mapping = {
   php_cs_fixer = 'php-cs-fixer',
@@ -24,7 +24,7 @@ M.get_mason_tool_names = function()
     local ft_tools = vim.deepcopy(x)
 
     for _, value in pairs(ft_tools) do
-      if not vim.tbl_contains(M.mason_ignore, value) then
+      if not M.mason_ignore[value] then
         tools[#tools + 1] = M.mason_mapping[value] or value
       end
     end
