@@ -171,8 +171,6 @@ M.complete = function(_arg, _line, _pos, _arg_list)
         }) or {}
 
     vim.list_extend(params_list, vim.tbl_keys(child_list))
-    print(vim.inspect(params_list))
-    print(vim.inspect(remaining_args))
 
     return vim.tbl_filter(
         function(entry)
