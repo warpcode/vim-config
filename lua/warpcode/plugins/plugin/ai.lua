@@ -409,7 +409,7 @@ return {
         function()
           local input = vim.fn.input('Quick Chat: ')
           if input ~= '' then
-            vim.cmd('CopilotChatBuffer ' .. input)
+            vim.cmd.CopilotChatBuffer(input)
           end
         end,
         desc = 'CopilotChat - Quick chat',
