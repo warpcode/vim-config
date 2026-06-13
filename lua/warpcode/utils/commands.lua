@@ -81,34 +81,54 @@ local function split(cmd, remove_first, remove_last)
     return split_command
 end
 
---- Recursively scan the argument list for a command entry
+--- Resolve a node using the provided args
+---@param node table|function|nil
+---@param args table
+---@return table|nil
+local function resolve_node(node, args)
+    return get_table_or_run_fn(node, { remaining_args = args })
+end
+
+--- Extract the matching child node based on the first argument
+---@param child_config table|function|nil
+---@param args table
+---@return table|nil
+local function get_child_node(child_config, args)
+    if type(args) ~= 'table' or #args == 0 then
+        return nil
+    end
+
+    local child_list = resolve_node(child_config, args)
+    if type(child_list) ~= 'table' then
+        return nil
+    end
+
+    return child_list[args[1]]
+end
+
+--- Scan the argument list iteratively for a command entry
 ---@param _args table
 ---@param _arg_list table|function
 ---@return table|function|nil, table|function|nil
 local function get_command(_args, _arg_list)
-    local arg_list = get_table_or_run_fn(_arg_list, {
-        remaining_args = _args
-    })
-
+    local current_node = _arg_list
     local args = vim.deepcopy(_args)
 
-    if type(args) ~= 'table' or #args == 0 then
-        return arg_list, args
+    while true do
+        local resolved_node = resolve_node(current_node, args)
+
+        if type(args) ~= 'table' or #args == 0 then
+            return resolved_node, args
+        end
+
+        local child_node = get_child_node(resolved_node and resolved_node.children, args)
+        if not child_node then
+            return resolved_node, args
+        end
+
+        table.remove(args, 1)
+        current_node = child_node
     end
-
-    local first_arg = args[1]
-    local child_list = get_table_or_run_fn(arg_list.children, {
-        remaining_args = _args
-    })
-
-    if type(child_list) ~= 'table' or not child_list[first_arg] then
-        -- no children so assume we're at our command with additional args
-        return arg_list, args
-    end
-
-    -- Remove the first item as we're grabbing it for the next recursion
-    table.remove(args, 1)
-    return get_command(args, child_list[first_arg])
 end
 
 
