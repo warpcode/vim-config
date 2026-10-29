@@ -90,6 +90,7 @@ m("n", "<leader>ft", p.getAction('fs.file_tree'),         e(opt, { desc = 'FS: F
 m("n", "<leader>fb", p.getAction('fs.find_buffer'),       e(opt, { desc = 'FS: Find Buffer in File Tree' }))
 m("n", "<leader>ff", p.getAction('fs.find_files'),        e(opt, { desc = 'FS: Find Files' }))
 m("n", "<leader>fr", p.getAction('fs.find_recent_files'), e(opt, { desc = 'FS: Find Recent Files' }))
+m("n", "<leader>fg", p.getAction('search.file_contents'), e(opt, { desc = 'FS: Find by Grep (live_grep)' }))
 
 -- [[ History ]]
 -- Add additional undo breakpoints
@@ -212,6 +213,7 @@ p.addCall('search.file_contents', function() vim.api.nvim_input(':vimgrep //j **
 
 m('n', '<leader>/',  function() vim.cmd(':noh') end ,     e(opt, { desc = 'Search: Clear Buffer Search' }))
 m("n", "<leader>ss", p.getAction('search.file_contents'), e(opt, { desc = 'Search: Search File Contents' }))
+m("n", "<leader>sg", p.getAction('search.file_contents'), e(opt, { desc = 'Search: Search by Grep (live_grep)' }))
 
 -- [[ Version Control ]]
 m('n', '<leader>vl', p.getAction('vcs.show_status'),       e(opt, { desc = 'Version Control: Show Status' }))
