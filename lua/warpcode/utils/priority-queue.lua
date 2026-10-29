@@ -9,16 +9,22 @@ function PQueue:create()
 end
 
 function PQueue:add(priority, buffer, uniqid, data)
-  self:filterInvalidBuffers()
-
-  -- remove anything on the same buffer with the same uniqid
-  for index, call in pairs(self.queue) do
-    if call.uniqid and call.uniqid == uniqid and buffer == call.buffer then
-      self.queue[index] = nil
+  -- Find existing item with same buffer and uniqid to update
+  local found = false
+  if uniqid then
+    for _, call in ipairs(self.queue) do
+      if call.uniqid == uniqid and call.buffer == buffer then
+        call.priority = priority or 0
+        call.data = data or {}
+        found = true
+        break
+      end
     end
   end
 
-  table.insert(self.queue, { priority = priority or 0, buffer = buffer, uniqid = uniqid, data = data or {} })
+  if not found then
+    table.insert(self.queue, { priority = priority or 0, buffer = buffer, uniqid = uniqid, data = data or {} })
+  end
 
   self:sortList()
 end
@@ -63,11 +69,13 @@ end
 
 -- Method to remove calls for dead buffers
 function PQueue:filterInvalidBuffers()
-  for index, call in pairs(self.queue) do
-    if call.buffer and not vim.api.nvim_buf_is_loaded(call.buffer) then
-      self.queue[index] = nil
+  local new_queue = {}
+  for _, call in pairs(self.queue) do
+    if not call.buffer or vim.api.nvim_buf_is_loaded(call.buffer) then
+      table.insert(new_queue, call)
     end
   end
+  self.queue = new_queue
 end
 
 return PQueue
