@@ -28,7 +28,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gzip \
     jq \
     ripgrep \
-    sudo \
     build-essential \
     cmake \
     pkg-config \
@@ -88,9 +87,7 @@ RUN nvim --version || echo "Warning: Neovim execution test failed"
 
 # Create a non-root user with configurable UID/GID
 RUN groupadd --gid "${USER_GID}" "${USER_NAME}" \
-    && useradd --uid "${USER_UID}" --gid "${USER_GID}" --shell /bin/bash --create-home "${USER_NAME}" \
-    && echo "${USER_NAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/"${USER_NAME}" \
-    && chmod 0440 /etc/sudoers.d/"${USER_NAME}"
+    && useradd --uid "${USER_UID}" --gid "${USER_GID}" --shell /bin/bash --create-home "${USER_NAME}"
 
 # Set the working directory and switch to the new user
 WORKDIR /workdir
