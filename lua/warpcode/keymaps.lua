@@ -113,6 +113,15 @@ m('n',          '<space>wl',  p.getAction('lsp.list_workspace_folders'),  e(opt,
 
 
 -- [[ Quickfix / Loclist ]]
+local is_loclist_open = function()
+  for _, win in ipairs(vim.fn.getwininfo()) do
+    if win.loclist == 1 then
+      return true
+    end
+  end
+  return false
+end
+
 m('n', ']q', function() vim.cmd('cnext') end, e(opt, { desc = 'Quickfix: Next' }))
 m('n', '[q', function() vim.cmd('cprev') end, e(opt, { desc = 'Quickfix: Previous' }))
 m('n', ']Q', function() vim.cmd('clast') end, e(opt, { desc = 'Quickfix: Last' }))
@@ -120,14 +129,7 @@ m('n', '[Q', function() vim.cmd('cfirst') end, e(opt, { desc = 'Quickfix: First'
 m('n', '<leader>qo', function() vim.cmd('copen') end, e(opt, { desc = 'Quickfix: Open' }))
 m('n', '<leader>qc', function() vim.cmd('cclose') end, e(opt, { desc = 'Quickfix: Close' }))
 m('n', '<leader>qt', function()
-  local loclist_open = false
-  for _, win in ipairs(vim.fn.getwininfo()) do
-    if win.loclist == 1 then
-      loclist_open = true
-      break
-    end
-  end
-  if loclist_open then
+  if is_loclist_open() then
     vim.cmd('lclose')
   else
     vim.cmd('lopen')
@@ -141,14 +143,7 @@ m('n', '[L', function() vim.cmd('lfirst') end, e(opt, { desc = 'Loclist: First' 
 m('n', '<leader>lo', function() vim.cmd('lopen') end, e(opt, { desc = 'Loclist: Open' }))
 m('n', '<leader>lc', function() vim.cmd('lclose') end, e(opt, { desc = 'Loclist: Close' }))
 m('n', '<leader>lt', function()
-  local loclist_open = false
-  for _, win in ipairs(vim.fn.getwininfo()) do
-    if win.loclist == 1 then
-      loclist_open = true
-      break
-    end
-  end
-  if loclist_open then
+  if is_loclist_open() then
     vim.cmd('lclose')
   else
     vim.cmd('lopen')
