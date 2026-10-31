@@ -53,7 +53,7 @@ function PQueue:getFirstItem(buffer)
   return items[1]
 end
 
--- Method to remove calls for dead buffers
+-- Method to sort the queue by priority
 function PQueue:sortList()
   if #self.queue < 2 then
     return
