@@ -70,9 +70,22 @@ end
 -- Method to remove calls for dead buffers
 function PQueue:filterInvalidBuffers()
   local new_queue = {}
-  for _, call in pairs(self.queue) do
-    if not call.buffer or vim.api.nvim_buf_is_loaded(call.buffer) then
+  local is_loaded_cache = {}
+  local is_loaded = vim.api.nvim_buf_is_loaded
+
+  for _, call in ipairs(self.queue) do
+    local buf = call.buffer
+    if not buf then
       table.insert(new_queue, call)
+    else
+      local loaded = is_loaded_cache[buf]
+      if loaded == nil then
+        loaded = is_loaded(buf)
+        is_loaded_cache[buf] = loaded
+      end
+      if loaded then
+        table.insert(new_queue, call)
+      end
     end
   end
   self.queue = new_queue
