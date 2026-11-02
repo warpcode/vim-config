@@ -29,7 +29,7 @@ function PQueue:add(priority, buffer, uniqid, data)
   self:sortList()
 end
 
--- Method to remove calls for dead buffers
+-- Method to get queue items, optionally filtered by buffer
 function PQueue:getItems(buffer)
   self:filterInvalidBuffers()
   local filteredItems = {}
