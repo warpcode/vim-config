@@ -9,24 +9,43 @@ function PQueue:create()
 end
 
 function PQueue:add(priority, buffer, uniqid, data)
+  local p = priority or 0
+  local d = data or {}
+  local queue = self.queue
+
   -- Find existing item with same buffer and uniqid to update
-  local found = false
   if uniqid then
-    for _, call in ipairs(self.queue) do
+    for i = 1, #queue do
+      local call = queue[i]
       if call.uniqid == uniqid and call.buffer == buffer then
-        call.priority = priority or 0
-        call.data = data or {}
-        found = true
-        break
+        if call.priority == p then
+          call.data = d
+          return
+        else
+          table.remove(queue, i)
+          break
+        end
       end
     end
   end
 
-  if not found then
-    table.insert(self.queue, { priority = priority or 0, buffer = buffer, uniqid = uniqid, data = data or {} })
+  -- Binary search insertion index for descending order
+  local low = 1
+  local high = #queue
+  local pos = #queue + 1
+  while low <= high do
+    local mid = math.floor((low + high) / 2)
+    local item = queue[mid]
+    local item_p = item and item.priority or 0
+    if item_p < p then
+      pos = mid
+      high = mid - 1
+    else
+      low = mid + 1
+    end
   end
 
-  self:sortList()
+  table.insert(queue, pos, { priority = p, buffer = buffer, uniqid = uniqid, data = d })
 end
 
 -- Method to remove calls for dead buffers
