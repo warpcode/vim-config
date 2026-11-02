@@ -106,12 +106,11 @@ m('n',          '<space>wl',  p.getAction('lsp.list_workspace_folders'),  e(opt,
 
 -- [[ Quickfix / Loclist ]]
 local is_loclist_open = function()
-  for _, win in ipairs(vim.fn.getwininfo()) do
-    if win.loclist == 1 then
-      return true
-    end
-  end
-  return false
+  return vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
+end
+
+local is_quickfix_open = function()
+  return vim.fn.getqflist({ winid = 0 }).winid ~= 0
 end
 
 m('n', ']q', function() vim.cmd('cnext') end, e(opt, { desc = 'Quickfix: Next' }))
@@ -121,10 +120,10 @@ m('n', '[Q', function() vim.cmd('cfirst') end, e(opt, { desc = 'Quickfix: First'
 m('n', '<leader>qo', function() vim.cmd('copen') end, e(opt, { desc = 'Quickfix: Open' }))
 m('n', '<leader>qc', function() vim.cmd('cclose') end, e(opt, { desc = 'Quickfix: Close' }))
 m('n', '<leader>qt', function()
-  if is_loclist_open() then
-    vim.cmd('lclose')
+  if is_quickfix_open() then
+    vim.cmd('cclose')
   else
-    vim.cmd('lopen')
+    vim.cmd('copen')
   end
 end, e(opt, { desc = 'Quickfix: Toggle' }))
 
