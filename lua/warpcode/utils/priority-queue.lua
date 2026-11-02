@@ -72,11 +72,14 @@ function PQueue:filterInvalidBuffers()
   local new_queue = {}
   local is_loaded_cache = {}
   local is_loaded = vim.api.nvim_buf_is_loaded
+  local count = 0
 
-  for _, call in ipairs(self.queue) do
+  for i = 1, #self.queue do
+    local call = self.queue[i]
     local buf = call.buffer
     if not buf then
-      table.insert(new_queue, call)
+      count = count + 1
+      new_queue[count] = call
     else
       local loaded = is_loaded_cache[buf]
       if loaded == nil then
@@ -84,7 +87,8 @@ function PQueue:filterInvalidBuffers()
         is_loaded_cache[buf] = loaded
       end
       if loaded then
-        table.insert(new_queue, call)
+        count = count + 1
+        new_queue[count] = call
       end
     end
   end
