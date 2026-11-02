@@ -64,6 +64,49 @@ describe('warpcode.utils.commands', function()
       assert.are.same({ '--release', 'target' }, passed_remaining)
     end)
 
+    it('handles arguments with escaped spaces correctly', function()
+      local executed = false
+      local passed_remaining = nil
+
+      local config = {
+        children = {
+          msg = {
+            run = function(_, remaining)
+              executed = true
+              passed_remaining = remaining
+            end,
+          },
+        },
+      }
+
+      commands.run({ args = 'msg hello\\ world second\\ arg' }, config)
+
+      assert.is_true(executed)
+      assert.are.same({ 'hello\\ world', 'second\\ arg' }, passed_remaining)
+    end)
+
+    it('falls back to parent command when subcommand is not matched', function()
+      local executed = false
+      local passed_remaining = nil
+
+      local config = {
+        run = function(_, remaining)
+          executed = true
+          passed_remaining = remaining
+        end,
+        children = {
+          deploy = {
+            run = function() end,
+          },
+        },
+      }
+
+      commands.run({ args = 'not_a_child extra_arg' }, config)
+
+      assert.is_true(executed)
+      assert.are.same({ 'not_a_child', 'extra_arg' }, passed_remaining)
+    end)
+
     it('resolves children defined as a function dynamically', function()
       local executed = false
       local dynamic_called_with = nil
@@ -233,6 +276,41 @@ describe('warpcode.utils.commands', function()
       table.sort(comp2)
       assert.are.same({ 'optionA', 'optionB' }, comp2)
     end)
+
+    it('combines both children and params when remaining_args is empty', function()
+      local config = {
+        children = {
+          sub1 = { run = function() end },
+          sub2 = { run = function() end },
+        },
+        params = { '--flag', '--verbose' },
+      }
+
+      local completions = commands.complete('', 'MyCmd ', 6, config)
+      table.sort(completions)
+
+      assert.are.same({ '--flag', '--verbose', 'sub1', 'sub2' }, completions)
+    end)
+
+    it('handles escaped spaces when completing command line', function()
+      local config = {
+        children = {
+          ['target\\ name'] = {
+            children = {
+              sub = {
+                run = function() end,
+                params = { '--all', '--filter' },
+              },
+            },
+          },
+        },
+      }
+
+      local completions = commands.complete('', 'MyCmd target\\ name sub ', 24, config)
+      table.sort(completions)
+
+      assert.are.same({ '--all', '--filter' }, completions)
+    end)
   end)
 
   describe('M.register and M.deregister', function()
@@ -315,6 +393,34 @@ describe('warpcode.utils.commands', function()
 
       buf_commands = vim.api.nvim_buf_get_commands(bufnr, {})
       assert.is_nil(buf_commands['DeregCommand'])
+    end)
+
+    it('defaults to current buffer (0) when bufnr is nil in register and deregister', function()
+      local executed = false
+      local config = {
+        run = function()
+          executed = true
+        end,
+      }
+
+      commands.register(nil, 'DefaultBufCommand', config)
+
+      local buf_commands = vim.api.nvim_buf_get_commands(0, {})
+      assert.is_not_nil(buf_commands['DefaultBufCommand'])
+
+      vim.cmd('DefaultBufCommand')
+      assert.is_true(executed)
+
+      commands.deregister(nil, 'DefaultBufCommand')
+
+      buf_commands = vim.api.nvim_buf_get_commands(0, {})
+      assert.is_nil(buf_commands['DefaultBufCommand'])
+    end)
+
+    it('safely deregisters non-existent command without error', function()
+      assert.has_no_errors(function()
+        commands.deregister(bufnr, 'NonExistentCommand12345')
+      end)
     end)
   end)
 end)
