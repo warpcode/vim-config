@@ -147,6 +147,52 @@ describe('warpcode.utils.commands', function()
       assert.is_true(executed)
     end)
 
+    it('handles multiple consecutive spaces between arguments without creating empty tokens', function()
+      local executed = false
+      local passed_remaining = nil
+
+      local config = {
+        run = function(_, remaining)
+          executed = true
+          passed_remaining = remaining
+        end,
+      }
+
+      commands.run({ args = 'arg1    arg2      arg3' }, config)
+
+      assert.is_true(executed)
+      assert.are.same({ 'arg1', 'arg2', 'arg3' }, passed_remaining)
+    end)
+
+    it('resolves nested dynamic children at multiple levels', function()
+      local executed = false
+      local passed_remaining = nil
+
+      local config = {
+        children = function(ctx1)
+          return {
+            level1 = {
+              children = function(ctx2)
+                return {
+                  level2 = {
+                    run = function(_, rem)
+                      executed = true
+                      passed_remaining = rem
+                    end,
+                  },
+                }
+              end,
+            },
+          }
+        end,
+      }
+
+      commands.run({ args = 'level1 level2 extra1 extra2' }, config)
+
+      assert.is_true(executed)
+      assert.are.same({ 'extra1', 'extra2' }, passed_remaining)
+    end)
+
     it('throws an error if command_config is not a table', function()
       local config = {
         children = {
@@ -157,6 +203,20 @@ describe('warpcode.utils.commands', function()
       assert.has_error(function()
         commands.run({ args = 'child' }, config)
       end, 'Command cannot be ran')
+    end)
+
+    it('throws an error if root config resolves to nil', function()
+      assert.has_error(function()
+        commands.run({ args = 'foo' }, nil)
+      end)
+
+      local nil_fn = function()
+        return nil
+      end
+
+      assert.has_error(function()
+        commands.run({ args = 'foo' }, nil_fn)
+      end)
     end)
 
     it('throws an error if command config has no run function and no children', function()
@@ -311,6 +371,20 @@ describe('warpcode.utils.commands', function()
 
       assert.are.same({ '--all', '--filter' }, completions)
     end)
+
+    it('handles dynamic params or children functions returning nil gracefully', function()
+      local config = {
+        children = function()
+          return nil
+        end,
+        params = function()
+          return nil
+        end,
+      }
+
+      local completions = commands.complete('', 'MyCmd ', 6, config)
+      assert.are.same({}, completions)
+    end)
   end)
 
   describe('M.register and M.deregister', function()
@@ -421,6 +495,32 @@ describe('warpcode.utils.commands', function()
       assert.has_no_errors(function()
         commands.deregister(bufnr, 'NonExistentCommand12345')
       end)
+    end)
+
+    it('overwrites previous command registration when re-registered', function()
+      local call_first = 0
+      local call_second = 0
+
+      local config1 = {
+        run = function()
+          call_first = call_first + 1
+        end,
+      }
+      local config2 = {
+        run = function()
+          call_second = call_second + 1
+        end,
+      }
+
+      commands.register(bufnr, 'OverwriteCommand', config1)
+      commands.register(bufnr, 'OverwriteCommand', config2)
+
+      vim.api.nvim_buf_call(bufnr, function()
+        vim.cmd('OverwriteCommand')
+      end)
+
+      assert.are.same(0, call_first)
+      assert.are.same(1, call_second)
     end)
   end)
 end)
