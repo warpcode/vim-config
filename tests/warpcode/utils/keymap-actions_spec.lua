@@ -129,6 +129,29 @@ describe('warpcode.utils.keymap-actions', function()
       assert.are.same(1, #notifications)
       assert.are.same('test.nil_fn is not imlemented', notifications[1].msg)
     end)
+
+    it('returns not_impl when non-function item fn is boolean false', function()
+      actions.addCall('test.false_fn', false, 5)
+
+      local action_fn = actions.getAction('test.false_fn')
+      action_fn()
+
+      assert.are.same(1, #notifications)
+      assert.are.same('test.false_fn is not imlemented', notifications[1].msg)
+      assert.are.same(vim.log.levels.WARN, notifications[1].level)
+    end)
+
+    it('invokes callback without args when getAction was called without arguments', function()
+      local received_args = 'sentinel'
+      actions.addCall('test.no_args', function(item, args)
+        received_args = args
+      end, 5)
+
+      local action_fn = actions.getAction('test.no_args')
+      action_fn()
+
+      assert.is_nil(received_args)
+    end)
   end)
 
   describe('priorities and buffer selection', function()
@@ -190,6 +213,35 @@ describe('warpcode.utils.keymap-actions', function()
       action_fn()
 
       assert.are.same('second', result)
+    end)
+
+    it('dynamically adapts when active buffer changes between invocations of the returned action function', function()
+      local called_target = nil
+
+      actions.addCall('test.dynamic_buf', function()
+        called_target = 'global'
+      end, 10, nil)
+
+      actions.addCall('test.dynamic_buf', function()
+        called_target = 'buffer_2'
+      end, 20, 2)
+
+      local action_fn = actions.getAction('test.dynamic_buf')
+
+      -- First execution on buffer 1 (matches global)
+      current_buf = 1
+      action_fn()
+      assert.are.same('global', called_target)
+
+      -- Second execution on buffer 2 (matches buffer 2 with higher priority)
+      current_buf = 2
+      action_fn()
+      assert.are.same('buffer_2', called_target)
+
+      -- Third execution switching back to buffer 1
+      current_buf = 1
+      action_fn()
+      assert.are.same('global', called_target)
     end)
   end)
 end)
