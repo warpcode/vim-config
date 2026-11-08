@@ -84,7 +84,7 @@ end
 --- Recursively scan the argument list for a command entry
 ---@param _args table
 ---@param _arg_list table|function
----@return table|function|nil, table|function|nil
+---@return table|nil, table
 local function get_command(_args, _arg_list)
     local arg_list = get_table_or_run_fn(_arg_list, {
         remaining_args = _args
