@@ -68,6 +68,7 @@ end
 ---@param remove_last boolean|nil
 ---@return table
 local function split(cmd, remove_first, remove_last)
+    if cmd == "" then return {} end
     local split_command = vim.fn.split(cmd, [[\%(\%(\%(^\|[^\\]\)\\\)\@<!\s\)\+]], 1)
 
     if remove_first then

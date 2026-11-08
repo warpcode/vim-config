@@ -193,6 +193,18 @@ describe('warpcode.utils.commands', function()
       assert.are.same({ 'extra1', 'extra2' }, passed_remaining)
     end)
 
+    it('handles empty args string without creating an empty array item', function()
+      local passed_remaining
+      local config = {
+        run = function(_, rem)
+          passed_remaining = rem
+        end,
+      }
+
+      commands.run({ args = '' }, config)
+      assert.are.same({}, passed_remaining)
+    end)
+
     it('throws an error if command_config is not a table', function()
       local config = {
         children = {
