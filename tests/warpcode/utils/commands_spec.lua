@@ -522,5 +522,22 @@ describe('warpcode.utils.commands', function()
       assert.are.same(0, call_first)
       assert.are.same(1, call_second)
     end)
+
+    it('passes arguments to the registered command', function()
+      local passed_args
+      local config = {
+        run = function(args, remaining)
+          passed_args = args.args
+        end,
+      }
+
+      commands.register(bufnr, 'ArgsCommand', config)
+
+      vim.api.nvim_buf_call(bufnr, function()
+        vim.cmd('ArgsCommand arg1 arg2')
+      end)
+
+      assert.are.same('arg1 arg2', passed_args)
+    end)
   end)
 end)
