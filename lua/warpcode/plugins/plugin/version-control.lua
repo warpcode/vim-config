@@ -41,7 +41,7 @@ return {
           untracked    = { text = '┆' },
         },
         on_attach = function(bufnr)
-          local gs = package.loaded.gitsigns
+          local gs = require('gitsigns')
           local km_priority = 10
 
           -- We must wrap every call in functions else they throw errors
