@@ -1,7 +1,3 @@
-if exists("b:did_ftplugin_warpcode")
-    finish
-endif
-let b:did_ftplugin_warpcode = 1
 
 " Add $ as part of the keyword search
 setlocal iskeyword+=$
