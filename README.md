@@ -11,7 +11,7 @@ Please refer to the [official Neovim installation documentation](https://github.
 ### Run Make
 To install to nvim run
 ```bash
-make install-nvim
+make install
 ```
 
 This command will remove any old config
