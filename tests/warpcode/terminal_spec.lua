@@ -43,6 +43,10 @@ describe('warpcode.utils.terminal', function()
       assert.are.same(expected_col, get_coord(config.col))
       assert.are.same(expected_row, get_coord(config.row))
       assert.are.same('editor', config.relative)
+      -- Border configuration should be rounded border table
+      assert.is_not_nil(config.border)
+      -- Newly created scratch buffer should not be listed
+      assert.is_false(vim.bo[res.buf].buflisted)
 
       -- Clean up created window and buffer
       vim.api.nvim_win_close(res.win, true)
@@ -151,6 +155,50 @@ describe('warpcode.utils.terminal', function()
       assert.is_true(vim.api.nvim_buf_is_valid(terminal.state.floating.buf))
       assert.is_true(terminal.state.floating.buf ~= first_buf)
       assert.are.same('terminal', vim.bo[terminal.state.floating.buf].buftype)
+    end)
+
+    it('handles window closed externally and re-opens the terminal', function()
+      terminal.toggle_terminal()
+      local win = terminal.state.floating.win
+      local buf = terminal.state.floating.buf
+      assert.is_true(vim.api.nvim_win_is_valid(win))
+
+      -- Externally close the window
+      vim.api.nvim_win_close(win, true)
+      assert.is_false(vim.api.nvim_win_is_valid(terminal.state.floating.win))
+
+      -- Toggle terminal again should detect closed window and re-open it
+      terminal.toggle_terminal()
+      assert.is_true(vim.api.nvim_win_is_valid(terminal.state.floating.win))
+      assert.are.same(buf, terminal.state.floating.buf)
+      assert.are.same(buf, vim.api.nvim_win_get_buf(terminal.state.floating.win))
+    end)
+
+    it('does not re-launch terminal command when buffer is already a terminal', function()
+      terminal.toggle_terminal()
+      local buf = terminal.state.floating.buf
+      assert.are.same('terminal', vim.bo[buf].buftype)
+
+      -- Spy on vim.cmd.terminal if possible, or verify repeated toggle retains terminal session
+      terminal.toggle_terminal() -- hide
+      assert.is_false(vim.api.nvim_win_is_valid(terminal.state.floating.win))
+
+      terminal.toggle_terminal() -- open again
+      assert.is_true(vim.api.nvim_win_is_valid(terminal.state.floating.win))
+      assert.are.same(buf, terminal.state.floating.buf)
+      assert.are.same('terminal', vim.bo[buf].buftype)
+    end)
+
+    it('converts non-terminal buffer into terminal when pre-set in state', function()
+      -- Create an existing scratch non-terminal buffer and assign to state
+      local scratch_buf = vim.api.nvim_create_buf(false, true)
+      assert.are_not.same('terminal', vim.bo[scratch_buf].buftype)
+      terminal.state.floating.buf = scratch_buf
+
+      terminal.toggle_terminal()
+      assert.is_true(vim.api.nvim_win_is_valid(terminal.state.floating.win))
+      assert.are.same(scratch_buf, terminal.state.floating.buf)
+      assert.are.same('terminal', vim.bo[scratch_buf].buftype)
     end)
   end)
 end)
